@@ -6,8 +6,10 @@
 
 // INCLUSIONS
 
-#include <vector>
 #include <string>
+#include <vector>
+
+#include "types/instance/instance.h"
 
 // USINGS
 
@@ -23,9 +25,9 @@ public:
 
     /** Tableau ordonné des IDs des tâches placées sur cette machine */
     vector<int> tabId;
+
     /** Cmax local sur la machine */
     int cmax;
-
 
     // CONSTRUCTEUR / DESTRUCTEUR
 
@@ -37,18 +39,38 @@ public:
     /**
      * Supprime un camion
      */
-    ~Camion();
+    ~Camion() {}
 
     /**
      * Clone un camion depuis une source
      *
      * @param source le camion duquel puiser les informations
      */
-    Camion(const Camion& source);
+    Camion(const Camion& source): tabId(source.tabId), cmax(source.cmax) {}
 
+    // FONCTIONS
+
+    /**
+     * Ajoute une tâche à l'ordonnancement en fin de position.
+     * @param ordonnancement L'ordonnancement à manipuler
+     * @param i Indice de la tâche à ajouter
+     * @param quantite Durée opératoire de la tâche à ajouter
+     */
     void ajouterTache(const int& i, const int& quantite);
 
+    /**
+     * Ajoute une tâche à l'ordonnancement en fin de position.
+     * @param ordonnancement L'ordonnancement à manipuler
+     * @param i Tâche à rajouter dans l'ordonnancement
+     * @param instance Instance depuis laquelle piocher les informations
+     */
+    void ajouterTacheParInstance(const int& i, const Instance& instance);
+
+    // SURCHARGES
+
     explicit operator string() const;
+
+    bool operator==(const Camion& c) const;
 };
 
 inline ostream& operator<<(ostream& os, const Camion& camion)

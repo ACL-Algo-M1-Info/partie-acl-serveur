@@ -3,6 +3,7 @@
 //
 
 #pragma once
+
 #include <string>
 
 #include "types/camion/camion.h"
@@ -47,9 +48,14 @@ public:
      */
     Instance(const Instance& source);
 
+    // FONCTIONS
+
+
+    // SURCHARGES
+
     explicit operator string() const;
 
-    bool operator==(const Instance& instance) const;
+    bool operator==(const Instance& i) const;
 
 };
 

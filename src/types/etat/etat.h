@@ -8,8 +8,10 @@
 
 #include <iosfwd>
 #include <ostream>
+#include <vector>
 
 #include "../instance/instance.h"
+#include "../camion/camion.h"
 
 // USINGS
 
@@ -27,9 +29,9 @@ public:
     /** Nombre de machines */
     int m;
     /** Durée opératoire + durée de latence max de l'état */
-    int lmax;
+    int cmax;
     /** Tableau de camions */
-    //TODO
+    vector<Camion> camions;
 
     // CONSTRUCTEUR / DESTRUCTEUR
 
@@ -39,13 +41,13 @@ public:
     * @param m le nombre de machines
     * @return un nouvel état
     */
-    Etat(const int& m): m(m), lmax(0) {}
+    Etat(const int& m): m(m), cmax(0) {}
 
     /**
     * Supprime un état.
     *
     */
-    ~Etat();
+    ~Etat() {}
 
     /**
      * Créer un nouvel état selon un état existant
@@ -53,17 +55,18 @@ public:
      * @param source  l'état depuis lequel on clone
      * @return un nouvel état
      */
-    Etat(const Etat& source);
+    Etat(const Etat& source): m(source.m), cmax(source.cmax), camions(source.camions) {};
+
+    // FONCTIONS
 
     /**
      * Ajoute une tâche sur une machine.
      *
      * @param k la machine sur laquelle on ajoute la tâche
      * @param i l'id de la tâche que l'on ajoute
-     * @param pi la durée opératoire de la tâche i
-     * @param qi la durée de latence de la tâche i
+     * @param quantite la durée opératoire de la tâche i
      */
-    void ajouterTacheSurMachine(const int& k, const int& i, const int& pi, const int& qi);
+    void ajouterTacheSurMachine(const int& k, const int& i, const int& quantite);
 
     /**
      * Ajoute une tâche sur une machine depuis une instance.
@@ -72,11 +75,13 @@ public:
      * @param i l'id de la tâche que l'on ajoute
      * @param instance l'instance qui possède la tâche i
      */
-    void ajouterTacheSurMachineParInstance(const Instance& i, const int& k, const int& i);
+    void ajouterTacheSurMachineParInstance(const Instance& instance, const int& k, const int& i);
+
+    // SURCHARGES
 
     explicit operator string() const;
 
-    bool operator==(const Etat& source) const;
+    bool operator==(const Etat& e) const;
 };
 
 inline ostream& operator<<(ostream & os, const Etat& etat)
