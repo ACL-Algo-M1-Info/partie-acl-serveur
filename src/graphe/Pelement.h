@@ -4,6 +4,7 @@
 
 #ifndef TPACL_PELEMENT_H
 #define TPACL_PELEMENT_H
+
 #include <iostream>
 #include <ostream>
 #include <sstream>
@@ -13,22 +14,20 @@
 using namespace std;
 
 /**
- * Un maillon de la liste chaînée est de type PElement<T>. Il contient 2 attributs :
- * un lien vers le maillon suivant; ce lien est noté s.
- * un lien vers la valeur (c'est-à-dire l'information associée à ce maillon). Ce lien est noté v.
- * v est un pointeur vers une instance d'une classe T générique.
+ * Un maillon de la liste chaînée est de type PElement<T>. Il contient 2
+ * attributs : un lien vers le maillon suivant; ce lien est noté s. un lien vers
+ * la valeur (c'est-à-dire l'information associée à ce maillon). Ce lien est
+ * noté v. v est un pointeur vers une instance d'une classe T générique.
  * @tparam T
  */
 template <class T>
 class Pelement
 {
-public:
+   public:
     Pelement<T>* s;
     T* v;
 
-    Pelement(Pelement<T>* s, T* v) : s(s), v(v)
-    {
-    }
+    Pelement(Pelement<T>* s, T* v) : s(s), v(v) {}
 
     operator string() const
     {
@@ -49,20 +48,31 @@ public:
         return taille;
     }
 
-
+    /**
+     * Calcule la taille de la liste l
+     * @param l
+     * @return la taille de la liste l
+     */
     static int tailleR(const Pelement<T>* l)
     {
         if (l == nullptr)
         {
             return 0;
         }
-        else
-        {
-            return 1 + tailleR(l->s);
-        }
+        return 1 + tailleR(l->s);
     }
 
-    static const string toString(const Pelement<T>* p, const char* debut = "( ", const char* separateur = ", ",
+    /**
+     * Transforme la liste p en string.
+     * On suppose que l'opérateur << d'écriture sur un flux est défini pour la classe T.
+     * @param p
+     * @param debut
+     * @param separateur
+     * @param fin
+     * @return
+     */
+    static const string toString(const Pelement<T>* p, const char* debut = "( ",
+                                 const char* separateur = ", ",
                                  const char* fin = " )")
     {
         ostringstream o;
@@ -82,15 +92,18 @@ public:
     }
 
     /**
-     * Insère en ordre la nouvelle valeur a dans la liste l en se servant de la méthode de comparaison estPlusPetitOuEgal.
-     * l peut être modifiée par l'appel (d'où le &)
-     * On suppose que, avant l'appel, l est ordonnée par ordre croissant (l'ordre est défini par estPlusPetitOuEgal).
-     * Après l'appel, l est encore ordonnée.
+     * Insère en ordre la nouvelle valeur a dans la liste l en se servant de la
+     * méthode de comparaison estPlusPetitOuEgal. l peut être modifiée par
+     * l'appel (d'où le &) On suppose que, avant l'appel, l est ordonnée par
+     * ordre croissant (l'ordre est défini par estPlusPetitOuEgal). Après
+     * l'appel, l est encore ordonnée.
      * @param a
      * @param l
      * @param estPlusPetitOuEgal
      */
-    static void insertionOrdonnee(T* a, Pelement<T>*& l, bool (*estPlusPetitOuEgal)(const T* a1, const T* a2))
+    static void insertionOrdonnee(T* a, Pelement<T>*& l,
+                                  bool (*estPlusPetitOuEgal)(const T* a1,
+                                                             const T* a2))
     {
         if (l == nullptr || estPlusPetitOuEgal(a, l->v))
         {
@@ -124,9 +137,9 @@ public:
     }
 
     /**
-     * Retire la 1ère occurrence de a de l si a est présent dans l, sinon ne fait rien.
-     * L'élément trouvé v n'est pas effacé mais le maillon le contenant est effacé.
-     * La comparaison est faite sur les pointeurs v.
+     * Retire la 1ère occurrence de a de l si a est présent dans l, sinon ne
+     * fait rien. L'élément trouvé v n'est pas effacé mais le maillon le
+     * contenant est effacé. La comparaison est faite sur les pointeurs v.
      * @param a
      * @param l
      * @return
@@ -148,9 +161,8 @@ public:
     }
 
     /**
-     *  Efface tous les maillons de  la liste l mais qui n'efface pas les données *v.
-     *  En sortie l vaut NULL.
-     *  Ne fait rien si l vaut NULL à l'appel.
+     *  Efface tous les maillons de  la liste l mais qui n'efface pas les
+     * données *v. En sortie l vaut NULL. Ne fait rien si l vaut NULL à l'appel.
      * @param l
      */
     static void efface1(Pelement<T>*& l)
@@ -177,8 +189,8 @@ public:
             return;
         }
         efface2(l->s);
-        delete(l->v);
-        delete(l);
+        delete (l->v);
+        delete (l);
         l = nullptr;
     }
 
@@ -230,4 +242,4 @@ inline bool estPlusPetitOuEgal(const string* s1, const string* s2)
     return s1->compare(*s2) <= 0;
 }
 
-#endif //TPACL_PELEMENT_H
+#endif  // TPACL_PELEMENT_H
