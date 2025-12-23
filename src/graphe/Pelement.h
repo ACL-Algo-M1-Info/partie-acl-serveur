@@ -11,6 +11,7 @@
 #include <string>
 
 #include "../Exceptions/Erreur.h"
+#include "../Formes/FormeUtils.h"
 using namespace std;
 
 /**
@@ -64,7 +65,8 @@ class Pelement
 
     /**
      * Transforme la liste p en string.
-     * On suppose que l'opérateur << d'écriture sur un flux est défini pour la classe T.
+     * On suppose que l'opérateur << d'écriture sur un flux est défini pour la
+     * classe T.
      * @param p
      * @param debut
      * @param separateur
@@ -224,6 +226,70 @@ class Pelement
         T* newV = new T(*(l->v));
         return new Pelement<T>(copie2(l->s), newV);
     }
+
+    /**
+     * réalise une copie de la liste l en recopiant toutes les données *v à
+     * l'aide de la méthode  v->copie(). Réalise donc une copie ne partageant
+     * aucune  donnée  avec l. Et si la classe T possède la méthode virtuelle
+     * copie(), l peut être hétérogène et la méthode copie3 produit une copie de
+     * cette liste hétérogène.
+     * @param l
+     * @return
+     */
+    static Pelement<T>* copie3(Pelement<T>* l)
+    {
+        if (l == nullptr)
+        {
+            return nullptr;
+        }
+        T* newV = l->v->copie();
+        return new Pelement<T>(copie3(l->s), newV);
+    }
+
+    /**
+     * Recherche si a appartient à l.
+     * Renvoie un pointeur sur le maillon de l contenant a. Renvoie NULL si a
+     * n'appartient pas à l.
+     * @param a
+     * @param l
+     * @return
+     */
+    static Pelement<T>* appartient(const T* a, Pelement<T>* l)
+    {
+        if (l == nullptr)
+        {
+            return nullptr;
+        }
+        if (*a == *(l->v))
+        {
+            return l;
+        }
+        return appartient(a, l->s);
+    }
+
+    /**
+     * recherche dans l le premier élément vérifiant la condition condition.
+     * renvoie un pointeur sur le premier  maillon de l vérifiant la condition.
+     * Renvoie NULL si aucun maillon ne vérifie la conditon. condition est
+     * supposée avoir la signature : bool condition(const T * a)
+     * @tparam FONCTEUR
+     * @param l
+     * @param condition
+     * @return
+     */
+    template <class FONCTEUR>
+    static Pelement<T>* appartient(Pelement<T>* l, const FONCTEUR& condition)
+    {
+        if (l == nullptr)
+        {
+            return nullptr;
+        }
+        if (condition(l->v))
+        {
+            return l;
+        }
+        return appartient(l->s, condition);
+    }
 };
 
 template <class T>
@@ -235,6 +301,11 @@ ostream& operator<<(ostream& o, const Pelement<T>* p)
 inline bool estPlusPetitOuEgal(const double* a1, const double* a2)
 {
     return *a1 <= *a2;
+}
+
+inline bool estPlusPetitOuEgal(const Forme* f1, const Forme* f2)
+{
+    return *f1 <= *f2;
 }
 
 inline bool estPlusPetitOuEgal(const string* s1, const string* s2)

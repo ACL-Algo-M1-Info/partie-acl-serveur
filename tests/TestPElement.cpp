@@ -1,8 +1,9 @@
 //
 // Created by MEGACHEESEKEBAB on 22/12/2025.
 //
+#include "../src/Foncteurs/FoncteurUtils.h"
+#include "../src/Formes/FormeUtils.h"
 #include "../src/graphe/Pelement.h"
-
 int main()
 {
     {
@@ -250,6 +251,124 @@ int main()
         *(l2->v) = 777;
         cout << l1 << endl;
         cout << l2 << endl;
+        Pelement<double>::efface2(l1);
+        Pelement<double>::efface2(l2);
+    }
+
+    {
+        cout << "*********************************** TEST COPIE3 "
+                "**********************************"
+             << endl;
+
+        Cercle* c1 = new Cercle("Rouge", 45);
+        Cercle* c2 = new Cercle("Rose", 10);
+        Segment* s1 = new Segment("Vert", 2, 0);
+        Cercle* c3 = new Cercle("Bleu", 10);
+
+        Pelement<Forme>* listeForme = nullptr;
+        listeForme = new Pelement<Forme>(listeForme, c1);
+        listeForme = new Pelement<Forme>(listeForme, c2);
+        listeForme = new Pelement<Forme>(listeForme, s1);
+
+        Pelement<Forme>* listeCopie = Pelement<Forme>::copie3(listeForme);
+        cout << "Les listes apres copie" << endl;
+        cout << listeCopie << endl;
+        cout << listeForme << endl;
+
+        Pelement<Forme>::insertionOrdonnee(c3, listeCopie, estPlusPetitOuEgal);
+
+        cout << "Les listes apres ajout dans copie" << endl;
+        cout << listeCopie << endl;
+        cout << listeForme << endl;
+
+        Pelement<Forme>::efface2(listeForme);
+        Pelement<Forme>::efface2(listeCopie);
+
+        cout << listeCopie << endl;
+        cout << listeForme << endl;
+    }
+
+    {
+        cout << "*********************************** TEST APPARTIENT "
+                "**********************************"
+             << endl;
+
+        double* a = new double(2);
+        double* b = new double(5);
+        double* c = new double(7.5);
+        double* d = new double(9);
+        Pelement<double>* l1 = nullptr;
+        l1 = new Pelement<double>(l1, a);
+        l1 = new Pelement<double>(l1, b);
+        l1 = new Pelement<double>(l1, c);
+
+        Pelement<double>* res = Pelement<double>::appartient(a, l1);
+        cout << "est ce que l1 = " << l1 << " contient " << *a << " ?" << endl;
+        if (res != nullptr)
+        {
+            cout << "Trouve ! : " << *res->v << endl;
+            cout << "Maillon : " << res << endl;
+        }
+        else
+        {
+            cout << "Echec, ne contient pas : " << *a << endl;
+        }
+
+        res = Pelement<double>::appartient(d, l1);
+        cout << "est ce que l1 = " << l1 << " contient " << *d << " ?" << endl;
+        if (res != nullptr)
+        {
+            cout << "Trouve ! : " << *res->v << endl;
+            cout << "Maillon : " << res << endl;
+        }
+        else
+        {
+            cout << "Echec, ne contient pas : " << *d << endl;
+        }
+    }
+
+    {
+        cout << "*********************************** TEST APPARTIENT FONCTEUR"
+                "**********************************"
+             << endl;
+        Cercle* c1 = new Cercle("Rouge", 45);
+        Cercle* c2 = new Cercle("Rose", 10);
+        Segment* s1 = new Segment("Vert", 2, 0);
+        Cercle* c3 = new Cercle("Bleu", 10);
+
+        Pelement<Forme>* listeForme = nullptr;
+        listeForme = new Pelement<Forme>(listeForme, c1);
+        listeForme = new Pelement<Forme>(listeForme, c2);
+        listeForme = new Pelement<Forme>(listeForme, s1);
+
+        CritereCouleur critere_couleur("Vert");
+
+        Pelement<Forme>* res =
+            Pelement<Forme>::appartient(listeForme, critere_couleur);
+
+        cout << "Est ce que un des elements de listeForme = " << endl
+             << listeForme << " contient la couleur vert ?" << endl;
+        if (res != nullptr)
+        {
+            cout << "Trouve ! : " << *res->v << endl;
+        }
+        else
+        {
+            cout << "Echec, vert pas trouve " << endl;
+        }
+
+        CritereCouleur critere_couleurAbsente("Bleu");
+        res = Pelement<Forme>::appartient(listeForme, critere_couleurAbsente);
+        cout << "Est ce que un des elements de listeForme = " << endl
+             << listeForme << " contient la couleur bleu ?" << endl;
+        if (res != nullptr)
+        {
+            cout << "Trouve ! :" << *res->v << endl;
+        }
+        else
+        {
+            cout << "Echec, bleu pas trouve " << endl;
+        }
     }
 
     return 0;
