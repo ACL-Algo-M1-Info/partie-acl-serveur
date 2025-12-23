@@ -14,18 +14,10 @@ class Utils
 public:
 
     /**
-     * Calcul du maximum entre deux int
-     * @param a Valeur A
-     * @param b Valeur B
-     * @return Le maximum entre A et B
+     * Retrouve l'entier maximal dans l'array. L'array ne doit pas être vide
+     * @param n Taille de l'array > 0
+     * @param a Array
+     * @return L'entier max dans l'array
      */
-    static int imax(int a, int b);
-
-    /**
-     * Calcul du minimum entre deux int
-     * @param a Valeur A
-     * @param b Valeur B
-     * @return Le minimum entre A et B
-     */
-    static int imin(int a, int b);
+    static int maxArrayInt(int n, const int* a);
 };

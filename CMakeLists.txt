@@ -42,3 +42,11 @@ target_link_libraries(testServeur PRIVATE CORE)
 # Test camion CPP
 add_executable(testCamion ${TESTS}/testCamion.cpp)
 target_link_libraries(testCamion PRIVATE CORE)
+
+# Test etat CPP
+add_executable(testEtat ${TESTS}/testEtat.cpp)
+target_link_libraries(testEtat PRIVATE CORE)
+
+# Test instance CPP
+add_executable(testInstance ${TESTS}/testInstance.cpp)
+target_link_libraries(testInstance PRIVATE CORE)

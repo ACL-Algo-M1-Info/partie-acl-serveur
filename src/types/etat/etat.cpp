@@ -16,7 +16,9 @@ void Etat::ajouterTacheSurMachine(const int& k, const int& i, const int& quantit
     this->camions.at(k).ajouterTache(i, quantite);
 
     // Recalcul du cmax selon l'ajout fait précédemment
-    this->cmax = Utils::imax(this->camions.at(k).cmax + quantite, this->cmax);
+    //this->cmax = Utils::imax(this->camions.at(k).cmax, this->cmax);
+
+    this->cmax = max(this->camions.at(k).cmax, this->cmax);
 }
 
 void Etat::ajouterTacheSurMachineParInstance(const Instance& instance, const int& k, const int& i)
@@ -29,7 +31,12 @@ void Etat::ajouterTacheSurMachineParInstance(const Instance& instance, const int
 Etat:: operator string() const
 {
     ostringstream o;
-    o << "--ETAT--" << endl << "lmax: " << this->cmax << endl << "m : " << this->m << endl;
+    o << "--ETAT--" << endl << "cmax: " << this->cmax << endl << "m : " << this->m << endl;
+    o << "Camions de ETAT : " << endl;
+    for (int i = 0; i < this->camions.size(); i++)
+    {
+        o << this->camions.at(i);
+    }
     return o.str();
 }
 

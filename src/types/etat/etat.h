@@ -41,7 +41,7 @@ public:
     * @param m le nombre de machines
     * @return un nouvel état
     */
-    Etat(const int& m): m(m), cmax(0) {}
+    Etat(const int& m): m(m), cmax(0), camions(vector<Camion>(m)) {}
 
     /**
     * Supprime un état.

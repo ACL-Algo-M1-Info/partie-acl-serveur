@@ -8,12 +8,14 @@
 
 // FONCTIONS
 
-int Utils::imax(int a, int b)
+int Utils::maxArrayInt(int n, const int* a)
 {
-    return a > b ? a : b;
-}
+    int res = a[0];
+    for (int i = 1; i < n; i++)
+    {
+        if (a[i] > res)
+            res = a[i];
+    }
 
-int Utils::imin(int a, int b)
-{
-    return a < b ? a : b;
+    return res;
 }

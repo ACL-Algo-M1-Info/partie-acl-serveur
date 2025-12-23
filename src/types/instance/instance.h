@@ -24,10 +24,13 @@ public:
 
     // VARIABLES
 
+    /** Nombre de tâches */
     int n;
 
+    /** Nombre de machines */
     int m;
 
+    /** Tableau de quantités des tâches */
     int* quantites;
 
     // CONSTRUCTEUR / DESTRUCTEUR
@@ -39,12 +42,12 @@ public:
      * @param m le nombre de mâchines
      * @param quantites la durée opératoire des tâches
      */
-    Instance(const int& n, const  int& m, int* quantites): n(n), m(m), quantites(quantites) {}
+    Instance(const int& n, const  int& m, int* quantites);
 
     /**
      * Supprime une instance.
      */
-    ~Instance();
+    ~Instance() {}
 
     /**
      * Clone une instance
@@ -55,12 +58,13 @@ public:
 
     // FONCTIONS
 
+    int obtenirPmax() const;
 
     // SURCHARGES
 
     explicit operator string() const;
 
-    bool operator==(const Instance& i) const;
+    bool operator==(const Instance& instance) const;
 
 };
 
