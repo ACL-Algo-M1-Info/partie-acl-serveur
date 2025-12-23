@@ -50,3 +50,7 @@ target_link_libraries(testEtat PRIVATE CORE)
 # Test instance CPP
 add_executable(testInstance ${TESTS}/testInstance.cpp)
 target_link_libraries(testInstance PRIVATE CORE)
+
+# Test Liste template (PElement)
+add_executable(testPElement ${TESTS}/TestPElement.cpp)
+target_link_libraries(testPElement PRIVATE CORE)
