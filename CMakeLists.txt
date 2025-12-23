@@ -38,3 +38,7 @@ target_link_libraries(main PRIVATE CORE)
 # Test serveur CPP
 add_executable(testServeur ${TESTS}/testServeur.cpp)
 target_link_libraries(testServeur PRIVATE CORE)
+
+# Test Liste template (PElement)
+add_executable(testPElement ${TESTS}/TestPElement.cpp)
+target_link_libraries(testPElement PRIVATE CORE)
