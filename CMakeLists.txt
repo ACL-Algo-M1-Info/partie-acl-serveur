@@ -38,3 +38,7 @@ target_link_libraries(main PRIVATE CORE)
 # Test serveur CPP
 add_executable(testServeur ${TESTS}/testServeur.cpp)
 target_link_libraries(testServeur PRIVATE CORE)
+
+# Test camion CPP
+add_executable(testCamion ${TESTS}/testCamion.cpp)
+target_link_libraries(testCamion PRIVATE CORE)

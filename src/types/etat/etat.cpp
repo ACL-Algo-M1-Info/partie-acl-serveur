@@ -6,6 +6,8 @@
 
 #include "etat.h"
 
+#include "utils/utils.h"
+
 // FONCTIONS
 
 void Etat::ajouterTacheSurMachine(const int& k, const int& i, const int& quantite)
@@ -14,8 +16,7 @@ void Etat::ajouterTacheSurMachine(const int& k, const int& i, const int& quantit
     this->camions.at(k).ajouterTache(i, quantite);
 
     // Recalcul du cmax selon l'ajout fait précédemment
-    //TODO
-    // A REECRIRE
+    this->cmax = Utils::imax(this->camions.at(k).cmax + quantite, this->cmax);
 }
 
 void Etat::ajouterTacheSurMachineParInstance(const Instance& instance, const int& k, const int& i)
@@ -28,15 +29,13 @@ void Etat::ajouterTacheSurMachineParInstance(const Instance& instance, const int
 Etat:: operator string() const
 {
     ostringstream o;
-    o << "--ETAT--" << endl << "lmax: " << this->cmax << endl << "m : " << this->m << endl << "camions: " << this->camions;
+    o << "--ETAT--" << endl << "lmax: " << this->cmax << endl << "m : " << this->m << endl;
     return o.str();
 }
 
 bool Etat::operator==(const Etat& source) const
 {
-    // Egalite des lmax
-    //TODO
-    // A ENLEVER ?
+    // Egalite des cmax
     if (this->cmax != source.cmax)
         return false;
 
@@ -45,9 +44,6 @@ bool Etat::operator==(const Etat& source) const
         return false;
 
     // Egalite des camions
-    if (m != source.m)
-        return false;
-
     if (this->camions != source.camions)
         return false;
 

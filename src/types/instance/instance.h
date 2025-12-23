@@ -10,6 +10,11 @@
 
 // INCLUSIONS
 
+#include <sstream>
+
+// USINGS
+
+using namespace std;
 
 // CLASSES
 
@@ -59,7 +64,7 @@ public:
 
 };
 
-inline ostream& operator<<(ostream& os, const Camion& camion)
+inline ostream& operator<<(ostream& os, const Instance& instance)
 {
-    return (os << (string)camion);
+    return (os << (string)instance);
 }

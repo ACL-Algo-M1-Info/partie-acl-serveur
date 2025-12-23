@@ -17,6 +17,8 @@ using namespace std;
 
 // CLASSES
 
+class Instance;
+
 class Camion
 {
 public:
@@ -52,7 +54,6 @@ public:
 
     /**
      * Ajoute une tâche à l'ordonnancement en fin de position.
-     * @param ordonnancement L'ordonnancement à manipuler
      * @param i Indice de la tâche à ajouter
      * @param quantite Durée opératoire de la tâche à ajouter
      */
@@ -60,8 +61,7 @@ public:
 
     /**
      * Ajoute une tâche à l'ordonnancement en fin de position.
-     * @param ordonnancement L'ordonnancement à manipuler
-     * @param i Tâche à rajouter dans l'ordonnancement
+     * @param i Tâche à rajouter dans le camion
      * @param instance Instance depuis laquelle piocher les informations
      */
     void ajouterTacheParInstance(const int& i, const Instance& instance);

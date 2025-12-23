@@ -4,10 +4,10 @@
 
 // INCLUSIONS
 
-#include <ostream>
-
 #include "camion.h"
 
+#include <ostream>
+#include <sstream>
 
 // FONCTIONS
 
@@ -30,7 +30,7 @@ void Camion::ajouterTacheParInstance(const int& i, const Instance& instance)
 Camion::operator string() const
 {
     ostringstream o;
-    o << "--Camion--" << endl << "cmax = " << this->cmax << endl << "tâches : " << this->tabId << endl;
+    o << "--Camion--" << endl << "cmax = " << this->cmax << endl;
     return o.str();
 }
 
