@@ -3,6 +3,7 @@
 //
 #include "../src/graphe/AElement.h"
 #include "graphe/GElement.h"
+#include "graphe/Sommet.h"
 int main()
 {
     {
@@ -36,6 +37,23 @@ int main()
         cout << *gElementInt << endl;
 
         delete gElementInt;
+    }
+    {
+        cout << "*********************************** TEST Sommet "
+                "**********************************"
+             << endl;
+        Sommet<int> sommetInt(1, 2);
+        cout << (string)sommetInt << endl;
+        cout << sommetInt << endl;
+
+        Sommet<string> sommetString(4, "Busan");
+        cout << (string)sommetString << endl;
+        cout << sommetString << endl;
+
+        Sommet<double>* sommetDouble = new Sommet<double>(1, 45.9);
+        cout << (string)*sommetDouble << endl;
+        cout << *sommetDouble << endl;
+        delete sommetDouble;
     }
     return 0;
 }
