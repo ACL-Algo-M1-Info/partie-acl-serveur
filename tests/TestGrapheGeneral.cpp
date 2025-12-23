@@ -1,9 +1,12 @@
 //
 // Created by MEGACHEESEKEBAB on 23/12/2025.
 //
+#include <assert.h>
+
 #include "../src/graphe/AElement.h"
 #include "graphe/Arete.h"
 #include "graphe/GElement.h"
+#include "graphe/Graphe.h"
 #include "graphe/Sommet.h"
 int main()
 {
@@ -120,6 +123,40 @@ int main()
         delete s1;
         delete s2;
         delete s3;
+    }
+    {
+        cout << "*********************************** TEST GRAPHE "
+                "**********************************"
+             << endl;
+        Graphe<char, string> g1;
+        Graphe<char, string> g2;
+
+        Sommet<string>*s0, *s1, *s2, *s3;
+        s0 = g1.creeSommet("king's Landing");
+        s1 = g1.creeSommet("Winterfall");
+        s2 = g1.creeSommet("DragonStone");
+        s3 = g1.creeSommet("The wall");
+
+        cout << (string)g1 << endl;
+        cout << g1 << endl;
+
+        //----------------- on connecte certains sommets -------------------
+
+        Arete<char, string>*a0, *a1, *a2, *a3;
+        a0 = g1.creeArete('a', s1, s0);
+        a1 = g1.creeArete('b', s2, s1);
+        a2 = g1.creeArete('c', s3, s2);
+        a3 = g1.creeArete('d', s3, s1);
+
+        //------------------ faire le dessin du graphe sur papier en notant les
+        // noms et les degrés pour comprendre la suite ----------------
+
+        cout << "Le graphe cree g1 est " << endl << g1 << endl;
+        cout << "le nombre de sommets de g1 est : " << g1.nombreSommets()
+             << endl;
+        cout << "le nombre d'aretes de g1 est : " << g1.nombreAretes() << endl;
+
+        assert(g1.nombreSommets() == 4 && g1.nombreAretes() == 4);
     }
 
     return 0;
