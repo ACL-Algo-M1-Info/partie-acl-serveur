@@ -11,3 +11,8 @@ IndentWidth: 4
 
 # Force à coller l'étoile des pointeurs à gauche.
 PointerAlignment: Left
+
+ColumnLimit: 150
+
+
+
