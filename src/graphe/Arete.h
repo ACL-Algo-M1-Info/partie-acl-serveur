@@ -37,8 +37,7 @@ class Arete : public GElement<S>
      * @param debut
      * @param fin
      */
-    Arete(const int clef, const S &v, Sommet<T> *debut, Sommet<T> *fin)
-        : GElement<S>(clef, v), debut(debut), fin(fin)
+    Arete(const int clef, const S &v, Sommet<T> *debut, Sommet<T> *fin) : GElement<S>(clef, v), debut(debut), fin(fin)
     {
         if (debut != nullptr)
         {
@@ -69,14 +68,10 @@ class Arete : public GElement<S>
     operator string() const
     {
         ostringstream o;
-        o << "Arete [ " << static_cast<GElement<S>>(*this)
-          << " Debut : " << debut->clef << " Fin : " << fin->clef << " ]";
+        o << "Arete [ " << static_cast<GElement<S>>(*this) << " Debut : " << debut->clef << " Fin : " << fin->clef << " ]";
         return o.str();
     }
-    friend ostream &operator<<(ostream &o, const Arete &arete)
-    {
-        return o << (string)arete;
-    }
+    friend ostream &operator<<(ostream &o, const Arete &arete) { return o << (string)arete; }
     /**
      *
      * vérifie si *this s'appuie sur s1 et s2
@@ -92,8 +87,7 @@ class Arete : public GElement<S>
      */
     bool estEgal(const Sommet<T> *s1, const Sommet<T> *s2) const
     {
-        return (this->debut == s1 && this->fin == s2) ||
-               (this->debut == s2 && this->fin == s1);
+        return (this->debut == s1 && this->fin == s2) || (this->debut == s2 && this->fin == s1);
     }
 };
 

@@ -26,15 +26,11 @@ class Sommet : public GElement<T>
     operator string() const
     {
         ostringstream o;
-        o << "Sommet [ " << static_cast<GElement<T>>(*this)
-          << ", degre = " << degre << " ]";
+        o << "Sommet [ " << static_cast<GElement<T>>(*this) << ", degre = " << degre << " ]";
         return o.str();
     }
 
-    friend ostream& operator<<(ostream& o, const Sommet& sommet)
-    {
-        return o << (string)sommet;
-    }
+    friend ostream& operator<<(ostream& o, const Sommet& sommet) { return o << (string)sommet; }
 };
 
 #endif  // SERVEURCPP_SOMMET_H

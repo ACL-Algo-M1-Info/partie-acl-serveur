@@ -70,14 +70,17 @@ class Graphe
             Sommet<T>* nouvelleFin = nullptr;
 
             CritereSommetAvecPaire<T> critereDebut(ancienneArete->debut);
+            // appartient par à la recherche de la paire qui contient le sommet recherche (le debut de l'ancienne arète)
             Pelement<pair<Sommet<T>*, Sommet<T>*>>* resultatDebut =
                 Pelement<pair<Sommet<T>*, Sommet<T>*>>::appartient(dicoAncienNouveau, critereDebut);
             if (resultatDebut != nullptr)
             {
+                // si il l'a trouvé, on récupère sa correspondance (le nouveau sommet, c'est à dire le nouveau début de la nouvelle arète)
                 nouveauDebut = resultatDebut->v->second;
             }
 
             CritereSommetAvecPaire<T> critereFin(ancienneArete->fin);
+            // et symétriquement..
             Pelement<pair<Sommet<T>*, Sommet<T>*>>* resultatFin = Pelement<pair<Sommet<T>*, Sommet<T>*>>::appartient(dicoAncienNouveau, critereFin);
 
             if (resultatFin != nullptr)

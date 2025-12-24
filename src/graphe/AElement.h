@@ -26,10 +26,7 @@ class AElement
         return o.str();
     }
 
-    friend ostream& operator<<(ostream& o, const AElement& a_element)
-    {
-        return o << (string)a_element;
-    }
+    friend ostream& operator<<(ostream& o, const AElement& a_element) { return o << (string)a_element; }
 };
 
 #endif  // SERVEURCPP_AELEMENT_H

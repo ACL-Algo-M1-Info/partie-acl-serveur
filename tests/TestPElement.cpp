@@ -213,8 +213,7 @@ int main()
         cout << l1 << endl;
         cout << l2 << endl;
 
-        Pelement<double>::insertionOrdonnee(new double(45), l2,
-                                            estPlusPetitOuEgal);
+        Pelement<double>::insertionOrdonnee(new double(45), l2, estPlusPetitOuEgal);
         cout << l1 << endl;
         cout << l2 << endl;
 
@@ -243,8 +242,7 @@ int main()
         cout << l1 << endl;
         cout << l2 << endl;
 
-        Pelement<double>::insertionOrdonnee(new double(45), l2,
-                                            estPlusPetitOuEgal);
+        Pelement<double>::insertionOrdonnee(new double(45), l2, estPlusPetitOuEgal);
         cout << l1 << endl;
         cout << l2 << endl;
 
@@ -343,11 +341,9 @@ int main()
 
         CritereCouleur critere_couleur("Vert");
 
-        Pelement<Forme>* res =
-            Pelement<Forme>::appartient(listeForme, critere_couleur);
+        Pelement<Forme>* res = Pelement<Forme>::appartient(listeForme, critere_couleur);
 
-        cout << "Est ce que un des elements de listeForme = " << endl
-             << listeForme << " contient la couleur vert ?" << endl;
+        cout << "Est ce que un des elements de listeForme = " << endl << listeForme << " contient la couleur vert ?" << endl;
         if (res != nullptr)
         {
             cout << "Trouve ! : " << *res->v << endl;
@@ -359,8 +355,7 @@ int main()
 
         CritereCouleur critere_couleurAbsente("Bleu");
         res = Pelement<Forme>::appartient(listeForme, critere_couleurAbsente);
-        cout << "Est ce que un des elements de listeForme = " << endl
-             << listeForme << " contient la couleur bleu ?" << endl;
+        cout << "Est ce que un des elements de listeForme = " << endl << listeForme << " contient la couleur bleu ?" << endl;
         if (res != nullptr)
         {
             cout << "Trouve ! :" << *res->v << endl;

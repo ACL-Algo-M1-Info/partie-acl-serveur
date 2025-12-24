@@ -29,10 +29,7 @@ class GElement : public AElement
         return o.str();
     }
 
-    friend ostream& operator<<(ostream& o, const GElement& gElement)
-    {
-        return o << (string)gElement;
-    }
+    friend ostream& operator<<(ostream& o, const GElement& gElement) { return o << (string)gElement; }
 };
 
 #endif  // SERVEURCPP_GELEMENT_H
