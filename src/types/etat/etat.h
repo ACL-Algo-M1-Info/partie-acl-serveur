@@ -1,0 +1,91 @@
+//
+// Created by maxen on 21/12/2025.
+//
+
+#pragma once
+
+// INCLUSIONS
+
+#include <iosfwd>
+#include <ostream>
+#include <vector>
+
+#include "../instance/instance.h"
+#include "../camion/camion.h"
+
+// USINGS
+
+using namespace std;
+
+
+// CLASSES
+
+class Etat
+{
+public:
+
+    // VARIABLES
+
+    /** Nombre de machines */
+    int m;
+    /** Durée opératoire + durée de latence max de l'état */
+    int cmax;
+    /** Tableau de camions */
+    vector<Camion> camions;
+
+    // CONSTRUCTEUR / DESTRUCTEUR
+
+    /**
+    * Créer un nouvel état avec m machines
+    *
+    * @param m le nombre de machines
+    * @return un nouvel état
+    */
+    Etat(const int& m): m(m), cmax(0), camions(vector<Camion>(m)) {}
+
+    /**
+    * Supprime un état.
+    *
+    */
+    ~Etat() {}
+
+    /**
+     * Créer un nouvel état selon un état existant
+     *
+     * @param source  l'état depuis lequel on clone
+     * @return un nouvel état
+     */
+    Etat(const Etat& source): m(source.m), cmax(source.cmax), camions(source.camions) {};
+
+    // FONCTIONS
+
+    /**
+     * Ajoute une tâche sur une machine.
+     *
+     * @param k la machine sur laquelle on ajoute la tâche
+     * @param i l'id de la tâche que l'on ajoute
+     * @param quantite la durée opératoire de la tâche i
+     */
+    void ajouterTacheSurMachine(const int& k, const int& i, const int& quantite);
+
+    /**
+     * Ajoute une tâche sur une machine depuis une instance.
+     *
+     * @param k la machine sur laquelle on ajoute la tâche
+     * @param i l'id de la tâche que l'on ajoute
+     * @param instance l'instance qui possède la tâche i
+     */
+    void ajouterTacheSurMachineParInstance(const Instance& instance, const int& k, const int& i);
+
+    // SURCHARGES
+
+    explicit operator string() const;
+
+    bool operator==(const Etat& e) const;
+};
+
+inline ostream& operator<<(ostream & os, const Etat& etat)
+{
+    return(os << (string)etat);
+}
+

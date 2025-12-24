@@ -13,6 +13,14 @@ set(SRC src)
 # Tests
 set(TESTS tests)
 
+### LIBRAIRIES EXTERNES ###
+
+# Threads
+find_package(Threads REQUIRED)
+
+# Liste des librairies externes à lier
+set(EXT_LIB ws2_32 Threads::Threads)
+
 ### IMPORTS AUTOMATIQUES ###
 
 # Fait une liste avec tous les .c et .h du projet.
@@ -31,17 +39,29 @@ target_include_directories(CORE PUBLIC ${SRC})
 
 ## Executable Exo 5
 add_executable(main ${SRC}/main.cpp)
-target_link_libraries(main PRIVATE CORE)
+target_link_libraries(main PRIVATE ${EXT_LIB} CORE)
 
 ## Tests
 
 # Test serveur CPP
 add_executable(testServeur ${TESTS}/testServeur.cpp)
-target_link_libraries(testServeur PRIVATE CORE)
+target_link_libraries(testServeur PRIVATE ${EXT_LIB} CORE)
+
+# Test camion CPP
+add_executable(testCamion ${TESTS}/testCamion.cpp)
+target_link_libraries(testCamion PRIVATE ${EXT_LIB} CORE)
+
+# Test etat CPP
+add_executable(testEtat ${TESTS}/testEtat.cpp)
+target_link_libraries(testEtat PRIVATE ${EXT_LIB} CORE)
+
+# Test instance CPP
+add_executable(testInstance ${TESTS}/testInstance.cpp)
+target_link_libraries(testInstance PRIVATE ${EXT_LIB} CORE)
 
 # Test Liste template (PElement)
 add_executable(testPElement ${TESTS}/TestPElement.cpp)
-target_link_libraries(testPElement PRIVATE CORE)
+target_link_libraries(testPElement PRIVATE ${EXT_LIB} CORE)
 
 # Test graphe
 add_executable(testGrapheGeneral ${TESTS}/TestGrapheGeneral.cpp)
