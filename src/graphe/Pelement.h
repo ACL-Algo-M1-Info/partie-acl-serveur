@@ -73,9 +73,7 @@ class Pelement
      * @param fin
      * @return
      */
-    static const string toString(const Pelement<T>* p, const char* debut = "( ",
-                                 const char* separateur = ", ",
-                                 const char* fin = " )")
+    static const string toString(const Pelement<T>* p, const char* debut = "( ", const char* separateur = ", ", const char* fin = " )")
     {
         ostringstream o;
         const Pelement<T>* it = p;
@@ -103,9 +101,7 @@ class Pelement
      * @param l
      * @param estPlusPetitOuEgal
      */
-    static void insertionOrdonnee(T* a, Pelement<T>*& l,
-                                  bool (*estPlusPetitOuEgal)(const T* a1,
-                                                             const T* a2))
+    static void insertionOrdonnee(T* a, Pelement<T>*& l, bool (*estPlusPetitOuEgal)(const T* a1, const T* a2))
     {
         if (l == nullptr || estPlusPetitOuEgal(a, l->v))
         {
@@ -298,19 +294,10 @@ ostream& operator<<(ostream& o, const Pelement<T>* p)
     return o << Pelement<T>::toString(p);
 }
 
-inline bool estPlusPetitOuEgal(const double* a1, const double* a2)
-{
-    return *a1 <= *a2;
-}
+inline bool estPlusPetitOuEgal(const double* a1, const double* a2) { return *a1 <= *a2; }
 
-inline bool estPlusPetitOuEgal(const Forme* f1, const Forme* f2)
-{
-    return *f1 <= *f2;
-}
+inline bool estPlusPetitOuEgal(const Forme* f1, const Forme* f2) { return *f1 <= *f2; }
 
-inline bool estPlusPetitOuEgal(const string* s1, const string* s2)
-{
-    return s1->compare(*s2) <= 0;
-}
+inline bool estPlusPetitOuEgal(const string* s1, const string* s2) { return s1->compare(*s2) <= 0; }
 
 #endif  // TPACL_PELEMENT_H

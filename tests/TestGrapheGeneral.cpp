@@ -66,8 +66,7 @@ int main()
         Sommet<double>* s1 = new Sommet<double>(5, 3.1);
         Sommet<double>* s2 = new Sommet<double>(10, 3.6);
         Sommet<double>* s3 = new Sommet<double>(15, .1);
-        Arete<string, double>* a1 =
-            new Arete<string, double>(1, "Paris", s1, s2);
+        Arete<string, double>* a1 = new Arete<string, double>(1, "Paris", s1, s2);
         cout << (string)*a1 << endl;
         cout << *a1 << endl;
         cout << *s1 << endl;
@@ -85,8 +84,7 @@ int main()
         cout << "a1 relie t-il s2 et s1 ?" << endl;
         if (a1->estEgal(s2, s1))
         {
-            cout << "Oui ! " << *a1 << " est bien egal a :" << endl
-                 << *s1 << " relie a " << *s2 << endl;
+            cout << "Oui ! " << *a1 << " est bien egal a :" << endl << *s1 << " relie a " << *s2 << endl;
         }
         else
         {
@@ -96,8 +94,7 @@ int main()
         cout << "a1 relie t-il s2 et s3 ?" << endl;
         if (a1->estEgal(s2, s3))
         {
-            cout << "Oui ! " << *a1 << " est bien egal a :" << endl
-                 << *s2 << " relie a " << *s3 << endl;
+            cout << "Oui ! " << *a1 << " est bien egal a :" << endl << *s2 << " relie a " << *s3 << endl;
         }
         else
         {
@@ -107,8 +104,7 @@ int main()
         cout << "a2 relie t-il s2 et s3 ?" << endl;
         if (a2.estEgal(s1, s3))
         {
-            cout << "Oui ! " << a2 << " est bien egal a :" << endl
-                 << *s1 << " relie a " << *s2 << endl;
+            cout << "Oui ! " << a2 << " est bien egal a :" << endl << *s1 << " relie a " << *s2 << endl;
         }
         else
         {
@@ -124,12 +120,15 @@ int main()
         delete s2;
         delete s3;
     }
+
+    Graphe<char, string> g2;  // pour vérifier que
+    // l'opérateur = et que le
+    // destructeur fonctionnent bien
     {
         cout << "*********************************** TEST GRAPHE "
                 "**********************************"
              << endl;
         Graphe<char, string> g1;
-        Graphe<char, string> g2;
 
         Sommet<string>*s0, *s1, *s2, *s3;
         s0 = g1.creeSommet("king's Landing");
@@ -152,12 +151,62 @@ int main()
         // noms et les degrés pour comprendre la suite ----------------
 
         cout << "Le graphe cree g1 est " << endl << g1 << endl;
-        cout << "le nombre de sommets de g1 est : " << g1.nombreSommets()
-             << endl;
+        cout << "le nombre de sommets de g1 est : " << g1.nombreSommets() << endl;
         cout << "le nombre d'aretes de g1 est : " << g1.nombreAretes() << endl;
 
         assert(g1.nombreSommets() == 4 && g1.nombreAretes() == 4);
+
+        cout << "*********************************** TEST GRAPHE VOISINS ET "
+                "ARETES "
+                "ADJACENTES "
+                "**********************************"
+             << endl;
+
+        Pelement<Sommet<string>>* l0 = g1.voisins(s0);
+        cout << "La liste des voisins de s0 est : " << endl << l0 << endl;
+        Pelement<Arete<char, string>>* adj0 = g1.aretesAdjacentes(s0);
+
+        cout << "La liste des aretes adjacentes a s0 est : " << endl << adj0 << endl;
+
+        Pelement<Sommet<string>>* l1 = g1.voisins(s1);
+        cout << "La liste des voisins de s1 est : " << endl << l1 << endl;
+        Pelement<Arete<char, string>>* adj1 = g1.aretesAdjacentes(s1);
+
+        cout << "La liste des aretes adjacentes a s1 est : " << endl << adj1 << endl;
+
+        Pelement<Sommet<string>>* l2 = g1.voisins(s2);
+        cout << "La liste des voisins de s2 est : " << endl << l2 << endl;
+        Pelement<Arete<char, string>>* adj2 = g1.aretesAdjacentes(s2);
+
+        cout << "La liste des aretes adjacentes a s2 est : " << endl << adj2 << endl;
+
+        Pelement<Sommet<string>>* l3 = g1.voisins(s3);
+        cout << "La liste des voisins de s3 est : " << endl << l3 << endl;
+        Pelement<Arete<char, string>>* adj3 = g1.aretesAdjacentes(s3);
+
+        cout << "La liste des aretes adjacentes a s3 est : " << endl << adj3 << endl;
+
+        cout << "*********************************** TEST GRAPHE "
+                "getAreteParSommet "
+                "**********************************"
+             << endl;
+        Arete<char, string>* a = g1.getAreteParSommets(s1, s3);
+        cout << "l'arete joignant s1 et s3 est : " << endl << *a << endl;
+
+        // Graphe<char, string> g2;
+        g2 = g1;
     }
+    // à la fin de ce bloc, le destructeur est appelé
+    //  pour g1.
+    // cela permet de vérifier que l'op = a fait une
+    // vraie copie de g1
+
+    cout << "*********************************** TEST GRAPHE "
+               "COPIE ET DESTRUCTEUR"
+               "**********************************"
+            << endl;
+    cout << "le graphe cree g2 comme copie de g1 est :" << endl << g2 << endl;
+
 
     return 0;
 }
