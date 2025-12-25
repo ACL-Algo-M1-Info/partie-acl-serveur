@@ -202,11 +202,10 @@ int main()
     // vraie copie de g1
 
     cout << "*********************************** TEST GRAPHE "
-               "COPIE ET DESTRUCTEUR"
-               "**********************************"
-            << endl;
+            "COPIE ET DESTRUCTEUR"
+            "**********************************"
+         << endl;
     cout << "le graphe cree g2 comme copie de g1 est :" << endl << g2 << endl;
-
 
     return 0;
 }
