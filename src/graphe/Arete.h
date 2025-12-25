@@ -28,10 +28,9 @@ class Arete : public GElement<S>
     Sommet<T> *fin;
 
     /**
-     * Un destructeur est nécessaire puisque la destruction d'une arête entraîne
-     * une modification du degré des sommets que cette arête connectait.
-     * Il modifie par contre ces deux mêmes arguments puisqu'il augmente leurs
-     * degrés respectifs !
+     * Met à jour le degré des sommets que cette nouvelle arête va connecter
+     * L'unique constructeur de Arete<S,T> ne fait pas de copie des arguments debut et fin.
+     * Il modifie par contre ces deux mêmes arguments puisqu'il augmente leurs degrés respectifs
      * @param clef
      * @param v
      * @param debut

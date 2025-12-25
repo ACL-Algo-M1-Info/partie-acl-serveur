@@ -78,12 +78,14 @@ class Pelement
         ostringstream o;
         const Pelement<T>* it = p;
         o << debut;
+        // o << endl;
         while (it != nullptr)
         {
             o << *it->v;
             if (it->s != nullptr)
             {
                 o << separateur;
+                o << endl;
             }
             it = it->s;
         }

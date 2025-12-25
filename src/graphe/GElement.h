@@ -25,7 +25,8 @@ class GElement : public AElement
     operator string() const
     {
         ostringstream o;
-        o << "GElement [ clef = " << clef << ", v = " << v << " ]";
+        // o << "GElement [ clef = " << clef << ", v = " << v << " ]";
+        o << " clef = " << clef << ", v = " << v;
         return o.str();
     }
 

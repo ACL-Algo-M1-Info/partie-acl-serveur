@@ -141,7 +141,7 @@ class Graphe
 
     ~Graphe()
     {
-        cout << "j'ai ete appele  ouille ouille !!" << endl;
+        cout << "Destructeur graphe a ete appele ouille ouille !" << endl;
         vider();
     }
 
