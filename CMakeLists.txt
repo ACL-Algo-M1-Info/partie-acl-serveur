@@ -66,3 +66,9 @@ target_link_libraries(testPElement PRIVATE ${EXT_LIB} CORE)
 # Test graphe
 add_executable(testGrapheGeneral ${TESTS}/TestGrapheGeneral.cpp)
 target_link_libraries(testGrapheGeneral PRIVATE CORE)
+
+# Test coordonnee
+add_executable(testCoordonnee tests/TestCoordonnee.cpp)
+target_link_libraries(testCoordonnee PRIVATE CORE)
+add_executable(testChargeurJson tests/TestChargeur.cpp)
+target_link_libraries(testChargeurJson PRIVATE CORE)
