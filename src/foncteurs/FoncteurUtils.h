@@ -4,6 +4,8 @@
 
 #ifndef SERVEURCPP_FONCTEURUTILS_H
 #define SERVEURCPP_FONCTEURUTILS_H
+#include <cmath>
+
 #include "../Formes/FormeUtils.h"
 #include "graphe/Arete.h"
 #include "graphe/Sommet.h"
@@ -37,6 +39,18 @@ class CritereSommetAvecPaire
     CritereSommetAvecPaire(const Sommet<T>* ancienSommetCherche) : ancienSommetCherche(ancienSommetCherche) {}
 
     bool operator()(pair<Sommet<T>*, Sommet<T>*>* paire) const { return paire->first == ancienSommetCherche; }
+};
+
+class DistanceEuclidienne
+{
+   public:
+    template <class T>
+    double operator()(const T& a, const T& b) const
+    {
+        double s = a.latitude - b.latitude;
+        double r = a.longitude - b.longitude;
+        return sqrt(s * s + r * r);
+    }
 };
 
 #endif  // SERVEURCPP_FONCTEURUTILS_H

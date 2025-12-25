@@ -4,9 +4,9 @@
 
 #ifndef SERVEURCPP_COORDONNEE_H
 #define SERVEURCPP_COORDONNEE_H
+#include <iostream>
 #include <sstream>
 #include <string>
-#include <iostream>
 using namespace std;
 
 template <class X, class Y>
@@ -24,8 +24,14 @@ class Coordonnee
     operator string() const
     {
         ostringstream o;
-        o << "Coordonnee [ ville = " << ville << ", latitude = " << latitude << ", longitude = " << longitude  << " ]";
+        o << "Coordonnee [ ville = " << ville << ", latitude = " << latitude << ", longitude = " << longitude << " ]";
         return o.str();
+    }
+
+    template <class FORMULE>
+    double distance(const Coordonnee& autre, const FORMULE & formule) const
+    {
+        return formule(*this, autre);
     }
 };
 
