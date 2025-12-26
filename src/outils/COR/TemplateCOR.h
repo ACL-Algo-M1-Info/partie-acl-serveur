@@ -21,10 +21,7 @@ class TemplateCOR : public InterfTemplateCOR<E, S>
      * Constructeur de la COR
      * @param maillonSuivant : pointeur vers le prochain maillon de la chaine
      */
-    explicit TemplateCOR(const TemplateCOR* maillonSuivant)
-    {
-        suivant = maillonSuivant;
-    }
+    explicit TemplateCOR(const TemplateCOR* maillonSuivant) : suivant(maillonSuivant){}
 
     /**
      * Implémentation de la méthode traitement de l'interface
