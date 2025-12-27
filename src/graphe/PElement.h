@@ -22,13 +22,13 @@ using namespace std;
  * @tparam T
  */
 template <class T>
-class Pelement
+class PElement
 {
    public:
-    Pelement<T>* s;
+    PElement<T>* s;
     T* v;
 
-    Pelement(Pelement<T>* s, T* v) : s(s), v(v) {}
+    PElement(PElement<T>* s, T* v) : s(s), v(v) {}
 
     operator string() const
     {
@@ -37,10 +37,10 @@ class Pelement
         return o.str();
     }
 
-    static int taille(const Pelement<T>* l)
+    static int taille(const PElement<T>* l)
     {
         int taille = 0;
-        const Pelement<T>* it = l;
+        const PElement<T>* it = l;
         while (it != nullptr)
         {
             taille++;
@@ -54,7 +54,7 @@ class Pelement
      * @param l
      * @return la taille de la liste l
      */
-    static int tailleR(const Pelement<T>* l)
+    static int tailleR(const PElement<T>* l)
     {
         if (l == nullptr)
         {
@@ -73,10 +73,10 @@ class Pelement
      * @param fin
      * @return
      */
-    static const string toString(const Pelement<T>* p, const char* debut = "( ", const char* separateur = ", ", const char* fin = " )")
+    static const string toString(const PElement<T>* p, const char* debut = "( ", const char* separateur = ", ", const char* fin = " )")
     {
         ostringstream o;
-        const Pelement<T>* it = p;
+        const PElement<T>* it = p;
         o << debut;
         // o << endl;
         while (it != nullptr)
@@ -103,11 +103,11 @@ class Pelement
      * @param l
      * @param estPlusPetitOuEgal
      */
-    static void insertionOrdonnee(T* a, Pelement<T>*& l, bool (*estPlusPetitOuEgal)(const T* a1, const T* a2))
+    static void insertionOrdonnee(T* a, PElement<T>*& l, bool (*estPlusPetitOuEgal)(const T* a1, const T* a2))
     {
         if (l == nullptr || estPlusPetitOuEgal(a, l->v))
         {
-            l = new Pelement<T>(l, a);
+            l = new PElement<T>(l, a);
         }
         else
         {
@@ -123,14 +123,14 @@ class Pelement
      * @param l
      * @return
      */
-    static T* depiler(Pelement<T>*& l)
+    static T* depiler(PElement<T>*& l)
     {
         if (l == nullptr)
         {
             throw Erreur("La liste est vide");
         }
         T* res = l->v;
-        Pelement<T>* temp = l;
+        PElement<T>* temp = l;
         l = l->s;
         delete temp;
         return res;
@@ -144,7 +144,7 @@ class Pelement
      * @param l
      * @return
      */
-    static bool retire(const T* a, Pelement<T>*& l)
+    static bool retire(const T* a, PElement<T>*& l)
     {
         if (l == nullptr)
         {
@@ -152,7 +152,7 @@ class Pelement
         }
         if (a == l->v)
         {
-            Pelement<T>* temp = l;
+            PElement<T>* temp = l;
             l = l->s;
             delete temp;
             return true;
@@ -165,7 +165,7 @@ class Pelement
      * données *v. En sortie l vaut NULL. Ne fait rien si l vaut NULL à l'appel.
      * @param l
      */
-    static void efface1(Pelement<T>*& l)
+    static void efface1(PElement<T>*& l)
     {
         if (l == nullptr)
         {
@@ -182,7 +182,7 @@ class Pelement
      * En sortie l vaut NULL. Ne fait rien si l vaut NULL à l'appel.
      * @param l
      */
-    static void efface2(Pelement<T>*& l)
+    static void efface2(PElement<T>*& l)
     {
         if (l == nullptr)
         {
@@ -200,13 +200,13 @@ class Pelement
      * @param l
      * @return
      */
-    static Pelement<T>* copie1(Pelement<T>* l)
+    static PElement<T>* copie1(PElement<T>* l)
     {
         if (l == nullptr)
         {
             return nullptr;
         }
-        return new Pelement<T>(copie1(l->s), l->v);
+        return new PElement<T>(copie1(l->s), l->v);
     }
 
     /**
@@ -215,14 +215,14 @@ class Pelement
      * @param l
      * @return
      */
-    static Pelement<T>* copie2(Pelement<T>* l)
+    static PElement<T>* copie2(PElement<T>* l)
     {
         if (l == nullptr)
         {
             return nullptr;
         }
         T* newV = new T(*(l->v));
-        return new Pelement<T>(copie2(l->s), newV);
+        return new PElement<T>(copie2(l->s), newV);
     }
 
     /**
@@ -234,14 +234,14 @@ class Pelement
      * @param l
      * @return
      */
-    static Pelement<T>* copie3(Pelement<T>* l)
+    static PElement<T>* copie3(PElement<T>* l)
     {
         if (l == nullptr)
         {
             return nullptr;
         }
         T* newV = l->v->copie();
-        return new Pelement<T>(copie3(l->s), newV);
+        return new PElement<T>(copie3(l->s), newV);
     }
 
     /**
@@ -252,7 +252,7 @@ class Pelement
      * @param l
      * @return
      */
-    static Pelement<T>* appartient(const T* a, Pelement<T>* l)
+    static PElement<T>* appartient(const T* a, PElement<T>* l)
     {
         if (l == nullptr)
         {
@@ -276,7 +276,7 @@ class Pelement
      * @return
      */
     template <class FONCTEUR>
-    static Pelement<T>* appartient(Pelement<T>* l, const FONCTEUR& condition)
+    static PElement<T>* appartient(PElement<T>* l, const FONCTEUR& condition)
     {
         if (l == nullptr)
         {
@@ -291,9 +291,9 @@ class Pelement
 };
 
 template <class T>
-ostream& operator<<(ostream& o, const Pelement<T>* p)
+ostream& operator<<(ostream& o, const PElement<T>* p)
 {
-    return o << Pelement<T>::toString(p);
+    return o << PElement<T>::toString(p);
 }
 
 inline bool estPlusPetitOuEgal(const double* a1, const double* a2) { return *a1 <= *a2; }

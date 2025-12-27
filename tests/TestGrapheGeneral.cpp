@@ -162,27 +162,27 @@ int main()
                 "**********************************"
              << endl;
 
-        Pelement<Sommet<string>>* l0 = g1.voisins(s0);
+        PElement<Sommet<string>>* l0 = g1.voisins(s0);
         cout << "La liste des voisins de s0 est : " << endl << l0 << endl;
-        Pelement<Arete<char, string>>* adj0 = g1.aretesAdjacentes(s0);
+        PElement<Arete<char, string>>* adj0 = g1.aretesAdjacentes(s0);
 
         cout << "La liste des aretes adjacentes a s0 est : " << endl << adj0 << endl;
 
-        Pelement<Sommet<string>>* l1 = g1.voisins(s1);
+        PElement<Sommet<string>>* l1 = g1.voisins(s1);
         cout << "La liste des voisins de s1 est : " << endl << l1 << endl;
-        Pelement<Arete<char, string>>* adj1 = g1.aretesAdjacentes(s1);
+        PElement<Arete<char, string>>* adj1 = g1.aretesAdjacentes(s1);
 
         cout << "La liste des aretes adjacentes a s1 est : " << endl << adj1 << endl;
 
-        Pelement<Sommet<string>>* l2 = g1.voisins(s2);
+        PElement<Sommet<string>>* l2 = g1.voisins(s2);
         cout << "La liste des voisins de s2 est : " << endl << l2 << endl;
-        Pelement<Arete<char, string>>* adj2 = g1.aretesAdjacentes(s2);
+        PElement<Arete<char, string>>* adj2 = g1.aretesAdjacentes(s2);
 
         cout << "La liste des aretes adjacentes a s2 est : " << endl << adj2 << endl;
 
-        Pelement<Sommet<string>>* l3 = g1.voisins(s3);
+        PElement<Sommet<string>>* l3 = g1.voisins(s3);
         cout << "La liste des voisins de s3 est : " << endl << l3 << endl;
-        Pelement<Arete<char, string>>* adj3 = g1.aretesAdjacentes(s3);
+        PElement<Arete<char, string>>* adj3 = g1.aretesAdjacentes(s3);
 
         cout << "La liste des aretes adjacentes a s3 est : " << endl << adj3 << endl;
 

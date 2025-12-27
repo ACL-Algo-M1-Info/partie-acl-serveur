@@ -5,7 +5,7 @@
 #ifndef SERVEURCPP_GRAPHE_H
 #define SERVEURCPP_GRAPHE_H
 #include "Arete.h"
-#include "Pelement.h"
+#include "PElement.h"
 #include "Sommet.h"
 #include "foncteurs/FoncteurUtils.h"
 
@@ -45,23 +45,25 @@ class Graphe
         this->lAretes = nullptr;
         this->lSommets = nullptr;
 
-        Pelement<pair<Sommet<T>*, Sommet<T>*>>* dicoAncienNouveau = nullptr;
-        Pelement<Sommet<T>>* anciensSommets = graphe.lSommets;
+        typedef pair<Sommet<T>*, Sommet<T>*> DicoAncienNouveau;
+
+        PElement<DicoAncienNouveau>* dicoAncienNouveau = nullptr;
+        PElement<Sommet<T>>* anciensSommets = graphe.lSommets;
 
         while (anciensSommets != nullptr)
         {
             Sommet<T>* ancienSommet = anciensSommets->v;
             Sommet<T>* nouveauSommet = new Sommet<T>(ancienSommet->clef, ancienSommet->v);
 
-            this->lSommets = new Pelement<Sommet<T>>(this->lSommets, nouveauSommet);
-            pair<Sommet<T>*, Sommet<T>*>* paire = new pair<Sommet<T>*, Sommet<T>*>(ancienSommet, nouveauSommet);
-            dicoAncienNouveau = new Pelement<pair<Sommet<T>*, Sommet<T>*>>(dicoAncienNouveau, paire);
+            this->lSommets = new PElement<Sommet<T>>(this->lSommets, nouveauSommet);
+            DicoAncienNouveau* paire = new DicoAncienNouveau(ancienSommet, nouveauSommet);
+            dicoAncienNouveau = new PElement<DicoAncienNouveau>(dicoAncienNouveau, paire);
             anciensSommets = anciensSommets->s;
         }
         // Ici j'ai un dico : { Ancien <--> Nouveau }, pour tout sommet dans
         // graphe
 
-        Pelement<Arete<S, T>>* anciennesAretes = graphe.lAretes;
+        PElement<Arete<S, T>>* anciennesAretes = graphe.lAretes;
 
         while (anciennesAretes != nullptr)
         {
@@ -70,28 +72,27 @@ class Graphe
             Sommet<T>* nouvelleFin = nullptr;
 
             CritereSommetAvecPaire<T> critereDebut(ancienneArete->debut);
-            // appartient par à la recherche de la paire qui contient le sommet recherche (le debut de l'ancienne arète)
-            Pelement<pair<Sommet<T>*, Sommet<T>*>>* resultatDebut =
-                Pelement<pair<Sommet<T>*, Sommet<T>*>>::appartient(dicoAncienNouveau, critereDebut);
+            // Appartient par à la recherche de la paire qui contient le sommet recherche (le debut de l'ancienne arète)
+            PElement<DicoAncienNouveau>* resultatDebut = PElement<DicoAncienNouveau>::appartient(dicoAncienNouveau, critereDebut);
             if (resultatDebut != nullptr)
             {
-                // si il l'a trouvé, on récupère sa correspondance (le nouveau sommet, c'est à dire le nouveau début de la nouvelle arète)
+                // Si il l'a trouvé, on récupère sa correspondance (le nouveau sommet, c'est à dire le nouveau début de la nouvelle arète)
                 nouveauDebut = resultatDebut->v->second;
             }
 
             CritereSommetAvecPaire<T> critereFin(ancienneArete->fin);
             // et symétriquement..
-            Pelement<pair<Sommet<T>*, Sommet<T>*>>* resultatFin = Pelement<pair<Sommet<T>*, Sommet<T>*>>::appartient(dicoAncienNouveau, critereFin);
+            PElement<DicoAncienNouveau>* resultatFin = PElement<DicoAncienNouveau>::appartient(dicoAncienNouveau, critereFin);
 
             if (resultatFin != nullptr)
             {
                 nouvelleFin = resultatFin->v->second;
             }
             Arete<S, T>* nouvelleArete = new Arete<S, T>(ancienneArete->clef, ancienneArete->v, nouveauDebut, nouvelleFin);
-            this->lAretes = new Pelement<Arete<S, T>>(this->lAretes, nouvelleArete);
+            this->lAretes = new PElement<Arete<S, T>>(this->lAretes, nouvelleArete);
             anciennesAretes = anciennesAretes->s;
         }
-        Pelement<pair<Sommet<T>*, Sommet<T>*>>::efface2(dicoAncienNouveau);
+        PElement<DicoAncienNouveau>::efface2(dicoAncienNouveau);
     }
 
     /**
@@ -99,14 +100,14 @@ class Graphe
      */
     void vider()
     {
-        Pelement<Sommet<T>>::efface2(lSommets);
-        Pelement<Arete<S, T>>::efface2(lAretes);
+        PElement<Sommet<T>>::efface2(lSommets);
+        PElement<Arete<S, T>>::efface2(lAretes);
         this->prochaineClef = 0;
     }
 
    public:
-    Pelement<Sommet<T>>* lSommets;
-    Pelement<Arete<S, T>>* lAretes;
+    PElement<Sommet<T>>* lSommets;
+    PElement<Arete<S, T>>* lAretes;
     int prochaineClef;
 
     /**************************************************************
@@ -160,7 +161,7 @@ class Graphe
         Sommet<T>* nouveauSommet = new Sommet<T>(prochaineClef, info);
         prochaineClef++;
 
-        lSommets = new Pelement<Sommet<T>>(lSommets, nouveauSommet);
+        lSommets = new PElement<Sommet<T>>(lSommets, nouveauSommet);
         return nouveauSommet;
     }
 
@@ -182,7 +183,7 @@ class Graphe
     {
         Arete<S, T>* nouvelleArete = new Arete<S, T>(prochaineClef, info, debut, fin);
         prochaineClef++;
-        lAretes = new Pelement<Arete<S, T>>(lAretes, nouvelleArete);
+        lAretes = new PElement<Arete<S, T>>(lAretes, nouvelleArete);
         return nouvelleArete;
     }
 
@@ -190,13 +191,13 @@ class Graphe
      *
      * @return le nombre de sommets contenus dans le graphe
      */
-    int nombreSommets() const { return Pelement<Sommet<T>>::tailleR(lSommets); }
+    int nombreSommets() const { return PElement<Sommet<T>>::tailleR(lSommets); }
 
     /**
      *
      * @return  le nombre d'arêtes contenues dans le graphe.
      */
-    int nombreAretes() const { return Pelement<Arete<S, T>>::tailleR(lAretes); }
+    int nombreAretes() const { return PElement<Arete<S, T>>::tailleR(lAretes); }
 
     operator string() const
     {
@@ -205,10 +206,10 @@ class Graphe
         int nbAretes = nombreAretes();
         o << "Graphe [ prochaine clef = " << prochaineClef << ", nombre de sommet = " << nbSommets << ", nombre d'aretes = " << nbAretes;
         o << endl << "Liste sommets : " << endl;
-        string chaineSommets = Pelement<Sommet<T>>::toString(lSommets);
+        string chaineSommets = PElement<Sommet<T>>::toString(lSommets);
         o << chaineSommets;
         o << endl << "Liste aretes : " << endl;
-        string chaineAretes = Pelement<Arete<S, T>>::toString(lAretes);
+        string chaineAretes = PElement<Arete<S, T>>::toString(lAretes);
 
         o << chaineAretes << endl << " ]" << endl;
         return o.str();
@@ -225,34 +226,34 @@ class Graphe
      * @param sommet
      * @return
      */
-    Pelement<pair<Sommet<T>*, Arete<S, T>*>>* adjacences(const Sommet<T>* sommet) const
+    PElement<pair<Sommet<T>*, Arete<S, T>*>>* adjacences(const Sommet<T>* sommet) const
     {
-        Pelement<pair<Sommet<T>*, Arete<S, T>*>>* listeAssociation = nullptr;
+        typedef pair<Sommet<T>*, Arete<S, T>*> PaireSommetArete;
+        PElement<PaireSommetArete>* resultat = nullptr;
 
-        Pelement<Arete<S, T>>* it = lAretes;
+        PElement<Arete<S, T>>* it = lAretes;
 
         while (it != nullptr)
         {
             Arete<S, T>* a = it->v;
             Sommet<T>* voisin = nullptr;
-
-            if (sommet == a->debut)
+            if (a->debut == sommet)
             {
                 voisin = a->fin;
             }
-            else if (sommet == a->fin)
+            else if (a->fin == sommet)
             {
                 voisin = a->debut;
             }
 
             if (voisin != nullptr)
             {
-                pair<Sommet<T>*, Arete<S, T>*>* paire = new pair<Sommet<T>*, Arete<S, T>*>(voisin, a);
-                listeAssociation = new Pelement<pair<Sommet<T>*, Arete<S, T>*>>(listeAssociation, paire);
+                PaireSommetArete* nouvellePaire = new PaireSommetArete(voisin, a);
+                resultat = new PElement<PaireSommetArete>(resultat, nouvellePaire);
             }
             it = it->s;
         }
-        return listeAssociation;
+        return resultat;
     }
 
     /**
@@ -261,22 +262,19 @@ class Graphe
      * @param sommet
      * @return
      */
-    Pelement<Arete<S, T>>* aretesAdjacentes(const Sommet<T>* sommet) const
+    PElement<Arete<S, T>>* aretesAdjacentes(const Sommet<T>* sommet)
     {
-        Pelement<pair<Sommet<T>*, Arete<S, T>*>>* listeAssociation = adjacences(sommet);
-        Pelement<pair<Sommet<T>*, Arete<S, T>*>>* it = listeAssociation;
-        Pelement<Arete<S, T>>* listeAretesAdjacentes = nullptr;
-        while (it != nullptr)
+        PElement<Arete<S, T>>* listesAretesAdjacentes = nullptr;
+        typedef pair<Sommet<T>*, Arete<S, T>*> PaireSommetArete;
+        PElement<PaireSommetArete>* paires = adjacences(sommet);
+
+        while (paires != nullptr)
         {
-            pair<Sommet<T>*, Arete<S, T>*>* paire = it->v;
-
-            listeAretesAdjacentes = new Pelement<Arete<S, T>>(listeAretesAdjacentes, paire->second);
-
-            it = it->s;
+            listesAretesAdjacentes = new PElement<Arete<S, T>>(listesAretesAdjacentes, paires->v->second);
+            paires = paires->s;
         }
-
-        Pelement<pair<Sommet<T>*, Arete<S, T>*>>::efface2(listeAssociation);
-        return listeAretesAdjacentes;
+        PElement<PaireSommetArete>::efface2(paires);
+        return listesAretesAdjacentes;
     }
 
     /**
@@ -285,21 +283,17 @@ class Graphe
      * @param sommet
      * @return
      */
-    Pelement<Sommet<T>>* voisins(const Sommet<T>* sommet) const
+    PElement<Sommet<T>>* voisins(const Sommet<T>* sommet)
     {
-        Pelement<pair<Sommet<T>*, Arete<S, T>*>>* listeAssociation = adjacences(sommet);
-        Pelement<Sommet<T>>* listeVoisins = nullptr;
-
-        Pelement<pair<Sommet<T>*, Arete<S, T>*>>* it = listeAssociation;
-
-        while (it != nullptr)
+        PElement<Sommet<T>>* listeVoisins = nullptr;
+        typedef pair<Sommet<T>*, Arete<S, T>*> PaireSommetArete;
+        PElement<PaireSommetArete>* paires = adjacences(sommet);
+        while (paires != nullptr)
         {
-            pair<Sommet<T>*, Arete<S, T>*>* paire = it->v;
-            listeVoisins = new Pelement<Sommet<T>>(listeVoisins, paire->first);
-            it = it->s;
+            listeVoisins = new PElement<Sommet<T>>(listeVoisins, paires->v->first);
+            paires = paires->s;
         }
-
-        Pelement<pair<Sommet<T>*, Arete<S, T>*>>::efface2(listeAssociation);
+        PElement<PaireSommetArete>::efface2(paires);
         return listeVoisins;
     }
 
@@ -313,7 +307,7 @@ class Graphe
     Arete<S, T>* getAreteParSommets(const Sommet<T>* s1, const Sommet<T>* s2) const
     {
         CritereLiaison<S, T> condition(s1, s2);
-        Pelement<Arete<S, T>>* res = Pelement<Arete<S, T>>::appartient(lAretes, condition);
+        PElement<Arete<S, T>>* res = PElement<Arete<S, T>>::appartient(lAretes, condition);
 
         if (res != nullptr)
         {
@@ -330,12 +324,12 @@ class Graphe
     template <class FONCTEURDISTANCE>
     void rendreComplet(const FONCTEURDISTANCE& calculPoids)
     {
-        Pelement<Sommet<T>>* it1 = lSommets;
+        PElement<Sommet<T>>* it1 = lSommets;
 
         while (it1 != nullptr)
         {
             Sommet<T>* s1 = it1->v;
-            Pelement<Sommet<T>>* it2 = it1->s;
+            PElement<Sommet<T>>* it2 = it1->s;
             while (it2 != nullptr)
             {
                 Sommet<T>* s2 = it2->v;

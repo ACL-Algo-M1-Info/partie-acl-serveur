@@ -3,7 +3,7 @@
 //
 #include "../src/Foncteurs/FoncteurUtils.h"
 #include "../src/Formes/FormeUtils.h"
-#include "../src/graphe/Pelement.h"
+#include "../src/graphe/PElement.h"
 int main()
 {
     {
@@ -14,30 +14,30 @@ int main()
         double* b = new double(5);
         double* c = new double(7.5);
         double* d = new double(9);
-        Pelement<double>* l1 = nullptr;
-        l1 = new Pelement<double>(l1, a);
-        l1 = new Pelement<double>(l1, b);
-        l1 = new Pelement<double>(l1, c);
-        l1 = new Pelement<double>(l1, d);
+        PElement<double>* l1 = nullptr;
+        l1 = new PElement<double>(l1, a);
+        l1 = new PElement<double>(l1, b);
+        l1 = new PElement<double>(l1, c);
+        l1 = new PElement<double>(l1, d);
 
         string s1 = "carotte";
         string s2 = "cerise";
         string s3 = "orange";
-        Pelement<string>* l2 = nullptr;
-        l2 = new Pelement<string>(l2, &s1);
-        l2 = new Pelement<string>(l2, &s2);
-        l2 = new Pelement<string>(l2, &s3);
+        PElement<string>* l2 = nullptr;
+        l2 = new PElement<string>(l2, &s1);
+        l2 = new PElement<string>(l2, &s2);
+        l2 = new PElement<string>(l2, &s3);
 
-        int tailleListe = Pelement<double>::taille(l1);
+        int tailleListe = PElement<double>::taille(l1);
         cout << "taille l1 : " << tailleListe << endl;
 
-        int tailleListeR = Pelement<double>::tailleR(l1);
+        int tailleListeR = PElement<double>::tailleR(l1);
         cout << "taille r l1 : " << tailleListeR << endl;
 
-        tailleListe = Pelement<string>::taille(l2);
+        tailleListe = PElement<string>::taille(l2);
         cout << "taille l1 : " << tailleListe << endl;
 
-        tailleListeR = Pelement<string>::tailleR(l2);
+        tailleListeR = PElement<string>::tailleR(l2);
         cout << "taille r l1 : " << tailleListeR << endl;
 
         cout << l1 << endl;
@@ -47,39 +47,39 @@ int main()
         cout << "*********************************** TEST INSERTION ET DEPILER "
                 "**********************************"
              << endl;
-        Pelement<double>* l3 = nullptr;
+        PElement<double>* l3 = nullptr;
         double* valIns1 = new double(-7);
         double* valIns2 = new double(6);
         double* valIns3 = new double(13);
-        Pelement<double>::insertionOrdonnee(valIns1, l3, estPlusPetitOuEgal);
-        Pelement<double>::insertionOrdonnee(valIns2, l3, estPlusPetitOuEgal);
-        Pelement<double>::insertionOrdonnee(valIns3, l3, estPlusPetitOuEgal);
+        PElement<double>::insertionOrdonnee(valIns1, l3, estPlusPetitOuEgal);
+        PElement<double>::insertionOrdonnee(valIns2, l3, estPlusPetitOuEgal);
+        PElement<double>::insertionOrdonnee(valIns3, l3, estPlusPetitOuEgal);
         cout << l3 << endl;
 
-        Pelement<string>* l4 = nullptr;
+        PElement<string>* l4 = nullptr;
         string s1 = "fraise";
         string s2 = "ananas";
         string s3 = "pomme";
 
-        Pelement<string>::insertionOrdonnee(&s1, l4, estPlusPetitOuEgal);
-        Pelement<string>::insertionOrdonnee(&s2, l4, estPlusPetitOuEgal);
-        Pelement<string>::insertionOrdonnee(&s3, l4, estPlusPetitOuEgal);
+        PElement<string>::insertionOrdonnee(&s1, l4, estPlusPetitOuEgal);
+        PElement<string>::insertionOrdonnee(&s2, l4, estPlusPetitOuEgal);
+        PElement<string>::insertionOrdonnee(&s3, l4, estPlusPetitOuEgal);
 
         cout << l4 << endl;
 
-        string* chaine = Pelement<string>::depiler(l4);
+        string* chaine = PElement<string>::depiler(l4);
         cout << *chaine << endl;
         cout << l4 << endl;
-        chaine = Pelement<string>::depiler(l4);
+        chaine = PElement<string>::depiler(l4);
         cout << *chaine << endl;
         cout << l4 << endl;
-        chaine = Pelement<string>::depiler(l4);
+        chaine = PElement<string>::depiler(l4);
         cout << *chaine << endl;
         cout << l4 << endl;
 
         try
         {
-            chaine = Pelement<string>::depiler(l4);
+            chaine = PElement<string>::depiler(l4);
             cout << *chaine << endl;
             cout << l4 << endl;
         }
@@ -96,33 +96,33 @@ int main()
         double* b = new double(5);
         double* c = new double(7.5);
         double* d = new double(9);
-        Pelement<double>* l1 = nullptr;
-        l1 = new Pelement<double>(l1, a);
-        l1 = new Pelement<double>(l1, b);
-        l1 = new Pelement<double>(l1, c);
-        l1 = new Pelement<double>(l1, d);
+        PElement<double>* l1 = nullptr;
+        l1 = new PElement<double>(l1, a);
+        l1 = new PElement<double>(l1, b);
+        l1 = new PElement<double>(l1, c);
+        l1 = new PElement<double>(l1, d);
 
         string s1 = "carotte";
         string s2 = "cerise";
         string s3 = "orange";
-        Pelement<string>* l2 = nullptr;
-        l2 = new Pelement<string>(l2, &s1);
-        l2 = new Pelement<string>(l2, &s2);
-        l2 = new Pelement<string>(l2, &s3);
+        PElement<string>* l2 = nullptr;
+        l2 = new PElement<string>(l2, &s1);
+        l2 = new PElement<string>(l2, &s2);
+        l2 = new PElement<string>(l2, &s3);
         cout << l1 << endl;
 
-        bool v = Pelement<double>::retire(d, l1);
+        bool v = PElement<double>::retire(d, l1);
         cout << l1 << (v ? " Succes " : "Echec ") << endl;
-        v = Pelement<double>::retire(a, l1);
+        v = PElement<double>::retire(a, l1);
         cout << l1 << (v ? " Succes " : "Echec ") << endl;
-        v = Pelement<double>::retire(d, l1);
+        v = PElement<double>::retire(d, l1);
         cout << l1 << (v ? " Succes " : "Echec ") << endl;
 
-        v = Pelement<string>::retire(&s1, l2);
+        v = PElement<string>::retire(&s1, l2);
         cout << l2 << (v ? " Succes" : " Echec") << endl;
-        v = Pelement<string>::retire(&s2, l2);
+        v = PElement<string>::retire(&s2, l2);
         cout << l2 << (v ? " Succes" : " Echec") << endl;
-        v = Pelement<string>::retire(&s1, l2);
+        v = PElement<string>::retire(&s1, l2);
         cout << l2 << (v ? " Succes" : " Echec") << endl;
     }
     {
@@ -133,30 +133,30 @@ int main()
         double* b = new double(5);
         double* c = new double(7.5);
         double* d = new double(9);
-        Pelement<double>* l1 = nullptr;
-        l1 = new Pelement<double>(l1, a);
-        l1 = new Pelement<double>(l1, b);
-        l1 = new Pelement<double>(l1, c);
-        l1 = new Pelement<double>(l1, d);
+        PElement<double>* l1 = nullptr;
+        l1 = new PElement<double>(l1, a);
+        l1 = new PElement<double>(l1, b);
+        l1 = new PElement<double>(l1, c);
+        l1 = new PElement<double>(l1, d);
 
         string s1 = "carotte";
         string s2 = "cerise";
         string s3 = "orange";
-        Pelement<string>* l2 = nullptr;
-        l2 = new Pelement<string>(l2, &s1);
-        l2 = new Pelement<string>(l2, &s2);
-        l2 = new Pelement<string>(l2, &s3);
+        PElement<string>* l2 = nullptr;
+        l2 = new PElement<string>(l2, &s1);
+        l2 = new PElement<string>(l2, &s2);
+        l2 = new PElement<string>(l2, &s3);
         cout << l1 << endl;
         cout << l2 << endl;
 
-        Pelement<double>::efface1(l1);
+        PElement<double>::efface1(l1);
         cout << l1 << endl;
-        Pelement<double>::efface1(l1);
+        PElement<double>::efface1(l1);
         cout << l1 << endl;
 
-        Pelement<string>::efface1(l2);
+        PElement<string>::efface1(l2);
         cout << l2 << endl;
-        Pelement<string>::efface1(l2);
+        PElement<string>::efface1(l2);
         cout << l2 << endl;
     }
     {
@@ -167,30 +167,30 @@ int main()
         double* b = new double(5);
         double* c = new double(7.5);
         double* d = new double(9);
-        Pelement<double>* l1 = nullptr;
-        l1 = new Pelement<double>(l1, a);
-        l1 = new Pelement<double>(l1, b);
-        l1 = new Pelement<double>(l1, c);
-        l1 = new Pelement<double>(l1, d);
+        PElement<double>* l1 = nullptr;
+        l1 = new PElement<double>(l1, a);
+        l1 = new PElement<double>(l1, b);
+        l1 = new PElement<double>(l1, c);
+        l1 = new PElement<double>(l1, d);
 
         string* s1 = new string("carotte");
         string* s2 = new string("cerise");
         string* s3 = new string("orange");
-        Pelement<string>* l2 = nullptr;
-        l2 = new Pelement<string>(l2, s1);
-        l2 = new Pelement<string>(l2, s2);
-        l2 = new Pelement<string>(l2, s3);
+        PElement<string>* l2 = nullptr;
+        l2 = new PElement<string>(l2, s1);
+        l2 = new PElement<string>(l2, s2);
+        l2 = new PElement<string>(l2, s3);
         cout << l1 << endl;
         cout << l2 << endl;
-        Pelement<double>::efface2(l1);
+        PElement<double>::efface2(l1);
         cout << l1 << endl;
 
-        Pelement<double>::efface2(l1);
+        PElement<double>::efface2(l1);
         cout << l1 << endl;
 
-        Pelement<string>::efface2(l2);
+        PElement<string>::efface2(l2);
         cout << l2 << endl;
-        Pelement<string>::efface2(l2);
+        PElement<string>::efface2(l2);
         cout << l2 << endl;
     }
     {
@@ -202,18 +202,18 @@ int main()
         double* b = new double(5);
         double* c = new double(7.5);
         double* d = new double(9);
-        Pelement<double>* l1 = nullptr;
-        l1 = new Pelement<double>(l1, a);
-        l1 = new Pelement<double>(l1, b);
-        l1 = new Pelement<double>(l1, c);
-        l1 = new Pelement<double>(l1, d);
+        PElement<double>* l1 = nullptr;
+        l1 = new PElement<double>(l1, a);
+        l1 = new PElement<double>(l1, b);
+        l1 = new PElement<double>(l1, c);
+        l1 = new PElement<double>(l1, d);
 
-        Pelement<double>* l2 = Pelement<double>::copie1(l1);
+        PElement<double>* l2 = PElement<double>::copie1(l1);
 
         cout << l1 << endl;
         cout << l2 << endl;
 
-        Pelement<double>::insertionOrdonnee(new double(45), l2, estPlusPetitOuEgal);
+        PElement<double>::insertionOrdonnee(new double(45), l2, estPlusPetitOuEgal);
         cout << l1 << endl;
         cout << l2 << endl;
 
@@ -231,26 +231,26 @@ int main()
         double* b = new double(5);
         double* c = new double(7.5);
         double* d = new double(9);
-        Pelement<double>* l1 = nullptr;
-        l1 = new Pelement<double>(l1, a);
-        l1 = new Pelement<double>(l1, b);
-        l1 = new Pelement<double>(l1, c);
-        l1 = new Pelement<double>(l1, d);
+        PElement<double>* l1 = nullptr;
+        l1 = new PElement<double>(l1, a);
+        l1 = new PElement<double>(l1, b);
+        l1 = new PElement<double>(l1, c);
+        l1 = new PElement<double>(l1, d);
 
-        Pelement<double>* l2 = Pelement<double>::copie2(l1);
+        PElement<double>* l2 = PElement<double>::copie2(l1);
 
         cout << l1 << endl;
         cout << l2 << endl;
 
-        Pelement<double>::insertionOrdonnee(new double(45), l2, estPlusPetitOuEgal);
+        PElement<double>::insertionOrdonnee(new double(45), l2, estPlusPetitOuEgal);
         cout << l1 << endl;
         cout << l2 << endl;
 
         *(l2->v) = 777;
         cout << l1 << endl;
         cout << l2 << endl;
-        Pelement<double>::efface2(l1);
-        Pelement<double>::efface2(l2);
+        PElement<double>::efface2(l1);
+        PElement<double>::efface2(l2);
     }
 
     {
@@ -263,24 +263,24 @@ int main()
         Segment* s1 = new Segment("Vert", 2, 0);
         Cercle* c3 = new Cercle("Bleu", 10);
 
-        Pelement<Forme>* listeForme = nullptr;
-        listeForme = new Pelement<Forme>(listeForme, c1);
-        listeForme = new Pelement<Forme>(listeForme, c2);
-        listeForme = new Pelement<Forme>(listeForme, s1);
+        PElement<Forme>* listeForme = nullptr;
+        listeForme = new PElement<Forme>(listeForme, c1);
+        listeForme = new PElement<Forme>(listeForme, c2);
+        listeForme = new PElement<Forme>(listeForme, s1);
 
-        Pelement<Forme>* listeCopie = Pelement<Forme>::copie3(listeForme);
+        PElement<Forme>* listeCopie = PElement<Forme>::copie3(listeForme);
         cout << "Les listes apres copie" << endl;
         cout << listeCopie << endl;
         cout << listeForme << endl;
 
-        Pelement<Forme>::insertionOrdonnee(c3, listeCopie, estPlusPetitOuEgal);
+        PElement<Forme>::insertionOrdonnee(c3, listeCopie, estPlusPetitOuEgal);
 
         cout << "Les listes apres ajout dans copie" << endl;
         cout << listeCopie << endl;
         cout << listeForme << endl;
 
-        Pelement<Forme>::efface2(listeForme);
-        Pelement<Forme>::efface2(listeCopie);
+        PElement<Forme>::efface2(listeForme);
+        PElement<Forme>::efface2(listeCopie);
 
         cout << listeCopie << endl;
         cout << listeForme << endl;
@@ -295,12 +295,12 @@ int main()
         double* b = new double(5);
         double* c = new double(7.5);
         double* d = new double(9);
-        Pelement<double>* l1 = nullptr;
-        l1 = new Pelement<double>(l1, a);
-        l1 = new Pelement<double>(l1, b);
-        l1 = new Pelement<double>(l1, c);
+        PElement<double>* l1 = nullptr;
+        l1 = new PElement<double>(l1, a);
+        l1 = new PElement<double>(l1, b);
+        l1 = new PElement<double>(l1, c);
 
-        Pelement<double>* res = Pelement<double>::appartient(a, l1);
+        PElement<double>* res = PElement<double>::appartient(a, l1);
         cout << "est ce que l1 = " << l1 << " contient " << *a << " ?" << endl;
         if (res != nullptr)
         {
@@ -312,7 +312,7 @@ int main()
             cout << "Echec, ne contient pas : " << *a << endl;
         }
 
-        res = Pelement<double>::appartient(d, l1);
+        res = PElement<double>::appartient(d, l1);
         cout << "est ce que l1 = " << l1 << " contient " << *d << " ?" << endl;
         if (res != nullptr)
         {
@@ -334,14 +334,14 @@ int main()
         Segment* s1 = new Segment("Vert", 2, 0);
         Cercle* c3 = new Cercle("Bleu", 10);
 
-        Pelement<Forme>* listeForme = nullptr;
-        listeForme = new Pelement<Forme>(listeForme, c1);
-        listeForme = new Pelement<Forme>(listeForme, c2);
-        listeForme = new Pelement<Forme>(listeForme, s1);
+        PElement<Forme>* listeForme = nullptr;
+        listeForme = new PElement<Forme>(listeForme, c1);
+        listeForme = new PElement<Forme>(listeForme, c2);
+        listeForme = new PElement<Forme>(listeForme, s1);
 
         CritereCouleur critere_couleur("Vert");
 
-        Pelement<Forme>* res = Pelement<Forme>::appartient(listeForme, critere_couleur);
+        PElement<Forme>* res = PElement<Forme>::appartient(listeForme, critere_couleur);
 
         cout << "Est ce que un des elements de listeForme = " << endl << listeForme << " contient la couleur vert ?" << endl;
         if (res != nullptr)
@@ -354,7 +354,7 @@ int main()
         }
 
         CritereCouleur critere_couleurAbsente("Bleu");
-        res = Pelement<Forme>::appartient(listeForme, critere_couleurAbsente);
+        res = PElement<Forme>::appartient(listeForme, critere_couleurAbsente);
         cout << "Est ce que un des elements de listeForme = " << endl << listeForme << " contient la couleur bleu ?" << endl;
         if (res != nullptr)
         {
