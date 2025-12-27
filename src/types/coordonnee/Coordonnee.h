@@ -28,11 +28,6 @@ class Coordonnee
         return o.str();
     }
 
-    template <class FORMULE>
-    double distance(const Coordonnee& autre, const FORMULE & formule) const
-    {
-        return formule(*this, autre);
-    }
 };
 
 template <class X, class Y>

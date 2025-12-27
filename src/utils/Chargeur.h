@@ -20,11 +20,13 @@ class Chargeur
     /**
      * Etant donné un nom de fichier au format Json et un graphe d'arête qui contient une info de type double
      * et de sommet qui contient une coordonnée au format : <NomVille, <latitude, longitude>>
-     * charge dans graphe ...TODO sortir le graphe complet avec les distances
+     * Charge dans graphe chacunes des villes du fichier en tant que Coordonnée puis le place dans un sommet
+     * Ne se charge pas de créer les arêtes.
+     * TODO trouver comment rendre les chargeurs plus généraux.
      * @param nomFichier
      * @param graphe
      */
-    static void chargerJsonGraphe(const string& nomFichier, Graphe<double, Coordonnee<string, double>>& graphe)
+    static void chargerGrapheJson(const string& nomFichier, Graphe<double, Coordonnee<string, double>>& graphe)
     {
         ifstream fichier(nomFichier);
         if (!fichier)
@@ -46,16 +48,26 @@ class Chargeur
             Coordonnee<string, double> coordonnee(ville, latitude, longitude);
             Sommet<Coordonnee<string, double>>* sommet = graphe.creeSommet(coordonnee);
         }
+
     }
 
-    static Graphe<double, Coordonnee<string, double>> chargerJsonDossier(const string& nomDossier)
+    static Graphe<double, Coordonnee<string, double>> chargerDossierJson(const string& nomDossier)
     {
         Graphe<double, Coordonnee<string, double>> graphe;
+        cout << "Les villes du dossier " << nomDossier << " vont etre chargees dans un graphe" << endl;
         for (filesystem::directory_iterator it(nomDossier); it != filesystem::directory_iterator(); ++it)
         {
-            cout << "Les villes du fichier suivant vont etre chargees : " << endl << *it << endl;
-            chargerJsonGraphe(it->path().string(), graphe);
+            // cout << "Les villes du fichier suivant vont etre chargees : " << endl << *it << endl;
+            chargerGrapheJson(it->path().string(), graphe);
         }
+        return graphe;
+    }
+
+    static Graphe<double, Coordonnee<string, double>> chargerFichierJson(const string& nomFichier)
+    {
+        cout << "Les villes du fichier " << nomFichier << " vont etre chargees dans un graphe" << endl;
+        Graphe<double, Coordonnee<string, double>> graphe;
+        chargerGrapheJson(nomFichier, graphe);
         return graphe;
     }
 };

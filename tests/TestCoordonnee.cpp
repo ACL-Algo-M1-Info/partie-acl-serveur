@@ -14,8 +14,8 @@ void testCoordonnee()
 
     Coordonnee<char, int>* coordonnee3 = new Coordonnee<char, int>('B', 0, 0);
 
-    DistanceEuclidienne distance_euclidienne;
-    double d = coordonnee2->distance(*coordonnee3, distance_euclidienne);
+    DistanceEuclidienneCoordonnee distance_euclidienne;
+    double d = distance_euclidienne(*coordonnee3, *coordonnee2);
     cout << "la distance euclidienne entre A et B = " << d << endl;
 
     delete coordonnee;

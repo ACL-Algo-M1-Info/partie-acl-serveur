@@ -201,14 +201,16 @@ class Graphe
     operator string() const
     {
         ostringstream o;
-        o << "Graphe [ prochaine clef = " << prochaineClef;
+        int nbSommets = nombreSommets();
+        int nbAretes = nombreAretes();
+        o << "Graphe [ prochaine clef = " << prochaineClef << ", nombre de sommet = " << nbSommets << ", nombre d'aretes = " << nbAretes;
         o << endl << "Liste sommets : " << endl;
         string chaineSommets = Pelement<Sommet<T>>::toString(lSommets);
         o << chaineSommets;
         o << endl << "Liste aretes : " << endl;
         string chaineAretes = Pelement<Arete<S, T>>::toString(lAretes);
 
-        o << chaineAretes;
+        o << chaineAretes << endl << " ]" << endl;
         return o.str();
     }
 
@@ -318,6 +320,33 @@ class Graphe
             return res->v;
         }
         return nullptr;
+    }
+
+    /**
+     * Transforme le graphe actuel en graphe complet.
+     * Crée une arête entre chaque paire de sommets.
+     * Si le graphe à n sommets il aura donc (n(n-1))/2 arêtes après l'appel de cette méthode
+     */
+    template <class FONCTEURDISTANCE>
+    void rendreComplet(const FONCTEURDISTANCE& calculPoids)
+    {
+        Pelement<Sommet<T>>* it1 = lSommets;
+
+        while (it1 != nullptr)
+        {
+            Sommet<T>* s1 = it1->v;
+            Pelement<Sommet<T>>* it2 = it1->s;
+            while (it2 != nullptr)
+            {
+                Sommet<T>* s2 = it2->v;
+
+                S poids = calculPoids(s1->v, s2->v);
+                creeArete(poids, s1, s2);
+
+                it2 = it2->s;
+            }
+            it1 = it1->s;
+        }
     }
 };
 

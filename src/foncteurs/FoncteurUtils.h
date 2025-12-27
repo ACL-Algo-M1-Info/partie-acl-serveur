@@ -41,7 +41,11 @@ class CritereSommetAvecPaire
     bool operator()(pair<Sommet<T>*, Sommet<T>*>* paire) const { return paire->first == ancienSommetCherche; }
 };
 
-class DistanceEuclidienne
+/**
+ * Foncteur pour calculer la distance euclidienne entre deux coordonnées
+ * (fausse pour calculer des coordonnées GPS)
+ */
+class DistanceEuclidienneCoordonnee
 {
    public:
     template <class T>
@@ -52,5 +56,6 @@ class DistanceEuclidienne
         return sqrt(s * s + r * r);
     }
 };
+
 
 #endif  // SERVEURCPP_FONCTEURUTILS_H
