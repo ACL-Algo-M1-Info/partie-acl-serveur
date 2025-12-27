@@ -31,68 +31,62 @@ class Graphe
    private:
     /**
      * Méthode privée pour le constructeur par copie et pour l'opérateur
-     * d'affectation ! très chiant à faire en deux étapes : 1) Pour chaque
-     * sommet de graphe, je copie tous les sommets et je conserve une
-     * correspondance avec les anciens dans une liste de paire 2) Pour chaque
-     * arete de graphe, on retrouve son début et sa fin sauvegardés dans le
+     * d'affectation ! deux étapes :
+     * 1) Pour chaque sommet de graphe, je copie tous les sommets et je conserve une
+     * correspondance avec les anciens dans une liste de paire
+     * 2) Pour chaque arete de graphe, on retrouve son début et sa fin sauvegardés dans le
      * dictionnaire, on crée alors une nouvelle arête avec les nouveaux sommets
      * correspondant aux anciens
      * @param graphe
      */
     void copie(const Graphe<S, T>& graphe)
     {
-        this->prochaineClef = graphe.prochaineClef;
+        typedef pair<Sommet<T>*, Sommet<T>*> DicoAncienNouveau;
+        PElement<DicoAncienNouveau>* sommetAncienNouveau = nullptr;
         this->lAretes = nullptr;
         this->lSommets = nullptr;
-
-        typedef pair<Sommet<T>*, Sommet<T>*> DicoAncienNouveau;
-
-        PElement<DicoAncienNouveau>* dicoAncienNouveau = nullptr;
-        PElement<Sommet<T>>* anciensSommets = graphe.lSommets;
-
-        while (anciensSommets != nullptr)
+        PElement<Sommet<T>>* itS = graphe.lSommets;
+        this->prochaineClef = graphe.prochaineClef;
+        while (itS != nullptr)
         {
-            Sommet<T>* ancienSommet = anciensSommets->v;
+            Sommet<T>* ancienSommet = itS->v;
             Sommet<T>* nouveauSommet = new Sommet<T>(ancienSommet->clef, ancienSommet->v);
-
-            this->lSommets = new PElement<Sommet<T>>(this->lSommets, nouveauSommet);
-            DicoAncienNouveau* paire = new DicoAncienNouveau(ancienSommet, nouveauSommet);
-            dicoAncienNouveau = new PElement<DicoAncienNouveau>(dicoAncienNouveau, paire);
-            anciensSommets = anciensSommets->s;
+            DicoAncienNouveau* nouvellePaire = new DicoAncienNouveau(ancienSommet, nouveauSommet);
+            sommetAncienNouveau = new PElement<pair<Sommet<T>*, Sommet<T>*>>(sommetAncienNouveau, nouvellePaire);
+            this->lSommets = new PElement<Sommet<T>>(lSommets, nouveauSommet);
+            itS = itS->s;
         }
-        // Ici j'ai un dico : { Ancien <--> Nouveau }, pour tout sommet dans
-        // graphe
 
-        PElement<Arete<S, T>>* anciennesAretes = graphe.lAretes;
-
-        while (anciennesAretes != nullptr)
+        PElement<Arete<S, T>>* itA = graphe.lAretes;
+        while (itA != nullptr)
         {
-            Arete<S, T>* ancienneArete = anciennesAretes->v;
+            PElement<DicoAncienNouveau>* it = sommetAncienNouveau;
+            Arete<S, T>* a = itA->v;
             Sommet<T>* nouveauDebut = nullptr;
             Sommet<T>* nouvelleFin = nullptr;
-
-            CritereSommetAvecPaire<T> critereDebut(ancienneArete->debut);
-            // Appartient par à la recherche de la paire qui contient le sommet recherche (le debut de l'ancienne arète)
-            PElement<DicoAncienNouveau>* resultatDebut = PElement<DicoAncienNouveau>::appartient(dicoAncienNouveau, critereDebut);
-            if (resultatDebut != nullptr)
+            while (it != nullptr)
             {
-                // Si il l'a trouvé, on récupère sa correspondance (le nouveau sommet, c'est à dire le nouveau début de la nouvelle arète)
-                nouveauDebut = resultatDebut->v->second;
-            }
+                Sommet<T>* ancienSommet = it->v->first;
+                if (a->debut == ancienSommet)
+                {
+                    nouveauDebut = it->v->second;
+                }
+                if (a->fin == ancienSommet)
+                {
+                    nouvelleFin = it->v->second;
+                }
 
-            CritereSommetAvecPaire<T> critereFin(ancienneArete->fin);
-            // et symétriquement..
-            PElement<DicoAncienNouveau>* resultatFin = PElement<DicoAncienNouveau>::appartient(dicoAncienNouveau, critereFin);
-
-            if (resultatFin != nullptr)
-            {
-                nouvelleFin = resultatFin->v->second;
+                if (nouveauDebut != nullptr && nouvelleFin != nullptr)
+                {
+                    Arete<S, T>* nouvelleArete = new Arete<S, T>(a->clef, a->v, nouveauDebut, nouvelleFin);
+                    this->lAretes = new PElement<Arete<S, T>>(lAretes, nouvelleArete);
+                    break;
+                }
+                it = it->s;
             }
-            Arete<S, T>* nouvelleArete = new Arete<S, T>(ancienneArete->clef, ancienneArete->v, nouveauDebut, nouvelleFin);
-            this->lAretes = new PElement<Arete<S, T>>(this->lAretes, nouvelleArete);
-            anciennesAretes = anciennesAretes->s;
+            itA = itA->s;
         }
-        PElement<DicoAncienNouveau>::efface2(dicoAncienNouveau);
+        PElement<DicoAncienNouveau>::efface2(sommetAncienNouveau);
     }
 
     /**
@@ -100,8 +94,8 @@ class Graphe
      */
     void vider()
     {
-        PElement<Sommet<T>>::efface2(lSommets);
         PElement<Arete<S, T>>::efface2(lAretes);
+        PElement<Sommet<T>>::efface2(lSommets);
         this->prochaineClef = 0;
     }
 
