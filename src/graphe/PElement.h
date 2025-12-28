@@ -12,6 +12,7 @@
 
 #include "../Exceptions/Erreur.h"
 #include "../Formes/FormeUtils.h"
+#include "Arete.h"
 using namespace std;
 
 /**
@@ -301,5 +302,11 @@ inline bool estPlusPetitOuEgal(const double* a1, const double* a2) { return *a1 
 inline bool estPlusPetitOuEgal(const Forme* f1, const Forme* f2) { return *f1 <= *f2; }
 
 inline bool estPlusPetitOuEgal(const string* s1, const string* s2) { return s1->compare(*s2) <= 0; }
+
+template <class S, class T>
+bool estPlusPetitOuEgal(const Arete<S, T>* a1, const Arete<S, T>* a2)
+{
+    return a1->v <= a2->v;
+}
 
 #endif  // TPACL_PELEMENT_H

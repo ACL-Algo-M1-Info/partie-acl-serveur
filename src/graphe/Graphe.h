@@ -4,6 +4,9 @@
 
 #ifndef SERVEURCPP_GRAPHE_H
 #define SERVEURCPP_GRAPHE_H
+#include <map>
+
+#include "../utils/utils.h"
 #include "Arete.h"
 #include "PElement.h"
 #include "Sommet.h"
@@ -335,6 +338,69 @@ class Graphe
             }
             it1 = it1->s;
         }
+    }
+
+    /**
+     * Algorithme de kruskal :
+     * 1) Tous les sommets du graphe seront présents donc on peut les recopier.
+     * 2) On tri les arêtes par poids croissant
+     * 3) Par chacune des arêtes triées, on l'ajoute à l'ACPM si on ne crée pas de cycle
+     * @return l'Arbre couvrant de poids minimum de *this
+     */
+    Graphe<S, T>* kruskal()
+    {
+        Graphe<S, T>* ACPM = new Graphe();
+        PElement<Sommet<T>>* itS = this->lSommets;
+        map<int, Sommet<T>*> correspondance;
+        map<int, int> parents;
+
+        // Copie de tous les sommets du graphe dans l'ACPM
+        // On en profite pour entretenir une map (utile pour détecter les cycles..)
+        while (itS != nullptr)
+        {
+            Sommet<T>* ancien = itS->v;
+            Sommet<T>* nouveau = ACPM->creeSommet(ancien->v);
+            correspondance[ancien->clef] = nouveau;
+            parents[ancien->clef] = ancien->clef;
+            itS = itS->s;
+        }
+
+        PElement<Arete<S, T>>* itA = this->lAretes;
+        PElement<Arete<S, T>>* listeAreteTriee = nullptr;
+
+        // La liste des arêtes triées
+        while (itA != nullptr)
+        {
+            PElement<Arete<S, T>>::insertionOrdonnee(itA->v, listeAreteTriee, estPlusPetitOuEgal);
+            itA = itA->s;
+        }
+
+        // Pour chaque arête triée
+        // On regarde si l'ajout du sommet debut et fin ne crée pas de cycle
+        // Autrement dit si debut et fin ont une racine commune, alors il y a un cycle
+        // Sinon on ajoute l'arête dans l'ACPM
+        while (listeAreteTriee != nullptr)
+        {
+            Arete<S, T>* a = listeAreteTriee->v;
+            int clefSommetDebut = a->debut->clef;
+            int clefSommetFin = a->fin->clef;
+
+            int racineDebut = Utils::trouveRacine(clefSommetDebut, parents);
+            int racineFin = Utils::trouveRacine(clefSommetFin, parents);
+
+            if (racineDebut != racineFin)
+            {
+                parents[racineDebut] = racineFin;
+                Sommet<T>* debut = correspondance[clefSommetDebut];
+                Sommet<T>* fin = correspondance[clefSommetFin];
+                ACPM->creeArete(a->v, debut, fin);
+            }
+
+            listeAreteTriee = listeAreteTriee->s;
+        }
+
+        PElement<Arete<S, T>>::efface1(listeAreteTriee);
+        return ACPM;
     }
 };
 
