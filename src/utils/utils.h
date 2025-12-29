@@ -6,12 +6,21 @@
 
 // INCLUSIONS
 
+#include <vector>
+
+#include "types/instance/instance.h"
+
+// USINGS
+
+using namespace std;
 
 // CLASSES
 
 class Utils
 {
 public:
+
+    // FONCTIONS
 
     /**
      * Retrouve l'entier maximal dans l'array. L'array ne doit pas être vide
@@ -20,4 +29,14 @@ public:
      * @return L'entier max dans l'array
      */
     static int maxArrayInt(int n, const int* a);
+
+    template<class COMPARAISON>
+    static void triFusion(int i, int j, Instance& instance, int* tp, COMPARAISON comparaison);
+
+    /**
+     * Applique l'ordre de Jackson sur les qi d'une instance
+     *
+     * @param instance l'instance où l'on veut appliquer l'ordre
+     */
+    static void triJackson(Instance& instance);
 };

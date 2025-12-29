@@ -47,9 +47,9 @@ target_link_libraries(main PRIVATE ${EXT_LIB} CORE)
 add_executable(testServeur ${TESTS}/testServeur.cpp)
 target_link_libraries(testServeur PRIVATE ${EXT_LIB} CORE)
 
-# Test camion CPP
-add_executable(testCamion ${TESTS}/testCamion.cpp)
-target_link_libraries(testCamion PRIVATE ${EXT_LIB} CORE)
+# Test ordonnancement machine CPP
+add_executable(testOrdonnancementMachine ${TESTS}/testOrdonnancementMachine.cpp)
+target_link_libraries(testOrdonnancementMachine PRIVATE ${EXT_LIB} CORE)
 
 # Test etat CPP
 add_executable(testEtat ${TESTS}/testEtat.cpp)
@@ -58,6 +58,14 @@ target_link_libraries(testEtat PRIVATE ${EXT_LIB} CORE)
 # Test instance CPP
 add_executable(testInstance ${TESTS}/testInstance.cpp)
 target_link_libraries(testInstance PRIVATE ${EXT_LIB} CORE)
+
+# Test Jackson
+add_executable(testJackson ${TESTS}/testJackson.cpp)
+target_link_libraries(testJackson PRIVATE ${EXT_LIB} CORE)
+
+# Test algorithme de programmation dynamique
+add_executable(testAlgoProgDynamique ${TESTS}/testAlgoProgDynamique.cpp)
+target_link_libraries(testAlgoProgDynamique PRIVATE ${EXT_LIB} CORE)
 
 # Test Liste template (PElement)
 add_executable(testPElement ${TESTS}/TestPElement.cpp)

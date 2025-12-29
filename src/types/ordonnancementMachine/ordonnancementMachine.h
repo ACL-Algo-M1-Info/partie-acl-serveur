@@ -17,9 +17,7 @@ using namespace std;
 
 // CLASSES
 
-class Instance;
-
-class Camion
+class OrdonnancementMachine
 {
 public:
 
@@ -34,30 +32,30 @@ public:
     // CONSTRUCTEUR / DESTRUCTEUR
 
     /**
-     * Créé un nouveau camion vide
+     * Créé un nouveau ordonnancementMachine vide
      */
-    Camion(): cmax(0) {}
+    OrdonnancementMachine(): cmax(0) {}
 
     /**
-     * Supprime un camion
+     * Supprime un ordonnancement
      */
-    ~Camion() {}
+    ~OrdonnancementMachine() {}
 
     /**
-     * Clone un camion depuis une source
+     * Clone un ordonnancementMachine depuis une source
      *
      * @param source le camion duquel puiser les informations
      */
-    Camion(const Camion& source): tabId(source.tabId), cmax(source.cmax) {}
+    OrdonnancementMachine(const OrdonnancementMachine& source): tabId(source.tabId), cmax(source.cmax) {}
 
     // FONCTIONS
 
     /**
      * Ajoute une tâche à l'ordonnancement en fin de position.
      * @param i Indice de la tâche à ajouter
-     * @param quantite Durée opératoire de la tâche à ajouter
+     * @param pi Durée opératoire de la tâche à ajouter
      */
-    void ajouterTache(const int& i, const int& quantite);
+    void ajouterTache(const int& i, const int& pi);
 
     /**
      * Ajoute une tâche à l'ordonnancement en fin de position.
@@ -70,10 +68,10 @@ public:
 
     explicit operator string() const;
 
-    bool operator==(const Camion& c) const;
+    bool operator==(const OrdonnancementMachine& c) const;
 };
 
-inline ostream& operator<<(ostream& os, const Camion& camion)
+inline ostream& operator<<(ostream& os, const OrdonnancementMachine& camion)
 {
     return(os << (string)camion);
 }

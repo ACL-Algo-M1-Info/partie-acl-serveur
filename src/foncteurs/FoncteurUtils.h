@@ -57,5 +57,33 @@ class DistanceEuclidienneCoordonnee
     }
 };
 
+/**
+ * Foncteur pour comparer si un entier est inférieur à un autre
+ */
+class EntierInferieur
+{
+public:
+    double operator()(const int& i, const int& j) const
+    {
+        if (i < j)
+            return true;
+        return false;
+    }
+};
+
+/**
+ * Foncteur pour comparer si un entier est supérieur à un autre
+ */
+class EntierSuperieur
+{
+public:
+    double operator()(const int& i, const int& j) const
+    {
+        if (i > j)
+            return true;
+        return false;
+    }
+};
+
 
 #endif  // SERVEURCPP_FONCTEURUTILS_H

@@ -2,26 +2,27 @@
 // Created by maxen on 23/12/2025.
 //
 
-#include <iostream>
-#include <ostream>
 #include <assert.h>
 
-#include "types/camion/camion.h"
+#include <iostream>
+#include <ostream>
+
+#include "types/ordonnancementMachine/ordonnancementMachine.h"
 
 int main()
 {
-    cout << "Camion vide" << endl;
-    Camion cam = Camion();
+    cout << "OrdonnancementMachine vide" << endl;
+    OrdonnancementMachine cam = OrdonnancementMachine();
     cout << cam << endl;
     assert(cam.cmax == 0 && cam.tabId.size() == 0);
 
-    cout << "Camion avec la tache 1 et cmax = 3" << endl;
+    cout << "OrdonnancementMachine avec la tache 1 et cmax = 3" << endl;
     cam.ajouterTache(1, 3);
     cout << cam << endl;
     assert(cam.cmax == 3 && cam.tabId.size() == 1);
 
     cout << "Clone" << endl;
-    Camion cam2 = Camion(cam);
+    OrdonnancementMachine cam2 = OrdonnancementMachine(cam);
     cout << cam2 << endl;
     assert(cam2.cmax == 3 && cam.tabId.size() == 1);
     assert(cam == cam2);
