@@ -68,7 +68,11 @@ add_executable(testGrapheGeneral ${TESTS}/TestGrapheGeneral.cpp)
 target_link_libraries(testGrapheGeneral PRIVATE CORE)
 
 # Test coordonnee
-add_executable(testCoordonnee tests/TestCoordonnee.cpp)
+add_executable(testCoordonnee ${TESTS}/TestCoordonnee.cpp)
 target_link_libraries(testCoordonnee PRIVATE CORE)
-add_executable(testChargeurJson tests/TestChargeur.cpp)
+add_executable(testChargeurJson ${TESTS}/TestChargeur.cpp)
 target_link_libraries(testChargeurJson PRIVATE CORE)
+
+# Test messageBase
+add_executable(testMessageBase ${TESTS}/testMessageBase.cpp)
+target_link_libraries(testMessageBase PRIVATE CORE)

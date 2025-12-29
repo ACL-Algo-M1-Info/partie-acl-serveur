@@ -120,7 +120,7 @@ public:
                 if (p)
                     *p = '\0';
                 else
-                    p = buffer + nbOctetsRecus; // Relocalisation de la fin du message
+                    p = buffer + nbOctetsRecus; // Relocalisation de la fin du base
 
                 int L = p - buffer; // Taille str sans le \0
                 int LResp = L + 3; // Taille de la réponse (2 cars en + pour \r\n et il reste le \0)
@@ -128,7 +128,7 @@ public:
 
                 cout << "Message \"" << buffer << "\" (\"" << controlString(string(buffer)) << "\") reçu d'une longueur " << L << endl;
 
-                // On retourne le message
+                // On retourne le base
                 char resp[LResp]; // Ajout de \r\n donc 2 chars en +
 
                 // Application de la transformation
