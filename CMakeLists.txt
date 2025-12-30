@@ -74,5 +74,5 @@ add_executable(testChargeurJson ${TESTS}/TestChargeur.cpp)
 target_link_libraries(testChargeurJson PRIVATE CORE)
 
 # Test messageBase
-add_executable(testMessageBase ${TESTS}/testMessageBase.cpp)
-target_link_libraries(testMessageBase PRIVATE CORE)
+add_executable(testMessagesServeur ${TESTS}/testMessagesServeur.cpp)
+target_link_libraries(testMessagesServeur PRIVATE CORE)

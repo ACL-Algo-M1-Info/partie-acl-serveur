@@ -8,7 +8,7 @@
 // INCLUSIONS
 
 #include "exceptions/ErreurFormat/erreurFormat.h"
-#include "types/messagesReseau/base/messageBase/messageBase.h"
+#include "types/tcp/messagesReseau/codeTypeRequete.h"
 #include "utils/json.h"
 
 using json = nlohmann::json;
@@ -16,38 +16,51 @@ using json = nlohmann::json;
 namespace serv
 {
 
-template <class DATA>
-class MessageBaseRecu : public MessageBase<DATA>
+class RequeteSocket
 {
 public:
 
+    // CONSTANTES
+
+    /** Segment JSON pour le champ du type. */
+    static const string SEGMENT_TYPE;
+
+    /** Segment JSON pour le champ de la data. */
+    static const string SEGMENT_DATA;
+
     // VARIABLES
 
-    /** Contenu JSON du message initial. */
-    string contenu;
+    /** Contenu JSON du jsonMessage initial. */
+    string contenuInitial;
 
     /** JSON obtenu. */
-    json message;
+    json jsonMessage;
+
+    /** Type de la requête reçue. */
+    CodeTypeRequete type;
+
+    /** Segment de données reçu, au format json. */
+    json data;
 
     // CONSTRUCTEUR / DESTRUCTEUR
 
     /**
-     * Construit un message reçu et parse le contenu. Doit être un json valide.
-     * @param contenu Contenu json en string.
+     * Construit un jsonMessage reçu et parse le contenu. Doit être un json valide.
+     * @param contenuInitial Contenu json en string.
      * @throws json::parse_error Erreur de parsing : json invalide.
      */
-    MessageBaseRecu(const string& contenu)
-        : contenu(contenu)
+    RequeteSocket(const string& contenuInitial)
+        : contenuInitial(contenuInitial)
     {
         // Throws un json::parse_error si invalide.
-        message = json::parse(contenu);
+        jsonMessage = json::parse(contenuInitial);
 
         // Structure incorrecte
         if (!messageRespecteStructure())
             throw ErreurFormat("Message au format invalide");
 
-        this->type = message[ MessageBase<DATA>::SEGMENT_TYPE ];
-        this->data = message[ MessageBase<DATA>::SEGMENT_DATA ];
+        this->type = jsonMessage[ SEGMENT_TYPE ].get<CodeTypeRequete>();
+        this->data = jsonMessage[ SEGMENT_DATA ];
     }
 
     // METHODES
@@ -58,7 +71,7 @@ public:
      */
     bool messageEstDictionnaire() const
     {
-        return message.is_object();
+        return jsonMessage.is_object(); // Est un dico <=> est un objet
     }
 
     /**
@@ -68,8 +81,8 @@ public:
     bool messageRespecteStructure() const
     {
         return messageEstDictionnaire()
-            && message.contains(MessageBase<DATA>::SEGMENT_TYPE)
-            && message.contains(MessageBase<DATA>::SEGMENT_DATA);
+            && jsonMessage.contains(SEGMENT_TYPE)
+            && jsonMessage.contains(SEGMENT_DATA);
     }
 
     // OPERATEURS
@@ -79,13 +92,13 @@ public:
      */
     operator string() const
     {
-        return this->contenu;
+        return "Message recu : " + this->contenuInitial;
     }
 
     /**
      * Opérateur <<
      */
-    friend ostream& operator<<(ostream& s, const MessageBaseRecu& m)
+    friend ostream& operator<<(ostream& s, const RequeteSocket& m)
     {
         return s << (string)m;
     }
