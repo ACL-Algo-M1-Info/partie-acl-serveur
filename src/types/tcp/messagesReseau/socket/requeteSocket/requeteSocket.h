@@ -23,10 +23,13 @@ public:
     // CONSTANTES
 
     /** Segment JSON pour le champ du type. */
-    static const string SEGMENT_TYPE;
+    inline static const string SEGMENT_TYPE = "type";
 
     /** Segment JSON pour le champ de la data. */
-    static const string SEGMENT_DATA;
+    inline static const string SEGMENT_DATA = "data";
+
+    /** Segment de l'id de conversation de la requête. */
+    inline static const string SEGMENT_IDCONVERSATION = "idConversation";
 
     // VARIABLES
 
@@ -41,6 +44,9 @@ public:
 
     /** Segment de données reçu, au format json. */
     json data;
+
+    /** ID de la conversation. */
+    int idConversation;
 
     // CONSTRUCTEUR / DESTRUCTEUR
 
@@ -60,6 +66,7 @@ public:
             throw ErreurFormat("Message au format invalide");
 
         this->type = jsonMessage[ SEGMENT_TYPE ].get<CodeTypeRequete>();
+        this->idConversation = jsonMessage[ SEGMENT_IDCONVERSATION ].get<int>();
         this->data = jsonMessage[ SEGMENT_DATA ];
     }
 
@@ -82,7 +89,8 @@ public:
     {
         return messageEstDictionnaire()
             && jsonMessage.contains(SEGMENT_TYPE)
-            && jsonMessage.contains(SEGMENT_DATA);
+            && jsonMessage.contains(SEGMENT_DATA)
+            && jsonMessage.contains(SEGMENT_IDCONVERSATION);
     }
 
     // OPERATEURS

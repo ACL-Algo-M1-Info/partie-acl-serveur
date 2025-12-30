@@ -13,13 +13,13 @@ using namespace std;
 
 int main()
 {
-    serv::ReponseSocket<string> m(serv::CodeStatutReponse::OK, "je suis une limace");
+    serv::ReponseSocket<string> m(serv::CodeStatutReponse::OK, "je suis une limace", 2);
     serv::ReponseSocket<map<string, int>> m2(serv::CodeStatutReponse::OK, map<string, int> {{"hey", 1}, {"hi", 2}});
 
     cout << m << endl;
     cout << m2 << endl;
 
-    serv::RequeteSocket r("{\"data\":{\"cmd\":\"test\",\"args\":[1,2,3]},\"type\":10}");
+    serv::RequeteSocket r("{\"data\":{\"cmd\":\"test\",\"args\":[1,2,3]},\"type\":10,\"idConversation\":5}");
 
     cout << r << endl;
 

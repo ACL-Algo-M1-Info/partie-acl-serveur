@@ -6,8 +6,4 @@
 
 namespace serv
 {
-
-const string RequeteSocket::SEGMENT_TYPE = "type";
-const string RequeteSocket::SEGMENT_DATA = "data";
-
 } // serv

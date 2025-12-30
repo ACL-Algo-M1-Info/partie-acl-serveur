@@ -29,10 +29,13 @@ public:
     // CONSTANTES
 
     /** Segment du code statut de la requête. */
-    const string SEGMENT_STATUT = "statut";
+    inline static const string SEGMENT_STATUT = "statut";
 
     /** Segment de la réponse de la requête. */
-    const string SEGMENT_REPONSE = "reponse";
+    inline static const string SEGMENT_REPONSE = "reponse";
+
+    /** Segment de l'id de conversation de la requête. */
+    inline static const string SEGMENT_IDCONVERSATION = "idConversation";
 
     // VARIABLES
 
@@ -42,6 +45,9 @@ public:
     /** Données à jsonifier. */
     T reponse;
 
+    /** ID de la conversation. */
+    int idConversation;
+
     // CONSTRUCTEUR / DESTRUCTEUR
 
     /**
@@ -49,8 +55,8 @@ public:
      * @param
      * @param
      */
-    ReponseSocket(CodeStatutReponse statut, const T& reponse)
-        : statut(statut), reponse(reponse)
+    ReponseSocket(CodeStatutReponse statut, const T& reponse, int idConversation = 0)
+        : statut(statut), reponse(reponse), idConversation(idConversation)
     {}
 
     // METHODES
@@ -65,7 +71,8 @@ public:
         json j;
 
         j[ SEGMENT_STATUT ] = this->statut;
-        j[ this->SEGMENT_REPONSE ] = this->reponse;
+        j[ SEGMENT_REPONSE ] = this->reponse;
+        j[ SEGMENT_IDCONVERSATION ] = this->idConversation;
 
         // Renvoie au format string. Provoque une erreur si le type T n'est pas sérialisable. Devrait être un type de base comme dictionnaire, ...
         return j.dump();
