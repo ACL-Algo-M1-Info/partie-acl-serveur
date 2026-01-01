@@ -4,8 +4,9 @@
 
 // INCLUSIONS
 
-#include "etat.h"
+#include <sstream>
 
+#include "etat.h"
 #include "utils/utils.h"
 
 // FONCTIONS
@@ -23,7 +24,22 @@ void Etat::ajouterTacheSurMachine(const int& k, const int& i, const int& quantit
 
 void Etat::ajouterTacheSurMachineParInstance(const Instance& instance, const int& k, const int& i)
 {
-    ajouterTacheSurMachine(k, i, instance.quantites[i]);
+    ajouterTacheSurMachine(k, i, instance.p[i]);
+}
+
+Etat Etat::getEtatWithMinCmax(const vector<Etat>& etats)
+{
+    Etat etat = etats.at(0);
+    Etat min = etat;
+
+    for (int i = 1; i < etats.size(); i++)
+    {
+        Etat ei = etats.at(i);
+        if (min.cmax > ei.cmax)
+            min = ei;
+    }
+
+    return min;
 }
 
 // SURCHARGES

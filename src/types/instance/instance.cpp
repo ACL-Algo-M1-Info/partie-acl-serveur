@@ -2,27 +2,30 @@
 // Created by maxen on 22/12/2025.
 //
 
-#include "instance.h"
+// INCLUSIONS
 
+#include <sstream>
+
+#include "instance.h"
 #include "utils/utils.h"
 
 // CONSTRUCTEUR
 
 Instance::Instance(const int& n, const  int& m, int* quantites) : n(n), m(m)
 {
-    this->quantites = new int[n];
+    this->p = new int[n];
     for (int i = 0; i < n; i++)
     {
-        this->quantites[i] = quantites[i];
+        this->p[i] = quantites[i];
     }
 }
 
 Instance::Instance(const Instance& source) : n(source.n), m(source.m)
 {
-    this->quantites = new int[n];
+    this->p = new int[n];
     for (int i = 0; i < n; i++)
     {
-        this->quantites[i] = source.quantites[i];
+        this->p[i] = source.p[i];
     }
 }
 
@@ -30,7 +33,7 @@ Instance::Instance(const Instance& source) : n(source.n), m(source.m)
 
 int Instance::obtenirPmax() const
 {
-    return Utils::maxArrayInt(this->n, this->quantites);
+    return Utils::maxArrayInt(this->n, this->p);
 }
 
 // SURCHARGES
@@ -43,7 +46,7 @@ Instance::operator string() const
     o << "{";
     for (int i = 0; i < this->n; i++)
     {
-        o << "  " << quantites[i];
+        o << "  " << p[i];
     }
     o << " }" << endl;
     return o.str();
@@ -60,7 +63,7 @@ bool Instance::operator==(const Instance& instance) const
 
     for (int i = 0; i < this->n; i++)
     {
-        if (this->quantites[i] != instance.quantites[i])
+        if (this->p[i] != instance.p[i])
             return false;
     }
 

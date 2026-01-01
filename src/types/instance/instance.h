@@ -4,13 +4,10 @@
 
 #pragma once
 
-#include <string>
-
-#include "types/camion/camion.h"
 
 // INCLUSIONS
 
-#include <sstream>
+#include <string>
 
 // USINGS
 
@@ -31,7 +28,7 @@ public:
     int m;
 
     /** Tableau de quantités des tâches */
-    int* quantites;
+    int* p;
 
     // CONSTRUCTEUR / DESTRUCTEUR
 
@@ -40,9 +37,9 @@ public:
      *
      * @param n le nombre de tâches
      * @param m le nombre de mâchines
-     * @param quantites la durée opératoire des tâches
+     * @param p la durée opératoire des tâches
      */
-    Instance(const int& n, const  int& m, int* quantites);
+    Instance(const int& n, const  int& m, int* p);
 
     /**
      * Supprime une instance.
