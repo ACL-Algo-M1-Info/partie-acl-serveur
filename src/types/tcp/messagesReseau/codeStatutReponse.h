@@ -19,7 +19,11 @@ typedef enum _CodeStatutReponse
     /** Code de réponse validant une requête. */
     OK = 200,
 
+    /** Code de réponse de ressource inexistante. */
+    ERREUR_INEXISTANT = 404,
 
+    /** Code de réponse d'erreur interne. */
+    ERREUR_INTERNE = 500,
 } CodeStatutReponse;
 
 } // serv

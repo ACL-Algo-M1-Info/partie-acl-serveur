@@ -55,7 +55,7 @@ public:
      * @param
      * @param
      */
-    ReponseSocket(CodeStatutReponse statut, const T& reponse, int idConversation = 0)
+    ReponseSocket(CodeStatutReponse statut, int idConversation, const T& reponse)
         : statut(statut), reponse(reponse), idConversation(idConversation)
     {}
 

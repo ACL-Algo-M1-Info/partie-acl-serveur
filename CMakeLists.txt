@@ -43,25 +43,29 @@ target_link_libraries(main PRIVATE ${EXT_LIB} CORE)
 
 ## Tests
 
-# Test serveur CPP
+# Test serveur CPP 1
+add_executable(testServeurTest ${TESTS}/testServeurTest.cpp)
+target_link_libraries(testServeurTest PRIVATE CORE ${EXT_LIB})
+
+# Test serveur CPP 2
 add_executable(testServeur ${TESTS}/testServeur.cpp)
-target_link_libraries(testServeur PRIVATE ${EXT_LIB} CORE)
+target_link_libraries(testServeur PRIVATE CORE ${EXT_LIB})
 
 # Test camion CPP
 add_executable(testCamion ${TESTS}/testCamion.cpp)
-target_link_libraries(testCamion PRIVATE ${EXT_LIB} CORE)
+target_link_libraries(testCamion PRIVATE CORE ${EXT_LIB})
 
 # Test etat CPP
 add_executable(testEtat ${TESTS}/testEtat.cpp)
-target_link_libraries(testEtat PRIVATE ${EXT_LIB} CORE)
+target_link_libraries(testEtat PRIVATE CORE ${EXT_LIB})
 
 # Test instance CPP
 add_executable(testInstance ${TESTS}/testInstance.cpp)
-target_link_libraries(testInstance PRIVATE ${EXT_LIB} CORE)
+target_link_libraries(testInstance PRIVATE CORE ${EXT_LIB})
 
 # Test Liste template (PElement)
 add_executable(testPElement ${TESTS}/TestPElement.cpp)
-target_link_libraries(testPElement PRIVATE ${EXT_LIB} CORE)
+target_link_libraries(testPElement PRIVATE CORE ${EXT_LIB})
 
 # Test graphe
 add_executable(testGrapheGeneral ${TESTS}/TestGrapheGeneral.cpp)
