@@ -23,7 +23,11 @@ class SingletonTemplate
      * elle n'existe pas
      * @return : pointeur sur l'instance du singleton
      */
-    static C* getInstance();
+    static C* getInstance()
+    {
+        static C instance;
+        return &instance;
+    }
 
     /**
      * Empêche la copie du singleton

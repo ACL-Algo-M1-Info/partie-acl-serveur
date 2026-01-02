@@ -43,21 +43,25 @@ target_link_libraries(main PRIVATE ${EXT_LIB} CORE)
 
 ## Tests
 
-# Test serveur CPP
+# Test serveur CPP 1
+add_executable(testServeurTest ${TESTS}/testServeurTest.cpp)
+target_link_libraries(testServeurTest PRIVATE CORE ${EXT_LIB})
+
+# Test serveur CPP 2
 add_executable(testServeur ${TESTS}/testServeur.cpp)
-target_link_libraries(testServeur PRIVATE ${EXT_LIB} CORE)
+target_link_libraries(testServeur PRIVATE CORE ${EXT_LIB})
 
 # Test ordonnancement machine CPP
 add_executable(testOrdonnancementMachine ${TESTS}/testOrdonnancementMachine.cpp)
-target_link_libraries(testOrdonnancementMachine PRIVATE ${EXT_LIB} CORE)
+target_link_libraries(testOrdonnancementMachine PRIVATE CORE ${EXT_LIB})
 
 # Test etat CPP
 add_executable(testEtat ${TESTS}/testEtat.cpp)
-target_link_libraries(testEtat PRIVATE ${EXT_LIB} CORE)
+target_link_libraries(testEtat PRIVATE CORE ${EXT_LIB})
 
 # Test instance CPP
 add_executable(testInstance ${TESTS}/testInstance.cpp)
-target_link_libraries(testInstance PRIVATE ${EXT_LIB} CORE)
+target_link_libraries(testInstance PRIVATE CORE ${EXT_LIB})
 
 # Test Jackson
 add_executable(testJackson ${TESTS}/testJackson.cpp)
@@ -69,20 +73,24 @@ target_link_libraries(testAlgoProgDynamique PRIVATE ${EXT_LIB} CORE)
 
 # Test Liste template (PElement)
 add_executable(testPElement ${TESTS}/TestPElement.cpp)
-target_link_libraries(testPElement PRIVATE ${EXT_LIB} CORE)
+target_link_libraries(testPElement PRIVATE CORE ${EXT_LIB})
 
 # Test graphe
 add_executable(testGrapheGeneral ${TESTS}/TestGrapheGeneral.cpp)
 target_link_libraries(testGrapheGeneral PRIVATE CORE)
 
 # Test coordonnee
-add_executable(testCoordonnee tests/TestCoordonnee.cpp)
+add_executable(testCoordonnee ${TESTS}/TestCoordonnee.cpp)
 target_link_libraries(testCoordonnee PRIVATE CORE)
 
 # Test Chargeur
-add_executable(testChargeurJson tests/TestChargeur.cpp)
+add_executable(testChargeurJson ${TESTS}/TestChargeur.cpp)
 target_link_libraries(testChargeurJson PRIVATE CORE)
 
 # Test TSP
 add_executable(testTSP tests/TestTSP.cpp)
 target_link_libraries(testTSP PRIVATE CORE)
+
+# Test messageBase
+add_executable(testMessagesServeur ${TESTS}/testMessagesServeur.cpp)
+target_link_libraries(testMessagesServeur PRIVATE CORE)

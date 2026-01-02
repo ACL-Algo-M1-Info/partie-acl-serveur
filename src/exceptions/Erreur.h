@@ -7,15 +7,15 @@
 #include <string>
 using namespace std;
 
-class Erreur
+class Erreur : public exception
 {
 private:
     string message;
 
 public:
-    Erreur(const string& message) : message(message)
-    {
-    }
+    Erreur(const string& message)
+        : message(message)
+    {}
 
     string getMessage() const
     {
