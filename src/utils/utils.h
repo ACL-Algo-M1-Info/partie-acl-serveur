@@ -109,6 +109,7 @@ class Utils
     static Graphe<S, T>* resoudreTSPComplet(Graphe<S, T>& graphe, const FONCTEURDISTANCE& distance)
     {
         graphe.rendreComplet(distance);
+        cout << "Graphe complet" << endl << graphe << endl;
         Graphe<S, T>* acpm = graphe.kruskal();
         PElement<Sommet<T>>* tournee = acpm->TSP();
         Graphe<S, T>* resultat = graphe.construireGrapheTournee(tournee);

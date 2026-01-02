@@ -26,7 +26,7 @@ class Coordonnee
 
 };
 
-ostream& operator<<(ostream& o, const Coordonnee coordonnee)
+ostream& operator<<(ostream& o, const Coordonnee& coordonnee)
 {
     return o << (string)coordonnee;
 }

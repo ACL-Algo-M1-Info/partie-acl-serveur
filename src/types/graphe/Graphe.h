@@ -370,6 +370,11 @@ class Graphe
         {
             Sommet<T>* ancien = itS->v;
             Sommet<T>* nouveau = ACPM->creeSommet(ancien->v);
+            nouveau->clef = ancien->clef;
+            if (nouveau->clef >= ACPM->prochaineClef)
+            {
+                ACPM->prochaineClef = nouveau->clef + 1;
+            }
             correspondance[ancien->clef] = nouveau;
             parents[ancien->clef] = ancien->clef;
             itS = itS->s;
@@ -433,7 +438,8 @@ class Graphe
      * Parcours prefixe sur l'ACPM en ne notant les sommets que lors de leur première découverte
      * => cycle eulérien
      * Le parcours récursif simile le passage sur les arêtes dédoublées
-     * => cycle eulérien transformé en cyle hamiltonien => ce qu'on voulait
+     * => cycle eulérien transformé en cyle hamiltonien (en réalité on a bien une ligne droite mais il faut refermer le cycle avec le sommet de
+     * depart, charge à l'appelant)
      * @param s
      * @param sommetsVisites
      * @param tournee
@@ -461,7 +467,7 @@ class Graphe
     /**
      * HYPOTHESE : La méthode est lancée sur un ACPM
      * Méthode principale de l'heuristique TSP
-     * Prépare la tournée de sommet et ferme la boucle
+     * Prépare la tournée de sommet et ferme la boucle pour obtenir le cycle hamiltonien
      * @return une tournée <= 2*OPT (et quelques ...)
      */
     PElement<Sommet<T>>* TSP()
