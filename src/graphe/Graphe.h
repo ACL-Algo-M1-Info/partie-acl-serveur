@@ -229,7 +229,7 @@ class Graphe
      * De cette liste, on peut donc déduire facilement, par exemple, la liste
      * des voisins de sommet ou encore la liste des arêtes adjacentes à sommet.
      * @param sommet
-     * @return
+     * @return la liste contenant les paires adjacentes sommet/arête à sommet (exemple Sommet = A et A connecté à B => paire : < B, A---B >
      */
     PElement<pair<Sommet<T>*, Arete<S, T>*>>* adjacences(const Sommet<T>* sommet) const
     {
@@ -265,7 +265,7 @@ class Graphe
      * Construit, pour le sommet sommet, la liste de toutes les  arêtes
      * incidentes en sommet.
      * @param sommet
-     * @return
+     * @return la liste des arêtes adjacentes à sommet
      */
     PElement<Arete<S, T>>* aretesAdjacentes(const Sommet<T>* sommet)
     {
@@ -286,7 +286,7 @@ class Graphe
      * Construit, pour le sommet sommet, la liste de tous les sommets voisins en
      * sommet.
      * @param sommet
-     * @return
+     * @return la liste des voisins
      */
     PElement<Sommet<T>>* voisins(const Sommet<T>* sommet)
     {
