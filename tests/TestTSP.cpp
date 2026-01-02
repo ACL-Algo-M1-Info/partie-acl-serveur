@@ -1,6 +1,6 @@
 #include <assert.h>
 
-#include "../src/graphe/Graphe.h"
+#include "../src/types/graphe/Graphe.h"
 #include "utils/utils.h"
 //
 // Created by MEGACHEESEKEBAB on 28/12/2025.

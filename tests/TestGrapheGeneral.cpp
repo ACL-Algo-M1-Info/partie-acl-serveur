@@ -3,11 +3,11 @@
 //
 #include <assert.h>
 
-#include "../src/graphe/AElement.h"
-#include "graphe/Arete.h"
-#include "graphe/GElement.h"
-#include "graphe/Graphe.h"
-#include "graphe/Sommet.h"
+#include "../src/types/graphe/AElement.h"
+#include "../src/types/graphe/Arete.h"
+#include "../src/types/graphe/GElement.h"
+#include "../src/types/graphe/Graphe.h"
+#include "../src/types/graphe/Sommet.h"
 int main()
 {
     {

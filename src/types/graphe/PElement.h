@@ -10,8 +10,8 @@
 #include <sstream>
 #include <string>
 
-#include "../Exceptions/Erreur.h"
-#include "../Formes/FormeUtils.h"
+#include "../../Exceptions/Erreur.h"
+#include "../../Formes/FormeUtils.h"
 #include "Arete.h"
 using namespace std;
 

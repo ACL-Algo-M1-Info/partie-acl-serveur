@@ -8,7 +8,7 @@
 #include <iostream>
 #include <string>
 
-#include "graphe/Graphe.h"
+#include "../types/graphe/Graphe.h"
 #include "json.h"
 #include "types/coordonnee/Coordonnee.h"
 using json = nlohmann::json;

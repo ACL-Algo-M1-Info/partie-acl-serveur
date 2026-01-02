@@ -3,7 +3,7 @@
 //
 #include "../src/Foncteurs/FoncteurUtils.h"
 #include "../src/Formes/FormeUtils.h"
-#include "../src/graphe/PElement.h"
+#include "../src/types/graphe/PElement.h"
 int main()
 {
     {

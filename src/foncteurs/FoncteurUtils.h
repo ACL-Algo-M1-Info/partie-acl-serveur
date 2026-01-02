@@ -7,8 +7,8 @@
 #include <cmath>
 
 #include "../Formes/FormeUtils.h"
-#include "graphe/Arete.h"
-#include "graphe/Sommet.h"
+#include "../types/graphe/Arete.h"
+#include "../types/graphe/Sommet.h"
 class CritereCouleur
 {
    public:

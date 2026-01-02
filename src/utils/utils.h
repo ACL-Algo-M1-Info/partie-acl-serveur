@@ -7,12 +7,12 @@
 #include <map>
 #include <set>
 
-
 using namespace std;
 // INCLUSIONS
 
 #include <vector>
-#include "../graphe/Graphe.h"
+
+#include "../types/graphe//Graphe.h"
 #include "types/instance/instance.h"
 
 // USINGS
@@ -25,7 +25,7 @@ class Utils
 {
    public:
     // FONCTIONS
-    
+
     /**
      * Retrouve l'entier maximal dans l'array. L'array ne doit pas être vide
      * @param n Taille de l'array > 0
