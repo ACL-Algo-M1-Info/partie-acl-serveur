@@ -7,7 +7,7 @@
 
 // INCLUSIONS
 
-#include "exceptions/ErreurFormat/erreurFormat.h"
+#include "exceptions/erreurFormat/erreurFormat.h"
 #include "types/tcp/messagesReseau/codeTypeRequete.h"
 #include "utils/json.h"
 
