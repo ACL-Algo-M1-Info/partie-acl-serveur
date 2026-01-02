@@ -1,5 +1,7 @@
-#include "../src/graphe/Graphe.h"
+#include <assert.h>
 
+#include "../src/graphe/Graphe.h"
+#include "utils/utils.h"
 //
 // Created by MEGACHEESEKEBAB on 28/12/2025.
 //
@@ -108,17 +110,105 @@ void testKruskal()
     graphe.creeArete(9, sC, sE);
     graphe.creeArete(9, sC, sD);
     graphe.creeArete(1, sC, sF);
-    graphe.creeArete(5,sE,sD);
+    graphe.creeArete(5, sE, sD);
     cout << graphe << endl;
 
-    Graphe<int,char> *acpm = graphe.kruskal();
+    Graphe<int, char>* acpm = graphe.kruskal();
     cout << "l'acpm de graphe : " << endl;
     cout << *acpm << endl;
+}
+
+void testDedouble()
+{
+    cout << "************************** test dedoublage ***************************" << endl;
+    Graphe<int, char> graphe;
+    Sommet<char>* sA = graphe.creeSommet('A');
+    Sommet<char>* sB = graphe.creeSommet('B');
+    Sommet<char>* sC = graphe.creeSommet('C');
+    graphe.creeArete(7, sA, sB);
+    graphe.creeArete(12, sB, sC);
+    graphe.creeArete(2, sA, sC);
+    cout << graphe;
+    Graphe<int, char>* acpm = graphe.kruskal();
+    cout << "acmp = " << endl << *acpm << endl;
+    acpm->dedoubleArete();
+    cout << "acmp dedouble = " << endl << *acpm << endl;
+}
+
+void testSet()
+{
+    cout << "************************** test set ***************************" << endl;
+    set<int> E;
+    E.insert(2);
+    E.insert(1);
+    E.insert(2);
+    assert(E.size() == 2);
+    assert(E.count(2) == 1);
+    assert(E.find(1) != E.end());
+    assert(E.find(13) == E.end());
+    Utils::afficheSet(E);
+    cout << endl;
+}
+
+void testTSP()
+{
+    cout << "************************** test TSP ***************************" << endl;
+    /* Instance page wikipedia cycle = ACBDA poids = 7*/
+    Graphe<int, char> graphe;
+    Sommet<char>* sA = graphe.creeSommet('A');
+    Sommet<char>* sB = graphe.creeSommet('B');
+    Sommet<char>* sC = graphe.creeSommet('C');
+    Sommet<char>* sD = graphe.creeSommet('D');
+    graphe.creeArete(4, sA, sB);
+    graphe.creeArete(3, sA, sC);
+    graphe.creeArete(1, sA, sD);
+    graphe.creeArete(1, sB, sC);
+    graphe.creeArete(2, sB, sD);
+    graphe.creeArete(5, sC, sD);
+    cout << "Affichage graphe complet" << endl;
+    cout << graphe << endl;
+    Graphe<int, char>* acpm = graphe.kruskal();
+    cout << "Affichage ACPM" << endl;
+    cout << *acpm << endl;
+    PElement<Sommet<char>>* tournee = acpm->TSP();
+    cout << PElement<Sommet<char>>::toString(tournee) << endl;
+    Graphe<int, char>* grapheTournee = graphe.construireGrapheTournee(tournee);
+    cout << "Affichage Graphe tournee" << endl;
+    cout << *grapheTournee << endl;
+    int poidsTotal = grapheTournee->sommePoids();
+    cout << "Poids total = " << poidsTotal << endl;
+
+    cout << "************************** test TSP2 ***************************" << endl;
+    /* Instance une autre instance : cycle = ACBDA poids = 10 mais l'heuristique trouve ABCDA poids = 11 */
+    Graphe<int, char> graphe2;
+    Sommet<char>* s2A = graphe2.creeSommet('A');
+    Sommet<char>* s2B = graphe2.creeSommet('B');
+    Sommet<char>* s2C = graphe2.creeSommet('C');
+    Sommet<char>* s2D = graphe2.creeSommet('D');
+    graphe2.creeArete(1, s2A, s2B);
+    graphe2.creeArete(2, s2A, s2C);
+    graphe2.creeArete(3, s2A, s2D);
+    graphe2.creeArete(2, s2B, s2C);
+    graphe2.creeArete(3, s2B, s2D);
+    graphe2.creeArete(5, s2C, s2D);
+
+    cout << "Affichage graphe complet 2" << endl << graphe2;
+    Graphe<int, char>* acpm2 = graphe2.kruskal();
+    cout << "Affichage ACPM 2" << *acpm2;
+    PElement<Sommet<char>>* tournee2 = acpm2->TSP();
+    cout << "Tourne optimale " << PElement<Sommet<char>>::toString(tournee2);
+    Graphe<int, char>* graphetournee2 = graphe2.construireGrapheTournee(tournee2);
+    cout << "Graphe de la tournee 2 " << endl << *graphetournee2 << endl;
+    int poidsTotal2 = graphetournee2->sommePoids();
+    cout << "Poids total tournee 2 = " << poidsTotal2 << endl;
 }
 int main()
 {
     testMap();
     testMapTemplate();
     testKruskal();
+    testDedouble();
+    testSet();
+    testTSP();
     return 0;
 }

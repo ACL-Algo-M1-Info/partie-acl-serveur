@@ -5,6 +5,9 @@
 #pragma once
 #include <iostream>
 #include <map>
+#include <set>
+
+#include "../graphe/Graphe.h"
 using namespace std;
 // INCLUSIONS
 
@@ -20,8 +23,7 @@ using namespace std;
 
 class Utils
 {
-public:
-
+   public:
     // FONCTIONS
 
    public:
@@ -33,7 +35,7 @@ public:
      */
     static int maxArrayInt(int n, const int* a);
 
-    template<class COMPARAISON>
+    template <class COMPARAISON>
     static void triFusion(int i, int j, Instance& instance, int* tp, COMPARAISON comparaison);
 
     /**
@@ -69,7 +71,7 @@ public:
      * @param parents
      */
     template <class T>
-    static void unionEnsemble(T a, T b, map<T, T> &parents)
+    static void unionEnsemble(T a, T b, map<T, T>& parents)
     {
         T racineA = trouveRacine(a, parents);
         T racineB = trouveRacine(b, parents);
@@ -89,5 +91,31 @@ public:
         {
             cout << "Element " << it->first << " a pour parent " << it->second << endl;
         }
+    }
+
+    template <class T>
+    static void afficheSet(const set<T>& ensemble)
+    {
+        cout << "Set : " << endl;
+        typename set<T>::const_iterator it;
+        cout << "{ ";
+        for (it = ensemble.begin(); it != ensemble.end(); ++it)
+        {
+            cout << *it << " ";
+        }
+        cout << "}";
+    }
+
+    template <class S, class T, class FONCTEURDISTANCE>
+    static Graphe<S, T>* resoudreTSPComplet(Graphe<S, T>& graphe, const FONCTEURDISTANCE& distance)
+    {
+        graphe.rendreComplet(distance);
+        Graphe<S, T>* acpm = graphe.kruskal();
+        PElement<Sommet<T>>* tournee = acpm->TSP();
+        Graphe<S, T>* resultat = graphe.construireGrapheTournee(tournee);
+
+        delete acpm;
+        PElement<Sommet<T>>::efface1(tournee);
+        return resultat;
     }
 };

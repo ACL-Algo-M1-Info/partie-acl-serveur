@@ -5,8 +5,8 @@
 #ifndef SERVEURCPP_GRAPHE_H
 #define SERVEURCPP_GRAPHE_H
 #include <map>
+#include <set>
 
-#include "../utils/utils.h"
 #include "Arete.h"
 #include "PElement.h"
 #include "Sommet.h"
@@ -27,10 +27,7 @@
 template <class S, class T>
 class Graphe
 {
-    /**************************************************************
-     **************************************************************
-     * TRUCS FACTORISES POUR CONSTRUCTEUR PAR COPIE ET DESTRUCTEUR*
-     */
+    /************************************************************** MÉTHODE PRIVÉE ***************************************************************/
    private:
     /**
      * Méthode privée pour le constructeur par copie et pour l'opérateur
@@ -102,15 +99,29 @@ class Graphe
         this->prochaineClef = 0;
     }
 
+    /**
+     * Cherche parmis les parents de i, le plus lointain ancêtre de i (la racine)
+     * Possible de le faire en récursif avec cas de base : i == parent[i]
+     * @param i
+     * @param parents
+     * @return la racine de i
+     */
+    int trouveRacine(int i, map<int, int>& parents)
+    {
+        while (i != parents[i])
+        {
+            i = parents[i];
+        }
+        return i;
+    }
+
    public:
     PElement<Sommet<T>>* lSommets;
     PElement<Arete<S, T>>* lAretes;
     int prochaineClef;
 
-    /**************************************************************
-     **************************************************************
-     * ************** CONSTRUCTEURS ET DESTRUCTEUR ****************
-     */
+    /************************************************************** CONSTRUCTEURS ET DESTRUCTEUR
+     * ***************************************************************/
     /**
      * Constructeur
      */
@@ -143,10 +154,7 @@ class Graphe
         vider();
     }
 
-    /**************************************************************
-     **************************************************************
-     * ************************ TOUT LE RESTE *********************
-     */
+    /************************************************************** MÉTHODE EXERCICES ***************************************************************/
     /**
      * Crée un sommet isolé
      * met à jour prochaineClef
@@ -312,8 +320,10 @@ class Graphe
         }
         return nullptr;
     }
-
+    /************************************************************** UTILITAIRES ET MÉTHODE POUR L'HEURISTIQUE
+    ***************************************************************/
     /**
+     * HYPOTHESE : Le graphe est supposé constitué uniquement d'une liste de sommets
      * Transforme le graphe actuel en graphe complet.
      * Crée une arête entre chaque paire de sommets.
      * Si le graphe à n sommets il aura donc (n(n-1))/2 arêtes après l'appel de cette méthode
@@ -375,18 +385,19 @@ class Graphe
             itA = itA->s;
         }
 
+        PElement<Arete<S, T>>* itListeTriee = listeAreteTriee;
         // Pour chaque arête triée
         // On regarde si l'ajout du sommet debut et fin ne crée pas de cycle
         // Autrement dit si debut et fin ont une racine commune, alors il y a un cycle
         // Sinon on ajoute l'arête dans l'ACPM
-        while (listeAreteTriee != nullptr)
+        while (itListeTriee != nullptr)
         {
-            Arete<S, T>* a = listeAreteTriee->v;
+            Arete<S, T>* a = itListeTriee->v;
             int clefSommetDebut = a->debut->clef;
             int clefSommetFin = a->fin->clef;
 
-            int racineDebut = Utils::trouveRacine(clefSommetDebut, parents);
-            int racineFin = Utils::trouveRacine(clefSommetFin, parents);
+            int racineDebut = trouveRacine(clefSommetDebut, parents);
+            int racineFin = trouveRacine(clefSommetFin, parents);
 
             if (racineDebut != racineFin)
             {
@@ -396,11 +407,152 @@ class Graphe
                 ACPM->creeArete(a->v, debut, fin);
             }
 
-            listeAreteTriee = listeAreteTriee->s;
+            itListeTriee = itListeTriee->s;
         }
 
         PElement<Arete<S, T>>::efface1(listeAreteTriee);
         return ACPM;
+    }
+
+    /**
+     * Permet de dédoubler les arêtes de this
+     * (n'est pas utilisée pour l'instant)
+     */
+    void dedoubleArete()
+    {
+        PElement<Arete<S, T>>* copieArete = PElement<Arete<S, T>>::copie1(lAretes);
+
+        while (copieArete != nullptr)
+        {
+            PElement<Arete<S, T>>::insertionOrdonnee(copieArete->v, lAretes, estPlusPetitOuEgal);
+            copieArete = copieArete->s;
+        }
+    }
+
+    /**
+     * Parcours prefixe sur l'ACPM en ne notant les sommets que lors de leur première découverte
+     * => cycle eulérien
+     * Le parcours récursif simile le passage sur les arêtes dédoublées
+     * => cycle eulérien transformé en cyle hamiltonien => ce qu'on voulait
+     * @param s
+     * @param sommetsVisites
+     * @param tournee
+     */
+    void DFS(Sommet<T>* s, set<int>& sommetsVisites, PElement<Sommet<T>>*& tournee)
+    {
+        sommetsVisites.insert(s->clef);
+        tournee = new PElement<Sommet<T>>(tournee, s);
+        PElement<Sommet<T>>* lesVoisinsDeS = voisins(s);
+        PElement<Sommet<T>>* it = lesVoisinsDeS;
+
+        while (it != nullptr)
+        {
+            Sommet<T>* voisin = it->v;
+            if (sommetsVisites.find(voisin->clef) == sommetsVisites.end())
+            {
+                DFS(voisin, sommetsVisites, tournee);
+            }
+            it = it->s;
+        }
+
+        PElement<Sommet<T>>::efface1(lesVoisinsDeS);
+    }
+
+    /**
+     * HYPOTHESE : La méthode est lancée sur un ACPM
+     * Méthode principale de l'heuristique TSP
+     * Prépare la tournée de sommet et ferme la boucle
+     * @return une tournée <= 2*OPT (et quelques ...)
+     */
+    PElement<Sommet<T>>* TSP()
+    {
+        PElement<Sommet<T>>* tournee = nullptr;
+
+        if (lSommets != nullptr)
+        {
+            set<int> sommetsVisites;
+            Sommet<T>* depart = lSommets->v;
+            DFS(depart, sommetsVisites, tournee);
+            tournee = new PElement<Sommet<T>>(tournee, depart);
+        }
+
+        return tournee;
+    }
+
+    /**
+     * HYPOTHESE : Est lancée sur un graphe complet pour retrouver toutes les arêtes de la tournée
+     * (En particulier celle qui permet de fermer le cycle qu'on perd avec l'ACPM)
+     * @param tournee
+     * @return un graphe qui ne contient que les arêtes de la tournée
+     */
+    Graphe<S, T>* construireGrapheTournee(PElement<Sommet<T>>* tournee) const
+    {
+        Graphe<S, T>* resultat = new Graphe<S, T>();
+        map<int, Sommet<T>*> correspondance;
+        map<int, Sommet<T>*> sommetsDuGrapheComplet;
+        PElement<Sommet<T>>* itS = this->lSommets;
+        while (itS != nullptr)
+        {
+            sommetsDuGrapheComplet[itS->v->clef] = itS->v;
+            itS = itS->s;
+        }
+
+        PElement<Sommet<T>>* it = tournee;
+        while (it != nullptr)
+        {
+            Sommet<T>* sommetACPM = it->v;
+            if (correspondance.find(sommetACPM->clef) == correspondance.end())
+            {
+                Sommet<T>* nouveau = resultat->creeSommet(sommetACPM->v);
+                correspondance[sommetACPM->clef] = nouveau;
+            }
+            it = it->s;
+        }
+
+        it = tournee;
+
+        while (it != nullptr && it->s != nullptr)
+        {
+            Sommet<T>* ancienS1 = it->v;
+            Sommet<T>* ancienS2 = it->s->v;
+
+            Sommet<T>* s1Complet = sommetsDuGrapheComplet[ancienS1->clef];
+            Sommet<T>* s2Complet = sommetsDuGrapheComplet[ancienS2->clef];
+
+            Arete<S, T>* areteOriginale = getAreteParSommets(s1Complet, s2Complet);
+            S poids = 0;
+            if (areteOriginale != nullptr)
+            {
+                poids = areteOriginale->v;
+            }
+            else
+            {
+                // Ce cas ne devrait pas arriver car this est complet !!
+                cerr << "Il faut lancer cette methode sur un graphe complet .." << endl;
+            }
+            Sommet<T>* nouveauS1 = correspondance[ancienS1->clef];
+            Sommet<T>* nouveauS2 = correspondance[ancienS2->clef];
+
+            resultat->creeArete(poids, nouveauS1, nouveauS2);
+            it = it->s;
+        }
+        return resultat;
+    }
+
+    /**
+     *
+     * @return la somme du poids des arêtes de this
+     */
+    S sommePoids() const
+    {
+        S total = 0;
+        PElement<Arete<S, T>>* it = lAretes;
+        while (it != nullptr)
+        {
+            total += it->v->v;
+            it = it->s;
+        }
+        return total;
     }
 };
 
