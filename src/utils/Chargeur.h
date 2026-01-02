@@ -26,7 +26,7 @@ class Chargeur
      * @param nomFichier
      * @param graphe
      */
-    static void chargerGrapheJson(const string& nomFichier, Graphe<double, Coordonnee<string, double>>& graphe)
+    static void chargerGrapheJson(const string& nomFichier, Graphe<double, Coordonnee>& graphe)
     {
         ifstream fichier(nomFichier);
         if (!fichier)
@@ -45,15 +45,15 @@ class Chargeur
             double latitude = donnees[i]["latitude"];
             double longitude = donnees[i]["longitude"];
             // cout << "ville = " << ville << ", longitude = " << longitude << ", latitude = " << latitude << endl;
-            Coordonnee<string, double> coordonnee(ville, latitude, longitude);
-            Sommet<Coordonnee<string, double>>* sommet = graphe.creeSommet(coordonnee);
+            Coordonnee coordonnee(ville, latitude, longitude);
+            Sommet<Coordonnee>* sommet = graphe.creeSommet(coordonnee);
         }
 
     }
 
-    static Graphe<double, Coordonnee<string, double>> chargerDossierJson(const string& nomDossier)
+    static Graphe<double, Coordonnee> chargerDossierJson(const string& nomDossier)
     {
-        Graphe<double, Coordonnee<string, double>> graphe;
+        Graphe<double, Coordonnee> graphe;
         cout << "Les villes du dossier " << nomDossier << " vont etre chargees dans un graphe" << endl;
         for (filesystem::directory_iterator it(nomDossier); it != filesystem::directory_iterator(); ++it)
         {
@@ -63,10 +63,10 @@ class Chargeur
         return graphe;
     }
 
-    static Graphe<double, Coordonnee<string, double>> chargerFichierJson(const string& nomFichier)
+    static Graphe<double, Coordonnee> chargerFichierJson(const string& nomFichier)
     {
         cout << "Les villes du fichier " << nomFichier << " vont etre chargees dans un graphe" << endl;
-        Graphe<double, Coordonnee<string, double>> graphe;
+        Graphe<double, Coordonnee> graphe;
         chargerGrapheJson(nomFichier, graphe);
         return graphe;
     }

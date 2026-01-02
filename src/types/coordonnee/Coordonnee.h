@@ -9,18 +9,14 @@
 #include <string>
 using namespace std;
 
-template <class X, class Y>
 class Coordonnee
 {
    public:
-    X ville;
-    Y latitude, longitude;
+    string ville;
+    double latitude, longitude;
 
-    Coordonnee(const X& ville, const Y& latitude, const Y& longitude) : ville(ville), latitude(latitude), longitude(longitude) {}
+    Coordonnee(const string& ville, const double& latitude, const double& longitude) : ville(ville), latitude(latitude), longitude(longitude) {}
 
-    /**
-     * Sous hypothèse que la classe X et Y ont redéfinis l'opérateur<< :-)
-     */
     operator string() const
     {
         ostringstream o;
@@ -30,8 +26,7 @@ class Coordonnee
 
 };
 
-template <class X, class Y>
-ostream& operator<<(ostream& o, const Coordonnee<X, Y> coordonnee)
+ostream& operator<<(ostream& o, const Coordonnee coordonnee)
 {
     return o << (string)coordonnee;
 }
