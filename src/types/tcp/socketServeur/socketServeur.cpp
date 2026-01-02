@@ -34,6 +34,23 @@ void SocketServeur::accepterRequetes()
             continue;
         }
 
+        // Si ça dépasse la taille max de clients, on ferme en déni de service
+        int taille;
+
+        { // Lock sur client
+            lock_guard lock(this->_clientsMutex);
+
+            taille = (int)this->_clients.size();
+        }
+
+        if (taille > CLIENTS_MAX)
+        {
+            cout << "Nombre de clients trop élevé : fermeture de la socket";
+            closesocket(sock);
+
+            continue;
+        }
+
         cout << "Nouvelle connexion d'id " << id << endl;
 
         // Stockage de l'interlocuteur & mise en thread. Le thread utilise le foncteur de la classe ConnexionClient pour démarrer l'interlocuteur.

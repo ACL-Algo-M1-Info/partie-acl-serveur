@@ -18,6 +18,8 @@ typedef enum _CodeTypeRequete
     /** Code de requête API. */
     API = 10,
 
+    /** Code d'impression de message sur le serveur. */
+    MESSAGE = 45,
 
 } CodeTypeRequete;
 
