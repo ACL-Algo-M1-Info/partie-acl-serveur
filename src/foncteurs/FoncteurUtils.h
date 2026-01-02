@@ -58,15 +58,55 @@ class DistanceEuclidienneCoordonnee
 };
 
 /**
+ * Foncteur pour calculer la distance géodésique
+ * Pourrait être paramétrée par un constructeur qui prendrait en argument le rayon de la sphére qu'il représente (donc pas seulement celui de la
+ * terre)
+ */
+class DistanceGeodesiqueCoordonnee
+{
+   private:
+    constexpr static double RAYON_TERRE_KM = 6371.0;
+
+    double degreToRadian(double degre) const { return degre * (M_PI / 180.0); }
+
+   public:
+    /**
+     * Formule de haversine
+     * source en javascript : https://www.movable-type.co.uk/scripts/latlong.html
+     * @tparam T
+     * @param a
+     * @param b
+     * @return la distance en Km entre deux points en prenant en compte la courbure de la terre
+     */
+    template <class T>
+    double operator()(const T& a, const T& b) const
+    {
+        double lat1 = degreToRadian(a.latitude);
+        double lat2 = degreToRadian(b.latitude);
+        double lon1 = degreToRadian(a.longitude);
+        double lon2 = degreToRadian(b.longitude);
+
+        double deltaLat = lat2 - lat1;
+        double deltaLon = lon2 - lon1;
+
+        double sinusDeltaLat = sin(deltaLat / 2);
+        double sinusDeltaLon = sin(deltaLon / 2);
+        double val = sinusDeltaLat * sinusDeltaLat + cos(lat1) * cos(lat2) * sinusDeltaLon * sinusDeltaLon;
+        double c = 2 * atan2(sqrt(val), sqrt(1 - val));
+
+        return RAYON_TERRE_KM * c;
+    }
+};
+
+/**
  * Foncteur pour comparer si un entier est inférieur à un autre
  */
 class EntierInferieur
 {
-public:
+   public:
     double operator()(const int& i, const int& j) const
     {
-        if (i < j)
-            return true;
+        if (i < j) return true;
         return false;
     }
 };
@@ -76,14 +116,12 @@ public:
  */
 class EntierSuperieur
 {
-public:
+   public:
     double operator()(const int& i, const int& j) const
     {
-        if (i > j)
-            return true;
+        if (i > j) return true;
         return false;
     }
 };
-
 
 #endif  // SERVEURCPP_FONCTEURUTILS_H
