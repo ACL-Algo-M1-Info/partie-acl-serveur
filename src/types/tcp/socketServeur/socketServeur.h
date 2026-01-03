@@ -20,7 +20,7 @@
 // DEFINES
 
 /** Nombre maximal de clients. */
-#define CLIENTS_MAX 50
+#define CLIENTS_MAX 1
 
 // NAMESPACES
 

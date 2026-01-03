@@ -43,9 +43,10 @@ void SocketServeur::accepterRequetes()
             taille = (int)this->_clients.size();
         }
 
-        if (taille > CLIENTS_MAX)
+        // Si l'ajout d'un nouveau client par rapport à la taille actuelle provoque un dépassement.
+        if (taille + 1 > CLIENTS_MAX)
         {
-            cout << "Nombre de clients trop élevé : fermeture de la socket";
+            cout << "Nombre de clients trop élevé : fermeture de la socket" << endl;
             closesocket(sock);
 
             continue;
