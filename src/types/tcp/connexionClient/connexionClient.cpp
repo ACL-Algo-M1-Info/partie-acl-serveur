@@ -116,9 +116,7 @@ void ConnexionClient::operator ()() const
         while (!fin);
     }
     catch (exception& e)
-    {
-        cerr << e.what() << endl;
-    }
+    { /* Rien à faire, la connexion se termine. Arrive parce que le sleep est souvent interrompu. */ }
 
     cout << "Déconnexion de la socket d'id " << this->_id << endl;
 
