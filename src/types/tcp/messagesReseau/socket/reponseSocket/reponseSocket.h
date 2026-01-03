@@ -11,6 +11,7 @@
 
 #include "types/tcp/messagesReseau/codeStatutReponse.h"
 #include "types/tcp/messagesReseau/conversionJSON.h"
+#include "types/tcp/messagesReseau/messageBase.h"
 #include "utils/json.h"
 
 // NAMESPACES
@@ -22,7 +23,7 @@ namespace serv
 {
 
 template <class T>
-class ReponseSocket : public ConversionJSON
+class ReponseSocket : public ConversionJSON, public MessageBase
 {
 public:
 
@@ -59,13 +60,20 @@ public:
         : statut(statut), reponse(reponse), idConversation(idConversation)
     {}
 
+    // GETTER / SETTER
+
+    int getIdConversation() const override
+    {
+        return this->idConversation;
+    }
+
     // METHODES
 
     /**
      * Transforme le jsonMessage au format JSON.
      * @return Message au format JSON.
      */
-    string enJson() const
+    string enJson() const override
     {
         // Mise en place du json.
         json j;
@@ -85,7 +93,7 @@ public:
      */
     operator string() const
     {
-        return "Reponse generee : " + this->enJson();
+        return this->enJson();
     }
 
     /**

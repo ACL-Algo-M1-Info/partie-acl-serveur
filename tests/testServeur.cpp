@@ -13,24 +13,24 @@ int main()
     SetConsoleCP(CP_UTF8);
     SetConsoleOutputCP(CP_UTF8);
 
-    string ip;
-    short port;
-    bool valid;
+    string ip = "127.0.0.1";
+    short port = 9111;
+    bool valid = true;
 
-    do
-    {
-        cout << "Choisissez l'adresse du serveur : ";
-        cin >> ip;
-
-        cout << "Choisissez le port : ";
-        cin >> port;
-
-        valid = SocketServeur::adresseEstDisponible(ip, port);
-
-        if (!valid)
-            cerr << ip << ":" << port << " invalides !" << endl;
-    }
-    while (!valid);
+    // do
+    // {
+    //     cout << "Choisissez l'adresse du serveur : ";
+    //     cin >> ip;
+    //
+    //     cout << "Choisissez le port : ";
+    //     cin >> port;
+    //
+    //     valid = SocketServeur::adresseEstDisponible(ip, port);
+    //
+    //     if (!valid)
+    //         cerr << ip << ":" << port << " invalides !" << endl;
+    // }
+    // while (!valid);
 
     SocketServeur *s = SocketServeur::getInstance();
 

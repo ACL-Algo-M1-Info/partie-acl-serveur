@@ -14,9 +14,10 @@
 template <class E, class S>
 class TemplateCOR : public InterfTemplateCOR<E, S>
 {
+public:
+
     const TemplateCOR* suivant;
 
-   public:
     /**
      * Constructeur de la COR
      * @param maillonSuivant : pointeur vers le prochain maillon de la chaine
@@ -24,12 +25,33 @@ class TemplateCOR : public InterfTemplateCOR<E, S>
     explicit TemplateCOR(const TemplateCOR* maillonSuivant) : suivant(maillonSuivant){}
 
     /**
-     * Implémentation de la méthode traitement de l'interface
+     * Détruit le maillon suivant à la destruction.
+     */
+    virtual ~TemplateCOR()
+    {
+        if (suivant != nullptr)
+            delete suivant;
+    }
+
+    bool traitement(const E* entree, S* sortie) const override
+    {
+        return traitementMaillon(entree, sortie);
+    }
+
+    /**
+     * Parcours du chaînage.
      * @param entree : entrée à analyser
      * @param sortie : sortie à renvoyer
      * @return : vrai en cas de réussite du traitement, faux en cas d'échec
      */
-    bool traitement(const E* entree, S* sortie) const;
+    bool traitementMaillon(const E* entree, S* sortie) const
+    {
+        if(traitementConcret(entree, sortie)) return true;
+
+        if (suivant != nullptr) return suivant->traitementMaillon(entree, sortie);
+
+        return false;
+    }
 
     /**
      * Méthode à implémenter dans les enfants de la classe

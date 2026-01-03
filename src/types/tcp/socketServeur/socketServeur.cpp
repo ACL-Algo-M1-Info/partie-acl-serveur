@@ -129,19 +129,20 @@ void SocketServeur::fermerConnexionClient(const ConnexionClient& connexion)
     // Fermeture de la socket.
     connexion.fermerSocket();
 
-        {   // Lock sur _clients.
+    // On enlève le thread.
+    {   // Lock sur _threads.
+        lock_guard lock(this->_threadMutex);
+
+        this->_threads.erase(id);
+    }
+
+    // On enlève le client.
+    {   // Lock sur _clients.
         lock_guard lock(this->_clientsMutex);
 
         // Suppression du client de la map.
         this->_clients.erase(id);
-        }
-
-    // On enlève le thread.
-        {   // Lock sur _threads.
-        lock_guard lock(this->_threadMutex);
-
-        this->_threads.erase(id);
-        }
+    }
 }
 
 } // serv

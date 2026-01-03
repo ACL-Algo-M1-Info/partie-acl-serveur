@@ -8,7 +8,8 @@
 #include <chrono>
 
 #include "connexionClient.h"
-#include "exceptions/Erreur.h"
+
+#include "cor/corUtils.h"
 #include "types/tcp/messagesReseau/socket/reponseSocket/reponseSocket.h"
 #include "types/tcp/messagesReseau/socket/requeteSocket/requeteSocket.h"
 #include "types/tcp/socketServeur/socketServeur.h"
@@ -80,12 +81,12 @@ void ConnexionClient::operator ()() const
                 RequeteSocket recu = RequeteSocket(recuStr);
 
                 // Traitement par la COR.
-                bool succes = false; // TODO écrire le COR
+                bool succes = CORUtils::getInstance()->typeCorRacine->traitement(&recu, &reponseStr);
 
                 // Si pas de succès, alors il faut envoyer une erreur disant que le traitement demandé n'existe pas.
                 if (!succes)
                 {
-                    reponseStr = ReponseSocket<string>(CodeStatutReponse::ERREUR_INEXISTANT, recu.idConversation, "La ressource demandée n'existe pas").enJson();
+                    reponseStr = ReponseSocket<string>(ERREUR_INEXISTANT, recu.getIdConversation(), "Le type de requête demandé n'existe pas").enJson();
                 }
             }
             catch (exception& e)
@@ -93,7 +94,7 @@ void ConnexionClient::operator ()() const
                 cerr << "Erreur sur l'interlocuteur " << _id << " : " << e.what() << endl;
 
                 // En cas d'erreur, envoi d'une erreur automatique : source inconnue. L'id client 0 signale une erreur au client.
-                reponseStr = ReponseSocket<string>(CodeStatutReponse::ERREUR_INTERNE, 0, "Une erreur interne s'est produite").enJson();
+                reponseStr = ReponseSocket<string>(ERREUR_INTERNE, 0, "Une erreur interne s'est produite").enJson();
             }
 
             // Calcul des tailles.

@@ -15,6 +15,7 @@ class InterfTemplateCOR {
 public:
     /**
      * Methode principale de la COR, permet de parcourt la chaine et de s'arrêter en cas d'aboutissement d'un traitement
+     * Peut être overridden si jamais un prétraitement/posttraitement est nécessaire
      * @param entree : entrée à analyser
      * @param sortie  : sortie à renvoyer
      * @return : vrai en cas de réussite du traitement, faux en cas d'échec

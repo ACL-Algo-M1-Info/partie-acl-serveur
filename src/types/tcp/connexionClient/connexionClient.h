@@ -10,6 +10,10 @@
 #include <thread>
 #include <winsock2.h>
 
+#include "tcp/gestionnaires/types/TypeCOR.h"
+#include "tcp/gestionnaires/types/api/TypeCORAPI.h"
+#include "tcp/gestionnaires/types/message/TypeCORMessage.h"
+
 // DEFINES
 
 /** Longueur maximale d'un message. */
@@ -33,16 +37,16 @@ private:
     /** Socket client. */
     SOCKET _sock;
 
-    // CONSTRUCTEUR
-
 public:
+
+    // CONSTRUCTEUR
 
     /**
      * Constructeur par défaut de construction d'un interlocuteur client.
      * @param sock Socket.
      * @param id ID client.
      */
-    ConnexionClient(SOCKET sock = INVALID_SOCKET, int id = -1)
+    explicit ConnexionClient(SOCKET sock = INVALID_SOCKET, int id = -1)
         : _sock(sock), _id(id)
     {}
 
@@ -71,9 +75,8 @@ public:
 
     /**
      * Foncteur lancé par le serveur dans la mise en thread.
-     * @return
      */
-    void operator ()() const;
+    virtual void operator ()() const;
 };
 
 } // serv

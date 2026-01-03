@@ -22,6 +22,9 @@ typedef enum _CodeStatutReponse
     /** Code de réponse de ressource inexistante. */
     ERREUR_INEXISTANT = 404,
 
+    /** Code de réponse de format invalide. */
+    ERREUR_FORMAT_INVALIDE = 419,
+
     /** Code de réponse d'erreur interne. */
     ERREUR_INTERNE = 500,
 } CodeStatutReponse;

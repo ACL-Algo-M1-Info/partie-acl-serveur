@@ -16,8 +16,12 @@ namespace serv
 class ConversionJSON
 {
 public:
-    
+
+    // CONSTRUCTEUR / DESTRUCTEUR
+
     virtual ~ConversionJSON() = default;
+
+    // METHODES
 
     /**
      * Méthode de conversion en JSON.

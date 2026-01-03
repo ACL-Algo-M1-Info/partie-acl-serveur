@@ -6,8 +6,4 @@
 
 namespace serv
 {
-
-const string RequeteAPI::SEGMENT_COMMANDE = "cmd";
-const string RequeteAPI::SEGMENT_ARGUMENTS = "args";
-
 } // serv

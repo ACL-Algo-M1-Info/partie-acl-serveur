@@ -8,7 +8,6 @@
 // INCLUSIONS
 
 #include <string>
-#include <variant>
 
 #include "types/tcp/messagesReseau/socket/requeteSocket/requeteSocket.h"
 #include "utils/json.h"
@@ -21,22 +20,22 @@ using json = nlohmann::json;
 namespace serv
 {
 
-class RequeteAPI
+class RequeteAPI : public MessageBase
 {
 public:
 
     // CONSTANTES
 
     /** Segment de commande. */
-    static const string SEGMENT_COMMANDE;
+    inline static const string SEGMENT_COMMANDE = "cmd";
 
     /** Segment d'arguments. */
-    static const string SEGMENT_ARGUMENTS;
+    inline static const string SEGMENT_ARGUMENTS = "args";
 
     // VARIABLES
 
     /** Requête obtenue (précédemment). */
-    RequeteSocket precedent;
+    const RequeteSocket& precedent;
 
     /** jsonMessage du contenu data. */
     json jsonAPIMessage;
@@ -59,6 +58,13 @@ public:
 
         for (const json& arg : jsonAPIMessage[ SEGMENT_ARGUMENTS ])
             this->args.push_back(arg);
+    }
+
+    // GETTER / SETTER
+
+    int getIdConversation() const override
+    {
+        return this->precedent.getIdConversation();
     }
 
     // METHODES

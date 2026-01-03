@@ -9,6 +9,7 @@
 
 #include "exceptions/erreurFormat/erreurFormat.h"
 #include "types/tcp/messagesReseau/codeTypeRequete.h"
+#include "types/tcp/messagesReseau/messageBase.h"
 #include "utils/json.h"
 
 using json = nlohmann::json;
@@ -16,7 +17,7 @@ using json = nlohmann::json;
 namespace serv
 {
 
-class RequeteSocket
+class RequeteSocket : public MessageBase
 {
 public:
 
@@ -70,6 +71,13 @@ public:
         this->data = jsonMessage[ SEGMENT_DATA ];
     }
 
+    // GETTER / SETTER
+
+    int getIdConversation() const override
+    {
+        return this->idConversation;
+    }
+
     // METHODES
 
     /**
@@ -100,7 +108,7 @@ public:
      */
     operator string() const
     {
-        return "Message recu : " + this->contenuInitial;
+        return this->contenuInitial;
     }
 
     /**
