@@ -22,7 +22,7 @@ int main()
     assert(i == i2);
 
     cout << "Modification i sur quantites[0]" << endl;
-    i.quantites[0] = 1;
+    i.p[0] = 1;
     cout << i << endl;
     cout << i2 << endl;
     assert(!(i == i2));

@@ -7,11 +7,10 @@
 // INCLUSIONS
 
 #include <iosfwd>
-#include <ostream>
 #include <vector>
 
 #include "../instance/instance.h"
-#include "../camion/camion.h"
+#include "../ordonnancementMachine/ordonnancementMachine.h"
 
 // USINGS
 
@@ -31,7 +30,7 @@ public:
     /** Durée opératoire + durée de latence max de l'état */
     int cmax;
     /** Tableau de camions */
-    vector<Camion> camions;
+    vector<OrdonnancementMachine> camions;
 
     // CONSTRUCTEUR / DESTRUCTEUR
 
@@ -41,7 +40,7 @@ public:
     * @param m le nombre de machines
     * @return un nouvel état
     */
-    Etat(const int& m): m(m), cmax(0), camions(vector<Camion>(m)) {}
+    Etat(const int& m): m(m), cmax(0), camions(vector<OrdonnancementMachine>(m)) {}
 
     /**
     * Supprime un état.
@@ -76,6 +75,14 @@ public:
      * @param instance l'instance qui possède la tâche i
      */
     void ajouterTacheSurMachineParInstance(const Instance& instance, const int& k, const int& i);
+
+    /**
+     * Retourne l'état minimisant le cmax de l'ensemble d'états passés en paramètres
+     *
+     * @param etats l'ensemble d'états
+     * @return l'état avec le cmax minimum
+     */
+    static Etat getEtatWithMinCmax(const vector<Etat>& etats);
 
     // SURCHARGES
 
