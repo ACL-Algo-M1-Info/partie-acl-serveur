@@ -29,8 +29,8 @@ public:
     int m;
     /** Durée opératoire + durée de latence max de l'état */
     int cmax;
-    /** Tableau de camions */
-    vector<OrdonnancementMachine> camions;
+    /** Tableau d'ordonnancements machine */
+    vector<OrdonnancementMachine> ordonnancements;
 
     // CONSTRUCTEUR / DESTRUCTEUR
 
@@ -40,7 +40,7 @@ public:
     * @param m le nombre de machines
     * @return un nouvel état
     */
-    Etat(const int& m): m(m), cmax(0), camions(vector<OrdonnancementMachine>(m)) {}
+    Etat(const int& m): m(m), cmax(0), ordonnancements(vector<OrdonnancementMachine>(m)) {}
 
     /**
     * Supprime un état.
@@ -54,7 +54,7 @@ public:
      * @param source  l'état depuis lequel on clone
      * @return un nouvel état
      */
-    Etat(const Etat& source): m(source.m), cmax(source.cmax), camions(source.camions) {};
+    Etat(const Etat& source) = default;
 
     // FONCTIONS
 

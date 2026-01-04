@@ -14,10 +14,12 @@ using namespace std;
 
 #include "../types/graphe//Graphe.h"
 #include "types/instance/instance.h"
+#include "utils/json.h"
 
 // USINGS
 
 using namespace std;
+using nlohmann::json;
 
 // CLASSES
 
@@ -33,6 +35,41 @@ class Utils
      * @return L'entier max dans l'array
      */
     static int maxArrayInt(int n, const int* a);
+
+    /**
+     * Parse un vecteur de json en vecteur de T
+     * @tparam T Type à récupérer
+     * @param v Vecteur de json
+     * @return Vecteur de T
+     */
+    template <class T>
+    static vector<T> jsonVersT(vector<json> v)
+    {
+        vector<T> res;
+
+        for (int i = 0; i < v.size(); i++)
+            res.push_back( v[i].get<T>() );
+
+        return res;
+    }
+
+    /**
+     * Parse un dictionnaire pointant vers du json en dictionnaire, conservant les clés et parsant le json en T
+     * @tparam K Type de clé
+     * @tparam T Type à récupérer pour les valeurs
+     * @param m Map associant des clés K à du json
+     * @return Map de clés K et de valeurs T
+     */
+    template <class K, class T>
+    static map<K, T> jsonVersT(map<K, json> m)
+    {
+        map<K, T> res;
+
+        for (const pair<const K, json>& p : m)
+            res[p.first] = p.second.template get<T>();
+
+        return res;
+    }
 
     template <class COMPARAISON>
     static void triFusion(int i, int j, Instance& instance, int* tp, COMPARAISON comparaison);

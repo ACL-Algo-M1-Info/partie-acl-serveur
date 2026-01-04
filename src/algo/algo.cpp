@@ -17,8 +17,6 @@ using namespace std;
 
 Etat Algo::algoProgrammationDynamique()
 {
-    Utils::triJackson(instance);
-
     Etat etat = Etat(instance.m);
     vector<Etat> etats;
     etats.push_back(etat);
@@ -31,7 +29,7 @@ Etat Algo::algoProgrammationDynamique()
         // Pour chaque etat dans E
         for (int e = 0; e < etats.size(); e++)
         {
-            Etat ei = etats.at(e);
+            Etat& ei = etats.at(e);
 
             // Pour chaque machine
             for (int k = 0; k < instance.m; k++)

@@ -14,12 +14,13 @@
 void Etat::ajouterTacheSurMachine(const int& k, const int& i, const int& quantite)
 {
     // On ajoute d'abord la tâche sur la machine pour avoir le nouveau cmax
-    this->camions.at(k).ajouterTache(i, quantite);
+    OrdonnancementMachine& ordo = this->ordonnancements.at(k);
+    ordo.ajouterTache(i, quantite);
 
     // Recalcul du cmax selon l'ajout fait précédemment
     //this->cmax = Utils::imax(this->camions.at(k).cmax, this->cmax);
 
-    this->cmax = max(this->camions.at(k).cmax, this->cmax);
+    this->cmax = max(ordo.cmax, this->cmax);
 }
 
 void Etat::ajouterTacheSurMachineParInstance(const Instance& instance, const int& k, const int& i)
@@ -48,10 +49,10 @@ Etat:: operator string() const
 {
     ostringstream o;
     o << "--ETAT--" << endl << "cmax: " << this->cmax << endl << "m : " << this->m << endl;
-    o << "Camions de ETAT : " << endl;
-    for (int i = 0; i < this->camions.size(); i++)
+    o << "Ordonnancements de ETAT : " << endl;
+    for (int i = 0; i < this->ordonnancements.size(); i++)
     {
-        o << this->camions.at(i);
+        o << this->ordonnancements.at(i);
     }
     return o.str();
 }
@@ -67,7 +68,7 @@ bool Etat::operator==(const Etat& source) const
         return false;
 
     // Egalite des camions
-    if (this->camions != source.camions)
+    if (this->ordonnancements != source.ordonnancements)
         return false;
 
     return true;
