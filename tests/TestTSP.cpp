@@ -118,23 +118,6 @@ void testKruskal()
     cout << *acpm << endl;
 }
 
-void testDedouble()
-{
-    cout << "************************** test dedoublage ***************************" << endl;
-    Graphe<int, char> graphe;
-    Sommet<char>* sA = graphe.creeSommet('A');
-    Sommet<char>* sB = graphe.creeSommet('B');
-    Sommet<char>* sC = graphe.creeSommet('C');
-    graphe.creeArete(7, sA, sB);
-    graphe.creeArete(12, sB, sC);
-    graphe.creeArete(2, sA, sC);
-    cout << graphe;
-    Graphe<int, char>* acpm = graphe.kruskal();
-    cout << "acmp = " << endl << *acpm << endl;
-    acpm->dedoubleArete();
-    cout << "acmp dedouble = " << endl << *acpm << endl;
-}
-
 void testSet()
 {
     cout << "************************** test set ***************************" << endl;
@@ -207,7 +190,6 @@ int main()
     testMap();
     testMapTemplate();
     testKruskal();
-    testDedouble();
     testSet();
     testTSP();
     return 0;

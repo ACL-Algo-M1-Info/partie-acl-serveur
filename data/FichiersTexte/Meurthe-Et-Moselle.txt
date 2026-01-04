@@ -1,0 +1,4 @@
+Briey;0.0;0.0
+Jarny;2;0
+Labry;0;5
+Doncourt-les-conflans;10;15

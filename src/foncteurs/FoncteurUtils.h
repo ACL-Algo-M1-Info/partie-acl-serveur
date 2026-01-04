@@ -42,6 +42,37 @@ class CritereSommetAvecPaire
 };
 
 /**
+ * Foncteur pour calculer la distance euclidienne entre deux valeurs
+ */
+class DistanceEuclidienne
+{
+public:
+    template <class T>
+    double operator()(const T& a, const T& b) const
+    {
+        double s = a - b;
+        double r = a - b;
+        return sqrt(s * s + r * r);
+    }
+};
+
+/**
+ * Foncteur pour calculer la distance euclidienne entre deux coordonnées
+ * (fausse pour calculer des coordonnées GPS)
+ */
+class DistanceEuclidienneVecteur2D
+{
+public:
+    template <class T>
+    double operator()(const T& a, const T& b) const
+    {
+        double s = a.x - b.x;
+        double r = a.y - b.y;
+        return sqrt(s * s + r * r);
+    }
+};
+
+/**
  * Foncteur pour calculer la distance euclidienne entre deux coordonnées
  * (fausse pour calculer des coordonnées GPS)
  */
@@ -65,11 +96,11 @@ class DistanceEuclidienneCoordonnee
 class DistanceGeodesiqueCoordonnee
 {
    private:
-    constexpr static double RAYON_TERRE_KM = 6371.0;
-
     double degreToRadian(double degre) const { return degre * (M_PI / 180.0); }
 
    public:
+    double rayon;
+    DistanceGeodesiqueCoordonnee(const double& rayon = 6371.0) : rayon(rayon) {}
     /**
      * Formule de haversine
      * source en javascript : https://www.movable-type.co.uk/scripts/latlong.html
@@ -94,7 +125,7 @@ class DistanceGeodesiqueCoordonnee
         double val = sinusDeltaLat * sinusDeltaLat + cos(lat1) * cos(lat2) * sinusDeltaLon * sinusDeltaLon;
         double c = 2 * atan2(sqrt(val), sqrt(1 - val));
 
-        return RAYON_TERRE_KM * c;
+        return rayon * c;
     }
 };
 

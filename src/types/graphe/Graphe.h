@@ -51,8 +51,10 @@ class Graphe
         {
             Sommet<T>* ancienSommet = itS->v;
             Sommet<T>* nouveauSommet = new Sommet<T>(ancienSommet->clef, ancienSommet->v);
+
             DicoAncienNouveau* nouvellePaire = new DicoAncienNouveau(ancienSommet, nouveauSommet);
-            sommetAncienNouveau = new PElement<pair<Sommet<T>*, Sommet<T>*>>(sommetAncienNouveau, nouvellePaire);
+            sommetAncienNouveau = new PElement<DicoAncienNouveau>(sommetAncienNouveau, nouvellePaire);
+
             this->lSommets = new PElement<Sommet<T>>(lSommets, nouveauSommet);
             itS = itS->s;
         }
@@ -325,8 +327,8 @@ class Graphe
     /**
      * HYPOTHESE : Le graphe est supposé constitué uniquement d'une liste de sommets
      * Transforme le graphe actuel en graphe complet.
-     * Crée une arête entre chaque paire de sommets.
-     * Si le graphe à n sommets il aura donc (n(n-1))/2 arêtes après l'appel de cette méthode
+     * Crée une arête entre chaque paire de sommets et effectue le poids de l'arête qui les relie.
+     * Si le graphe à n sommets il aura donc (n(n-1))/2 arêtes après l'appel de cette méthode.
      */
     template <class FONCTEURDISTANCE>
     void rendreComplet(const FONCTEURDISTANCE& calculPoids)
@@ -370,11 +372,14 @@ class Graphe
         {
             Sommet<T>* ancien = itS->v;
             Sommet<T>* nouveau = ACPM->creeSommet(ancien->v);
+
+            // -- Ce bloc a été rajouté pour permettre de retrouver les arêtes à l'aide des identifiants dans le graphe complet
             nouveau->clef = ancien->clef;
             if (nouveau->clef >= ACPM->prochaineClef)
             {
                 ACPM->prochaineClef = nouveau->clef + 1;
             }
+            // --
             correspondance[ancien->clef] = nouveau;
             parents[ancien->clef] = ancien->clef;
             itS = itS->s;
@@ -393,7 +398,7 @@ class Graphe
         PElement<Arete<S, T>>* itListeTriee = listeAreteTriee;
         // Pour chaque arête triée
         // On regarde si l'ajout du sommet debut et fin ne crée pas de cycle
-        // Autrement dit si debut et fin ont une racine commune, alors il y a un cycle
+        // Autrement dit si debut et fin ont une racine commune, alors il y a un cycle et donc on ne fait rien
         // Sinon on ajoute l'arête dans l'ACPM
         while (itListeTriee != nullptr)
         {
@@ -419,27 +424,13 @@ class Graphe
         return ACPM;
     }
 
-    /**
-     * Permet de dédoubler les arêtes de this
-     * (n'est pas utilisée pour l'instant)
-     */
-    void dedoubleArete()
-    {
-        PElement<Arete<S, T>>* copieArete = PElement<Arete<S, T>>::copie1(lAretes);
-
-        while (copieArete != nullptr)
-        {
-            PElement<Arete<S, T>>::insertionOrdonnee(copieArete->v, lAretes, estPlusPetitOuEgal);
-            copieArete = copieArete->s;
-        }
-    }
 
     /**
      * Parcours prefixe sur l'ACPM en ne notant les sommets que lors de leur première découverte
      * => cycle eulérien
      * Le parcours récursif simile le passage sur les arêtes dédoublées
      * => cycle eulérien transformé en cyle hamiltonien (en réalité on a bien une ligne droite mais il faut refermer le cycle avec le sommet de
-     * depart, charge à l'appelant)
+     * depart, charge à l'appelant (c-a-d algo TSP))
      * @param s
      * @param sommetsVisites
      * @param tournee

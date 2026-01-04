@@ -47,8 +47,7 @@ class Utils
     {
         vector<T> res;
 
-        for (int i = 0; i < v.size(); i++)
-            res.push_back( v[i].get<T>() );
+        for (int i = 0; i < v.size(); i++) res.push_back(v[i].get<T>());
 
         return res;
     }
@@ -65,8 +64,7 @@ class Utils
     {
         map<K, T> res;
 
-        for (const pair<const K, json>& p : m)
-            res[p.first] = p.second.template get<T>();
+        for (const pair<const K, json>& p : m) res[p.first] = p.second.template get<T>();
 
         return res;
     }
@@ -142,11 +140,23 @@ class Utils
         cout << "}";
     }
 
+    /**
+     * HYPOTHESE : le graphe ne contient qu'une liste de sommet
+     * Methode utilitaire qui lance toutes les étapes de l'heuristique TSP
+     * @tparam S
+     * @tparam T
+     * @tparam FONCTEURDISTANCE
+     * @param graphe
+     * @param distance
+     * @return
+     */
     template <class S, class T, class FONCTEURDISTANCE>
     static Graphe<S, T>* resoudreTSPComplet(Graphe<S, T>& graphe, const FONCTEURDISTANCE& distance)
     {
         graphe.rendreComplet(distance);
-        cout << "Graphe complet" << endl << graphe << endl;
+        // cout << "Graphe complet" << endl << graphe << endl;
+        int nbArete = PElement<Arete<S, T>>::tailleR(graphe.lAretes);
+        cout << "Nombre d'arete = " << nbArete << endl;
         Graphe<S, T>* acpm = graphe.kruskal();
         PElement<Sommet<T>>* tournee = acpm->TSP();
         Graphe<S, T>* resultat = graphe.construireGrapheTournee(tournee);

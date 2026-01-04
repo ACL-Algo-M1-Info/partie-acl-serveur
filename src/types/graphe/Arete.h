@@ -67,8 +67,8 @@ class Arete : public GElement<S>
     operator string() const
     {
         ostringstream o;
-        o << "Arete [ " << static_cast<GElement<S>>(*this) << " Debut : " << debut->clef << " Fin : " << fin->clef << " ]";
-        // o << "Arete [ " << static_cast<GElement<S>>(*this) << " Debut : " << debut->v << " Fin : " << fin->v << " ]";
+        // o << "Arete [ " << static_cast<GElement<S>>(*this) << " Debut : " << debut->clef << " Fin : " << fin->clef << " ]";
+        o << "Arete [ " << static_cast<GElement<S>>(*this) << " Debut : " << debut->v << " Fin : " << fin->v << " ]";
         return o.str();
     }
     friend ostream &operator<<(ostream &o, const Arete &arete) { return o << (string)arete; }

@@ -30,7 +30,9 @@ file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS ${SRC}/*.cpp ${SRC}/*.h)
 list(REMOVE_ITEM SOURCES ${SRC}/main.cpp)
 
 # Créé la librairie avec les fichiers obtenus.
-add_library(CORE ${SOURCES})
+add_library(CORE ${SOURCES}
+        src/types/chargeurs/ChargeurDossier.cpp
+        src/types/chargeurs/ChargeurDossier.h)
 
 # Ajoute le target sur la racine src
 target_include_directories(CORE PUBLIC ${SRC})
@@ -83,14 +85,18 @@ target_link_libraries(testGrapheGeneral PRIVATE CORE)
 add_executable(testCoordonnee ${TESTS}/TestCoordonnee.cpp)
 target_link_libraries(testCoordonnee PRIVATE CORE)
 
-# Test Chargeur
-add_executable(testChargeurJson ${TESTS}/TestChargeur.cpp)
-target_link_libraries(testChargeurJson PRIVATE CORE)
-
 # Test TSP
-add_executable(testTSP tests/TestTSP.cpp)
+add_executable(testTSP ${TESTS}/TestTSP.cpp)
 target_link_libraries(testTSP PRIVATE CORE)
 
 # Test messageBase
 add_executable(testMessagesServeur ${TESTS}/testMessagesServeur.cpp)
 target_link_libraries(testMessagesServeur PRIVATE CORE)
+
+# Test ChargeurTemplate
+add_executable(testChargeurTemplate ${TESTS}/TestChargeurTemplate.cpp)
+target_link_libraries(testChargeurTemplate PRIVATE CORE)
+
+# Test ChargeurTemplate et TSP
+add_executable(testChargeurTemplateEtTSP tests/TestChargeurTemplateEtTSP.cpp)
+target_link_libraries(testChargeurTemplateEtTSP PRIVATE CORE)
