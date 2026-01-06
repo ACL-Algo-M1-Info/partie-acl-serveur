@@ -28,7 +28,7 @@ public:
 
     int getNombreArguments() const override
     {
-        return -1;
+        return 1; // [..., ville, ...]
     }
 
     // METHODES

@@ -28,7 +28,7 @@ public:
 
     int getNombreArguments() const override
     {
-        return -1;
+        return 2; // [m, [..., pi, ...]]
     }
 
     // METHODES

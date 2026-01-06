@@ -15,7 +15,7 @@
 
 #include "exceptions/erreurSocket/erreurSocket.h"
 #include "outils/Singleton/SingletonTemplate.h"
-#include "types/tcp/connexionClient/connexionClient.h"
+#include "tcp/connexionClient/connexionClient.h"
 
 // DEFINES
 

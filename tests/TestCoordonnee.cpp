@@ -3,7 +3,7 @@
 //
 
 #include "foncteurs/FoncteurUtils.h"
-#include "types/coordonnee/Coordonnee.h"
+#include "types/tsp/coordonnee/Coordonnee.h"
 void testCoordonnee()
 {
     Coordonnee* coordonnee = new Coordonnee("Metz", 49.12, 6.17);

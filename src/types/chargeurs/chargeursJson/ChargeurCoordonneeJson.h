@@ -4,17 +4,15 @@
 
 #ifndef SERVEURCPP_CHARGEURCOORDONNEEJSON_H
 #define SERVEURCPP_CHARGEURCOORDONNEEJSON_H
-#include "../../coordonnee/Coordonnee.h"
+#include "../../tsp/coordonnee/Coordonnee.h"
 #include "ChargeurJsonTemplate.h"
 class ChargeurCoordonneeJson : public ChargeurJsonTemplate<double, Coordonnee>
 {
    protected:
     Coordonnee creerElement(const json& ligne) override
     {
-        string ville = ligne["ville"];
-        double latitude = ligne["latitude"];
-        double longitude = ligne["longitude"];
-        return Coordonnee(ville, latitude, longitude);
+        Coordonnee coord = ligne; // Par convertisseur implicite & constructeur par défaut
+        return coord;
     }
 };
 

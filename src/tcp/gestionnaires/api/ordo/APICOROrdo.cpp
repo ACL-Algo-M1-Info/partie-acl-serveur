@@ -21,17 +21,8 @@ bool APICOROrdo::traitementConcret(const RequeteAPI* entree, string* sortie) con
     if (estTraitable(entree))
     {
         //  ORDONNANCEMENT DEPUIS L'ENTREE ICI
+        // Pour rappel, la vérification des arguments est faite par estTraitable
         // [n, m, [...pj]]
-
-        int tailleArgs = entree->args.size();
-
-        //Vérification des arguments : au moins le nombre. Il faut au moins 1 argument (soit juste le nombre de camions avec aucune tâche à faire).
-        if (tailleArgs < 2)
-        {
-            // On quitte la requête.
-            *sortie = ReponseSocket<string>(ERREUR_FORMAT_INVALIDE, entree->getIdConversation(), "Impossible de résoudre l'ordonnancement si le nombre de machines n'est pas précisé").enJson();
-            return true;
-        }
 
         //1re étape : marshalling. On reçoit [n, m, [...pj]] depuis la requête API.
         int m = entree->args[0].get<int>();

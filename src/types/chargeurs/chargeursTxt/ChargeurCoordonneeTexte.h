@@ -5,7 +5,7 @@
 #ifndef SERVEURCPP_CHARGEURCOORDONNETEXTE_H
 #define SERVEURCPP_CHARGEURCOORDONNETEXTE_H
 #include "ChargeurTexteTemplate.h"
-#include "types/coordonnee/Coordonnee.h"
+#include "types/tsp/coordonnee/Coordonnee.h"
 
 class ChargeurCoordonneeTexte : public ChargeurTexteTemplate<double, Coordonnee>
 {

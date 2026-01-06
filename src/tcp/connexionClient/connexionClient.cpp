@@ -12,7 +12,7 @@
 #include "cor/corUtils.h"
 #include "types/tcp/messagesReseau/socket/reponseSocket/reponseSocket.h"
 #include "types/tcp/messagesReseau/socket/requeteSocket/requeteSocket.h"
-#include "types/tcp/socketServeur/socketServeur.h"
+#include "tcp/socketServeur/socketServeur.h"
 
 // NAMESPACES
 

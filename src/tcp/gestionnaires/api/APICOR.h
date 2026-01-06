@@ -39,7 +39,7 @@ public:
 
     /**
      * Obtient le nombre d'arguments de la commande API à traiter.
-     * @return Le nombre d'arguments attendus. Si le nombre est négatif, accepte un nombre infini d'arguments.
+     * @return Le nombre d'arguments attendus.
      */
     virtual int getNombreArguments() const = 0;
 
@@ -61,11 +61,7 @@ public:
     bool estTraitable(const RequeteAPI* entree) const
     {
         return entree->commande == getAPICommande()
-            && (
-                getNombreArguments() < 0 // Si getNombreArguments() < 0, nombre infini donc aucune vérification.
-                ||
-                entree->args.size() == getNombreArguments() // Sinon, il faut un matching de taille sur les arguments.
-            );
+            && entree->args.size() == getNombreArguments();
     }
 };
 

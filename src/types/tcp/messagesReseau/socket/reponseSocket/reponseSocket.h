@@ -9,8 +9,8 @@
 
 #include <string>
 
-#include "types/tcp/messagesReseau/codeStatutReponse.h"
-#include "types/tcp/messagesReseau/conversionJSON.h"
+#include "../../../codeStatutReponse.h"
+#include "../../../conversionJSON.h"
 #include "types/tcp/messagesReseau/messageBase.h"
 #include "utils/json.h"
 

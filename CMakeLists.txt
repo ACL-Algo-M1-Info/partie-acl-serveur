@@ -98,5 +98,9 @@ add_executable(testChargeurTemplate ${TESTS}/TestChargeurTemplate.cpp)
 target_link_libraries(testChargeurTemplate PRIVATE CORE)
 
 # Test ChargeurTemplate et TSP
-add_executable(testChargeurTemplateEtTSP tests/TestChargeurTemplateEtTSP.cpp)
+add_executable(testChargeurTemplateEtTSP ${TESTS}/TestChargeurTemplateEtTSP.cpp)
 target_link_libraries(testChargeurTemplateEtTSP PRIVATE CORE)
+
+# Test parseur JSON
+add_executable(testParseurJson ${TESTS}/testParseurJson.cpp)
+target_link_libraries(testParseurJson PRIVATE CORE)
