@@ -30,9 +30,7 @@ file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS ${SRC}/*.cpp ${SRC}/*.h)
 list(REMOVE_ITEM SOURCES ${SRC}/main.cpp)
 
 # Créé la librairie avec les fichiers obtenus.
-add_library(CORE ${SOURCES}
-        src/types/chargeurs/ChargeurDossier.cpp
-        src/types/chargeurs/ChargeurDossier.h)
+add_library(CORE ${SOURCES})
 
 # Ajoute le target sur la racine src
 target_include_directories(CORE PUBLIC ${SRC})
@@ -105,5 +103,6 @@ target_link_libraries(testChargeurTemplateEtTSP PRIVATE CORE)
 add_executable(testParseurJson ${TESTS}/testParseurJson.cpp)
 target_link_libraries(testParseurJson PRIVATE CORE)
 
+# Test chargeur JSON générique
 add_executable(testChargeurGenerique ${TESTS}/TestChargeurGenerique.cpp)
 target_link_libraries(testChargeurGenerique PRIVATE CORE)

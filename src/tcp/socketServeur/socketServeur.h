@@ -7,9 +7,10 @@
 
 // INCLUDES
 
+#include <winsock2.h>
+
 #include <string>
 #include <thread>
-#include <winsock2.h>
 #include <map>
 #include <mutex>
 

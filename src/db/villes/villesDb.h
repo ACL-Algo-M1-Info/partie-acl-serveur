@@ -7,23 +7,30 @@
 
 // INCLUSIONS
 
+#include <vector>
+#include <string>
+
 #include "db/db.h"
+#include "outils/Singleton/SingletonTemplate.h"
+#include "types/chargeursGeneriques/ChargeurGeneriqueJson.h"
 #include "types/tsp/coordonnee/Coordonnee.h"
 
-// NAMESPACES
-
-
-
-class VillesDb : public Db<string, Coordonnee>
+class VillesDb : public Db<string, Coordonnee>, public SingletonTemplate<VillesDb>
 {
+    // BINDINGS
+
+    /** Binding singleton. */
+    friend class SingletonTemplate<VillesDb>;
+
 public:
 
-    // METHODES
-    void recupererDonnees() override
-    {
-        // TODO faire le chargement des villes depuis le json. Stocker les coordonnées dans la map avec le nom comme clé !
-    }
-};
+    // CONSTANTES
 
+    /** Emplacement des fichiers JSON. */
+    inline static const string JSON_DIR = "../data/13_fichiers_JSON";
+
+    // METHODES
+    void recupererDonnees() override;
+};
 
 #endif //SERVEURCPP_VILLESDB_H

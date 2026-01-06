@@ -2,16 +2,26 @@
 // Created by remik on 02/01/2026.
 //
 
+#include <winsock2.h> // Garder en 1er sinon conflit avec byte à cause d'unwrap std
 #include <iostream>
-#include "tcp/socketServeur/socketServeur.h"
 
-using namespace std;
+#include "db/routes/routesDb.h"
+#include "db/villes/villesDb.h"
+#include "tcp/socketServeur/socketServeur.h"
+#include "types/chargeursGeneriques/ChargeurGeneriqueJson.h"
+
 using namespace serv;
 
 int main()
 {
     SetConsoleCP(CP_UTF8);
     SetConsoleOutputCP(CP_UTF8);
+
+    // Chargement des singletons
+    RoutesDb* r = RoutesDb::getInstance();
+    VillesDb* v = VillesDb::getInstance();
+
+    v->recupererDonnees();
 
     string ip = "127.0.0.1";
     short port = 9111;

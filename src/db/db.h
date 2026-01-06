@@ -8,23 +8,14 @@
 // INCLUSIONS
 
 #include <map>
-#include <string>
-
-#include "outils/Singleton/SingletonTemplate.h"
-#include "types/tsp/coordonnee/Coordonnee.h"
 
 // NAMESPACES
 
 using namespace std;
 
 template <class K, class V>
-class Db : public SingletonTemplate<Db<K, V>>
+class Db
 {
-    // BINDINGS
-
-    /** Binding singleton. */
-    friend class SingletonTemplate<Db<K, V>>;
-
 protected:
 
     // VARIABLES
@@ -52,14 +43,23 @@ public:
     }
 
     /**
+     * Obtient la taille de la DB
+     * @return Taille DB
+     */
+    int taille() const
+    {
+        return mappeur.size();
+    }
+
+    /**
      * Récupère une donnée de la base.
      * @param cle Clé à laquelle récupérer la valeur de sortie.
      * @return Objet.
      */
-    const V& get(const K& cle) const
+    V* get(const K& cle)
     {
         if (contient(cle))
-            return mappeur[cle];
+            return &mappeur[cle];
 
         return nullptr;
     }

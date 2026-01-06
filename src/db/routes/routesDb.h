@@ -10,17 +10,24 @@
 #include <string>
 
 #include "db/db.h"
+#include "outils/Singleton/SingletonTemplate.h"
 #include "types/tsp/route/route.h"
 
 // NAMESPACES
 
 using namespace std;
 
-class RoutesDb : public Db<string, Route>
+class RoutesDb : public Db<string, Route>, public SingletonTemplate<RoutesDb>
 {
+    // BINDINGS
+
+    /** Binding singleton. */
+    friend class SingletonTemplate;
+
     // METHODES
 
 private:
+
     /**
      * Formatte une clé.
      * @param A Ville A.
@@ -39,10 +46,15 @@ public:
         // TODO faire le chargement des routes depuis le json. Stocker les routes dans la map avec l'association A_B comme clé !
     }
 
-    // Route get(const string& villeA, const string& villeB) const
-    // {
-    //     const Route& res = Db::get(formatter(villeA, villeB));
-    // }
+    Route* get(const string& villeA, const string& villeB)
+    {
+        Route* res = Db::get(formatter(villeA, villeB)); // Cherche selon A_B.
+
+        if (res == nullptr)
+            res = Db::get(formatter(villeB, villeA)); // Formattage sur B_A si A_B non trouvé.
+
+        return res;
+    }
 };
 
 

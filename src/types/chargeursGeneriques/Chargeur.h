@@ -4,6 +4,7 @@
 
 #ifndef SERVEURCPP_CHARGEUR_H
 #define SERVEURCPP_CHARGEUR_H
+
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -11,6 +12,7 @@
 #include <vector>
 
 using namespace std;
+
 template <class T>
 class Chargeur
 {
@@ -32,7 +34,6 @@ class Chargeur
 
         for (filesystem::directory_iterator it(chemin); it != filesystem::directory_iterator(); ++it)
         {
-            cout << "on va charger " << it->path().string() << endl;
             vector<T> add;
             charger(it->path().string(), add);
             resultat.insert(resultat.end(),add.begin(),add.end());
