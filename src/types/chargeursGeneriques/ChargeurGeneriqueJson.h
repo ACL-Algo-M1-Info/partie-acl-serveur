@@ -8,15 +8,15 @@
 #include "utils/json.h"
 using json = nlohmann::json;
 
-template<class T>
-class ChargeurGeneriqueJson:public Chargeur<T>
+template <class T>
+class ChargeurGeneriqueJson : public Chargeur<T>
 {
-public:
-    T chargerFichier(ifstream& fichier) const
+   public:
+   void chargerFichier(ifstream& fichier, vector<T>& resultat) const
     {
         json donnees;
         fichier >> donnees;
-        return donnees;
+        resultat = donnees;
     }
 };
 
