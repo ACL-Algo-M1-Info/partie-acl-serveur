@@ -100,3 +100,8 @@ target_link_libraries(testChargeurTemplate PRIVATE CORE)
 # Test ChargeurTemplate et TSP
 add_executable(testChargeurTemplateEtTSP tests/TestChargeurTemplateEtTSP.cpp)
 target_link_libraries(testChargeurTemplateEtTSP PRIVATE CORE)
+
+add_executable(testChargeurGenerique tests/TestChargeurGenerique.cpp
+        src/types/chargeursGeneriques/ChargeurGeneriqueJson.cpp
+        src/types/chargeursGeneriques/ChargeurGeneriqueJson.h)
+target_link_libraries(testChargeurGenerique PRIVATE CORE)

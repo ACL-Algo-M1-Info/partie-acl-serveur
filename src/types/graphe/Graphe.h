@@ -6,7 +6,7 @@
 #define SERVEURCPP_GRAPHE_H
 #include <map>
 #include <set>
-
+#include <vector>
 #include "Arete.h"
 #include "PElement.h"
 #include "Sommet.h"
@@ -134,6 +134,13 @@ class Graphe
         prochaineClef = 0;
     }
 
+    void remplirGraphe(vector<T> sommets)
+    {
+        for (int i = 0; i < sommets.size(); i++)
+        {
+            creeSommet(sommets[i]);
+        }
+    }
     /**
      * Constructeur par copie
      * @param graphe
@@ -423,7 +430,6 @@ class Graphe
         PElement<Arete<S, T>>::efface1(listeAreteTriee);
         return ACPM;
     }
-
 
     /**
      * Parcours prefixe sur l'ACPM en ne notant les sommets que lors de leur première découverte

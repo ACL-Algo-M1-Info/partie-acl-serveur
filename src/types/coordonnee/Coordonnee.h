@@ -7,6 +7,8 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+
+#include "utils/json.h"
 using namespace std;
 
 class Coordonnee
@@ -14,6 +16,8 @@ class Coordonnee
    public:
     string ville;
     double latitude, longitude;
+
+    Coordonnee() = default;
 
     Coordonnee(const string& ville, const double& latitude, const double& longitude) : ville(ville), latitude(latitude), longitude(longitude) {}
 
@@ -24,11 +28,9 @@ class Coordonnee
         return o.str();
     }
 
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(Coordonnee, ville, latitude, longitude);
 };
 
-ostream& operator<<(ostream& o, const Coordonnee& coordonnee)
-{
-    return o << (string)coordonnee;
-}
+ostream& operator<<(ostream& o, const Coordonnee& coordonnee) { return o << (string)coordonnee; }
 
 #endif  // SERVEURCPP_COORDONNEE_H
