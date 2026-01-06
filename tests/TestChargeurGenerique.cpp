@@ -46,6 +46,8 @@ int main()
         double valeurArete = arete->v;
         Sommet<Coordonnee>* debut = arete->debut;
         Sommet<Coordonnee>* fin = arete->fin;
+        Coordonnee c = debut->v;
+        string nomVille = c.ville;
         listeArete = listeArete->s;
     }
     return 0;
