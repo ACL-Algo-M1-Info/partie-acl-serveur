@@ -43,6 +43,12 @@ public:
      */
     virtual int getNombreArguments() const = 0;
 
+    /**
+     * Détermine si les arguments sont en vararg.
+     * @return Si les arguments sur en vararg.
+     */
+    virtual bool nombreVariableArguments() const = 0;
+
     // METHODES
 
     bool traitement(const RequeteAPI* entree, string* sortie) const override
@@ -60,8 +66,16 @@ public:
      */
     bool estTraitable(const RequeteAPI* entree) const
     {
+        int nbArgs = getNombreArguments();
+        bool vararg = nombreVariableArguments();
+        int size = (int)entree->args.size();
+
         return entree->commande == getAPICommande()
-            && entree->args.size() == getNombreArguments();
+            && (
+                !vararg && nbArgs == size // Nombre d'arguments strict (pas vararg).
+                ||
+                vararg && nbArgs >= size // Nombre d'arguments large (vararg).
+            );
     }
 };
 

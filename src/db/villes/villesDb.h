@@ -30,7 +30,9 @@ public:
     inline static const string JSON_DIR = "../data/13_fichiers_JSON";
 
     // METHODES
-    void recupererDonnees() override;
+
+protected:
+    void _recupererDonnees() override;
 };
 
 #endif //SERVEURCPP_VILLESDB_H

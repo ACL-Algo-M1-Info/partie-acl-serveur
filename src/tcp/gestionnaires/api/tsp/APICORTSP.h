@@ -7,6 +7,8 @@
 
 // INCLUSIONS
 
+#include "db/routes/routesDb.h"
+#include "db/villes/villesDb.h"
 #include "tcp/gestionnaires/api/APICOR.h"
 
 class APICORTSP : public APICOR
@@ -29,6 +31,11 @@ public:
     int getNombreArguments() const override
     {
         return 1; // [..., ville, ...]
+    }
+
+    bool nombreVariableArguments() const override
+    {
+        return true;
     }
 
     // METHODES

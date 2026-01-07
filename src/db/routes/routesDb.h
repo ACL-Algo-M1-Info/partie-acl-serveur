@@ -39,22 +39,18 @@ private:
         return A + "_" + B;
     }
 
+protected:
+
+    void _recupererDonnees() override;
+
 public:
-
-    void recupererDonnees() override
-    {
-        // TODO faire le chargement des routes depuis le json. Stocker les routes dans la map avec l'association A_B comme clé !
-    }
-
-    Route* get(const string& villeA, const string& villeB)
-    {
-        Route* res = Db::get(formatter(villeA, villeB)); // Cherche selon A_B.
-
-        if (res == nullptr)
-            res = Db::get(formatter(villeB, villeA)); // Formattage sur B_A si A_B non trouvé.
-
-        return res;
-    }
+    /**
+     * Obtient la route depuis le nom des deux villes.
+     * @param villeA Ville A.
+     * @param villeB Ville B.
+     * @return Pointeur de route.
+     */
+    bool get(const string& villeA, const string& villeB, Route& sortie);
 };
 
 

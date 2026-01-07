@@ -31,6 +31,11 @@ public:
         return 2; // [m, [..., pi, ...]]
     }
 
+    bool nombreVariableArguments() const override
+    {
+        return false;
+    }
+
     // METHODES
 
     bool traitementConcret(const RequeteAPI* entree, string* sortie) const override;

@@ -36,6 +36,6 @@ class Coordonnee
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(Coordonnee, ville, latitude, longitude)
 };
 
-ostream& operator<<(ostream& o, const Coordonnee& coordonnee) { return o << (string)coordonnee; }
+inline ostream& operator<<(ostream& o, const Coordonnee& coordonnee) { return o << (string)coordonnee; }
 
 #endif  // SERVEURCPP_COORDONNEE_H

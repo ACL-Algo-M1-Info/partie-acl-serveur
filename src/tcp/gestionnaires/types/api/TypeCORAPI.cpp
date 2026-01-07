@@ -9,6 +9,11 @@
 #include "types/tcp/messagesReseau/api/requeteAPI/requeteAPI.h"
 #include "types/tcp/messagesReseau/socket/reponseSocket/reponseSocket.h"
 
+void erreurReponseFormat(const RequeteSocket* entree, string* sortie)
+{
+    *sortie = ReponseSocket<string>(ERREUR_FORMAT_INVALIDE, entree->getIdConversation(), "Format de la requête API invalide").enJson();
+}
+
 bool TypeCORAPI::traitementConcret(const RequeteSocket* entree, string* sortie) const
 {
     // Succès sur ce maillon.
@@ -26,9 +31,13 @@ bool TypeCORAPI::traitementConcret(const RequeteSocket* entree, string* sortie) 
             if (!ret)
                 *sortie = ReponseSocket<string>(ERREUR_INEXISTANT, entree->getIdConversation(), "La commande n'existe pas").enJson();
         }
-        catch (exception& e)
+        catch (nlohmann::detail::parse_error& e)
         {
-            *sortie = ReponseSocket<string>(ERREUR_FORMAT_INVALIDE, entree->getIdConversation(), "Format de la requête API invalide").enJson();
+            erreurReponseFormat(entree, sortie);
+        }
+        catch (nlohmann::detail::type_error& e)
+        {
+            erreurReponseFormat(entree, sortie);
         }
 
         // Succès.

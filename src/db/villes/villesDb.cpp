@@ -6,7 +6,7 @@
 
 #include "villesDb.h"
 
-void VillesDb::recupererDonnees()
+void VillesDb::_recupererDonnees()
 {
     // Chargement des villes sous forme de coordonnées. Sur toute la france.
     ChargeurGeneriqueJson<Coordonnee> chargeur = ChargeurGeneriqueJson<Coordonnee>();
@@ -18,5 +18,5 @@ void VillesDb::recupererDonnees()
 
     // Mapping sur la map.
     for (const Coordonnee& c : villes)
-        mappeur[c.ville] = c;
+        _mappeur[c.ville] = c;
 }

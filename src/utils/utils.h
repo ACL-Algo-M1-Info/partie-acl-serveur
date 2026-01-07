@@ -156,7 +156,6 @@ class Utils
         graphe.rendreComplet(distance);
         // cout << "Graphe complet" << endl << graphe << endl;
         int nbArete = PElement<Arete<S, T>>::tailleR(graphe.lAretes);
-        cout << "Nombre d'arete = " << nbArete << endl;
         Graphe<S, T>* acpm = graphe.kruskal();
         PElement<Sommet<T>>* tournee = acpm->TSP();
         Graphe<S, T>* resultat = graphe.construireGrapheTournee(tournee);

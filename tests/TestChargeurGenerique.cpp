@@ -3,7 +3,7 @@
 //
 
 #include "types/chargeursGeneriques/ChargeurGeneriqueJson.h"
-#include "types/coordonnee/Coordonnee.h"
+#include "types/tsp/coordonnee/Coordonnee.h"
 #include "types/graphe/Graphe.h"
 #include "utils/utils.h"
 int main()

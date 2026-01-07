@@ -8,6 +8,7 @@
 // INCLUSIONS
 
 #include <map>
+#include <mutex>
 
 // NAMESPACES
 
@@ -16,21 +17,41 @@ using namespace std;
 template <class K, class V>
 class Db
 {
-protected:
-
     // VARIABLES
 
-    /** Mappeur. */
-    map<K, V> mappeur;
+private:
 
-public:
+    /** Mutex sur le _mappeur. */
+    mutex _mappeurMutex;
+
+    /** Empêche les mappings subséquents. */
+    bool _mapped = false;
+
+protected:
+
+    /** Mappeur. Thread-safe car readonly. */
+    map<K, V> _mappeur;
 
     // METHODES
 
     /**
+     * Méthode à override pour la récupération des données.
+     */
+    virtual void _recupererDonnees() = 0;
+
+public:
+
+    /**
      * Récupère les données à mapper.
      */
-    virtual void recupererDonnees() = 0;
+    void recupererDonnees()
+    {
+        if (_mapped)
+            return;
+
+        _recupererDonnees();
+        _mapped = true;
+    }
 
     /**
      * Détermine si la DB contient une donnée par sa clé.
@@ -39,7 +60,7 @@ public:
      */
     bool contient(const K& cle) const
     {
-        return mappeur.find(cle) != mappeur.end();
+        return _mappeur.find(cle) != _mappeur.end();
     }
 
     /**
@@ -48,7 +69,7 @@ public:
      */
     int taille() const
     {
-        return mappeur.size();
+        return _mappeur.size();
     }
 
     /**
@@ -56,12 +77,21 @@ public:
      * @param cle Clé à laquelle récupérer la valeur de sortie.
      * @return Objet.
      */
-    V* get(const K& cle)
+    bool get(const K& cle, V& valeur)
     {
-        if (contient(cle))
-            return &mappeur[cle];
+        {   // Lock threadsafe.
+            lock_guard lock(_mappeurMutex);
 
-        return nullptr;
+            typename map<K, V>::iterator it = _mappeur.find(cle);
+
+            if (it != _mappeur.end())
+            {
+                valeur = it->second;
+                return true;
+            }
+        }
+
+        return false;
     }
 };
 
