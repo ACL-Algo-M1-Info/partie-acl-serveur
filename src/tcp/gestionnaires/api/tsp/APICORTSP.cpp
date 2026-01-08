@@ -4,7 +4,7 @@
 
 // INCLUSIONS
 
-#include <unordered_set>
+#include <algorithm>
 
 #include "APICORTSP.h"
 
@@ -24,6 +24,7 @@
 bool initialiserCoordonnees(const vector<vector<string>>& listeVilles, vector<vector<Coordonnee>>& listeCoordonnees)
 {
     VillesDb* vDb = VillesDb::getInstance();
+    vector<string> villesStockees;
 
     for (const vector<string>& villes : listeVilles)
     {
@@ -37,6 +38,15 @@ bool initialiserCoordonnees(const vector<vector<string>>& listeVilles, vector<ve
             // Le nom de la ville n'est pas clé dans la db.
             if (!vDb->get(ville, coord))
                 return false;
+
+            // Le nom de la ville est déjà stocké. Evite les duplicatas de ville & valide cette hypothèse.
+            vector<string>::iterator deb = villesStockees.begin();
+            vector<string>::iterator end = villesStockees.end();
+
+            if (find(deb, end, coord.ville) != end)
+                return false;
+
+            villesStockees.push_back(coord.ville);
 
             c.push_back( coord );
         }
