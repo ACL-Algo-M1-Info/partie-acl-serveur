@@ -56,6 +56,21 @@ bool initialiserCoordonnees(const vector<vector<string>>& listeVilles, vector<ve
 }
 
 /**
+ * Insère un objet ville dans le résultat.
+ * @param ville Ville à ajouter.
+ * @param res Liste des villes.
+ */
+bool ajouterVilleDansReponse(Coordonnee& ville, vector<Coordonnee>& res)
+{
+    if (find(res.begin(), res.end(), ville) == res.end())
+    {
+        res.push_back(ville);
+        return true;
+    }
+    return false;
+}
+
+/**
  * Marshall des Graphes* au format [TrajetCamionReponse].
  * Hypothèse : Aucun graphe ne partage une même ville.
  * @param graphes
@@ -78,6 +93,8 @@ bool produireSolution(const vector<Graphe<double, Coordonnee>*>& graphes, vector
         // Ajout de la distance totale.
         reponse.distanceTotale = graphe->sommePoids();
 
+        cout << "Graphe : " << *graphe << endl;
+
         // Parcours implicit pour rajouter les informations des villes & des routes.
         while (iterateurArete != nullptr)
         {
@@ -87,14 +104,21 @@ bool produireSolution(const vector<Graphe<double, Coordonnee>*>& graphes, vector
 
             // L'ordre est inversé parce que ça permet de faire un parcours en insérant que le début dans la liste.
             Coordonnee& debut = arete->debut->v;
+            Coordonnee& fin = arete->fin->v;
 
-            // Ajout de la ville de début. Va progressivement rajouter toutes les villes une unique fois selon l'hypothèse.
-            reponse.villes.push_back(debut);
+            // Ajout des villes si pas déjà ajoutées.
+            ajouterVilleDansReponse(debut, reponse.villes);
+            ajouterVilleDansReponse(fin, reponse.villes);
 
-            // TODO récupérer le type de route depuis la db
+            // Récupère le type de route depuis la DB.
+            // Comme le programme fonctionne entre toutes les régions mais que les types de route ne sont pas définis entre deux villes de deux régions
+            // différentes, on renvoie par défaut "AUTRE".
+
+            TypeRoute type;
+            rDb->get(debut.ville, fin.ville, type);
 
             // Ajout de l'arête sous forme d'objet route.
-            Route r = Route(distance, AUTRE);
+            Route r = Route(distance, type, debut.ville, fin.ville);
             reponse.routes.push_back(r);
 
             // Itération.
@@ -143,12 +167,7 @@ bool APICORTSP::traitementConcret(const RequeteAPI* entree, string* sortie) cons
 
         // Etape 4 : Générer la réponse selon le modèle choisi & formatter la réponse pour l'envoi.
         vector<TrajetReponse> reponse;
-
-        if (!produireSolution(solutions, reponse))
-        {
-            *sortie = ReponseSocket<string>(ERREUR_FORMAT_INVALIDE, entree->getIdConversation(), "Route(s) inexistante(s) entre certaines villes");
-            return true;
-        }
+        produireSolution(solutions, reponse);
 
         *sortie = ReponseSocket<vector<TrajetReponse>>(OK, entree->getIdConversation(), reponse).enJson();
 

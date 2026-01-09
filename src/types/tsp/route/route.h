@@ -8,6 +8,7 @@
 // INCLUSIONS
 
 #include "types/tsp/typeRoute.h"
+#include "types/tsp/coordonnee/Coordonnee.h"
 #include "utils/json.h"
 
 class Route
@@ -21,17 +22,23 @@ public:
     /** Type de route. */
     TypeRoute type;
 
+    /** Ville A liée. */
+    string villeA;
+
+    /** Ville B liée. */
+    string villeB;
+
     // CONSTRUCTEUR / DESTRUCTEUR
 
     /** Pour la librairie JSON. */
     Route() = default;
 
     /** Constructeur avec données. */
-    Route(double distance, TypeRoute type)
-        : distance(distance), type(type)
+    Route(double distance, TypeRoute type, const string& villeA, const string& villeB)
+        : distance(distance), type(type), villeA(villeA), villeB(villeB)
     {}
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(Route, distance, type)
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(Route, distance, type, villeA, villeB)
 };
 
 

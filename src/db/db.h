@@ -36,6 +36,7 @@ protected:
 
     /**
      * Méthode à override pour la récupération des données.
+     * Devrait utiliser un objet annexe pour permettre le chargement des données depuis des formats de fichier différents.
      */
     virtual void _recupererDonnees() = 0;
 

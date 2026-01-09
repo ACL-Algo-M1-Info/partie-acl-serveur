@@ -21,6 +21,7 @@ int main()
     RoutesDb* r = RoutesDb::getInstance();
     VillesDb* v = VillesDb::getInstance();
 
+    r->recupererDonnees();
     v->recupererDonnees();
 
     string ip = "127.0.0.1";

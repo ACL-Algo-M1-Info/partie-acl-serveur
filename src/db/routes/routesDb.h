@@ -17,27 +17,20 @@
 
 using namespace std;
 
-class RoutesDb : public Db<string, Route>, public SingletonTemplate<RoutesDb>
+class RoutesDb : public Db<string, TypeRoute>, public SingletonTemplate<RoutesDb>
 {
     // BINDINGS
 
     /** Binding singleton. */
     friend class SingletonTemplate;
 
+public:
+    // CONSTANTES
+
+    /** Emplacement des fichiers JSON. */
+    inline static const string CSV_DIR = "../data/13_routes_CSV";
+
     // METHODES
-
-private:
-
-    /**
-     * Formatte une clé.
-     * @param A Ville A.
-     * @param B Ville B.
-     * @return
-     */
-    static string formatter(const string& A, const string& B)
-    {
-        return A + "_" + B;
-    }
 
 protected:
 
@@ -50,7 +43,18 @@ public:
      * @param villeB Ville B.
      * @return Pointeur de route.
      */
-    bool get(const string& villeA, const string& villeB, Route& sortie);
+    bool get(const string& villeA, const string& villeB, TypeRoute& sortie);
+
+    /**
+     * Formatte une clé.
+     * @param A Ville A.
+     * @param B Ville B.
+     * @return
+     */
+    static string formatter(const string& A, const string& B)
+    {
+        return A + "_" + B;
+    }
 };
 
 

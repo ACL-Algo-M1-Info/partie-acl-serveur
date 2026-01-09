@@ -3,14 +3,14 @@
 //
 
 #pragma once
-#include <iostream>
-#include <map>
-#include <set>
 
-using namespace std;
 // INCLUSIONS
 
 #include <vector>
+#include <iostream>
+#include <map>
+#include <set>
+#include <algorithm>
 
 #include "../types/graphe//Graphe.h"
 #include "types/instance/instance.h"
@@ -67,6 +67,36 @@ class Utils
         for (const pair<const K, json>& p : m) res[p.first] = p.second.template get<T>();
 
         return res;
+    }
+
+    /**
+     * Trim à gauche d'un string.
+     * @param s String à trim.
+     */
+    static void ltrim(string &s)
+    {
+        s.erase(s.begin(), find_if(s.begin(), s.end(),
+            [](char ch){ return !isspace(ch); }));
+    }
+
+    /**
+     * Trim à droite d'un string.
+     * @param s String à trim.
+     */
+    static void rtrim(string &s)
+    {
+        s.erase(find_if(s.rbegin(), s.rend(),
+            [](char ch){ return !isspace(ch); }).base(), s.end());
+    }
+
+    /**
+     * Trim d'un string.
+     * @param s String à trim.
+     */
+    static void trim(string &s)
+    {
+        ltrim(s);
+        rtrim(s);
     }
 
     template <class COMPARAISON>

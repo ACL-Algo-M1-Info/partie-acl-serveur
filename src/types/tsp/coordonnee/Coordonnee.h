@@ -33,6 +33,13 @@ class Coordonnee
         return o.str();
     }
 
+    bool operator==(const Coordonnee& other) const
+    {
+        return ville == other.ville
+            && latitude == other.latitude
+            && longitude == other.longitude;
+    }
+
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(Coordonnee, ville, latitude, longitude)
 };
 

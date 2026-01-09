@@ -14,8 +14,6 @@ void VillesDb::_recupererDonnees()
     vector<Coordonnee> villes;
     chargeur.chargerDossier(JSON_DIR, villes);
 
-    cout << "Chargé " << villes.size() << " villes" << endl;
-
     // Mapping sur la map.
     for (const Coordonnee& c : villes)
         _mappeur[c.ville] = c;

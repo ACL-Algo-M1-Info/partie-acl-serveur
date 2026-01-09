@@ -39,6 +39,18 @@ class Chargeur
             resultat.insert(resultat.end(),add.begin(),add.end());
         }
     }
+
+    void chargerDossierAvecSeparation(const string& chemin, vector<vector<T>>& resultat) const
+    {
+        for (filesystem::directory_iterator it(chemin); it != filesystem::directory_iterator(); ++it)
+        {
+            resultat.emplace_back();
+            vector<T>& add = resultat.back();
+
+            charger(it->path().string(), add);
+        }
+    }
+
     virtual void chargerFichier(ifstream& fichier, vector<T>& resultat) const = 0;
 };
 
