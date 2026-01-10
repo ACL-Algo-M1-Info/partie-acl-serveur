@@ -329,7 +329,7 @@ class Graphe
         }
         return nullptr;
     }
-    /************************************************************** UTILITAIRES ET MÉTHODE POUR L'HEURISTIQUE
+    /************************************************************** MÉTHODE POUR L'HEURISTIQUE
     ***************************************************************/
     /**
      * HYPOTHESE : Le graphe est supposé constitué uniquement d'une liste de sommets
@@ -481,6 +481,9 @@ class Graphe
 
         return tournee;
     }
+
+    /************************************************************** UTILITAIRES POUR LE SERVEUR
+  ***************************************************************/
 
     /**
      * HYPOTHESE : Est lancée sur un graphe complet pour retrouver toutes les arêtes de la tournée

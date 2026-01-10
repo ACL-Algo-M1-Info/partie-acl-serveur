@@ -13,11 +13,16 @@
 
 using namespace std;
 
+/**
+ * Charge dans un vector, depuis un chemin vers un fichier ou un dossier, des valeurs de type T
+ * @tparam T
+ */
 template <class T>
 class Chargeur
 {
    public:
     virtual ~Chargeur() = default;
+
     void charger(const string& chemin, vector<T>& resultat) const
     {
         ifstream fichier(chemin);
