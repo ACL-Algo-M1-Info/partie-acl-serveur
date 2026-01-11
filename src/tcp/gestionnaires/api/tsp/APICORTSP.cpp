@@ -85,15 +85,22 @@ bool produireSolution(const vector<Graphe<double, Coordonnee>*>& graphes, vector
         sortie.emplace_back();
         TrajetReponse& reponse = sortie.back();
 
-        // On parcourt les arêtes pour rajouter des objets Route & Coordonnée dans la réponse.
+        // Si ne contient qu'un seul sommet, on met uniquement la ville.
+        if (graphe->nombreSommets() == 1)
+        {
+            Coordonnee ville = graphe->lSommets->v->v;
+            reponse.villes.push_back(ville);
+
+            continue;
+        }
+
+        // Sinon, on parcourt les arêtes pour rajouter des objets Route & Coordonnée dans la réponse.
 
         // Liste des arêtes.
         PElement<Arete<double, Coordonnee>>* iterateurArete = graphe->lAretes;
 
         // Ajout de la distance totale.
         reponse.distanceTotale = graphe->sommePoids();
-
-        cout << "Graphe : " << *graphe << endl;
 
         // Parcours implicit pour rajouter les informations des villes & des routes.
         while (iterateurArete != nullptr)
