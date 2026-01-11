@@ -168,17 +168,9 @@ bool APICORTSP::traitementConcret(const RequeteAPI* entree, string* sortie) cons
         vector<Graphe<double, Coordonnee>*> solutions;
 
         for (Graphe<double, Coordonnee>& graphe : graphes)
-        {
-            // Doit contenir au moins un sommet pour lancer TSP.
-            if (graphe.nombreSommets() > 0)
-                solutions.push_back(
-                    Utils::resoudreTSPComplet(graphe, calculDistance)
-                );
-            else
-                // On créé de la mémoire parce qu'on a un free à la fin.
-                solutions.push_back(new Graphe<double, Coordonnee>(graphe));
-
-        }
+            solutions.push_back(
+                Utils::resoudreTSPComplet(graphe, calculDistance)
+            );
 
         // Etape 4 : Générer la réponse selon le modèle choisi & formatter la réponse pour l'envoi.
         vector<TrajetReponse> reponse;
