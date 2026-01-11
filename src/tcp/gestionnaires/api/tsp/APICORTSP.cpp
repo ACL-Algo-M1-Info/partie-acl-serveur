@@ -144,16 +144,6 @@ bool APICORTSP::traitementConcret(const RequeteAPI* entree, string* sortie) cons
             return true;
         }
 
-        for (const vector<string>& v : villes)
-        {
-            // Aucune ville pour un camion.
-            if (v.empty())
-            {
-                *sortie = ReponseSocket<string>(ERREUR_FORMAT_INVALIDE, entree->getIdConversation(), "Il faut au moins une ville par camion");
-                return true;
-            }
-        }
-
         // Vérifier chaque ville (dans la DB) si inexistant, retourner sinon.
         if (!initialiserCoordonnees(villes, coords))
         {
@@ -178,9 +168,17 @@ bool APICORTSP::traitementConcret(const RequeteAPI* entree, string* sortie) cons
         vector<Graphe<double, Coordonnee>*> solutions;
 
         for (Graphe<double, Coordonnee>& graphe : graphes)
-            solutions.push_back(
-                Utils::resoudreTSPComplet(graphe, calculDistance)
-            );
+        {
+            // Doit contenir au moins un sommet pour lancer TSP.
+            if (graphe.nombreSommets() > 0)
+                solutions.push_back(
+                    Utils::resoudreTSPComplet(graphe, calculDistance)
+                );
+            else
+                // On créé de la mémoire parce qu'on a un free à la fin.
+                solutions.push_back(new Graphe<double, Coordonnee>(graphe));
+
+        }
 
         // Etape 4 : Générer la réponse selon le modèle choisi & formatter la réponse pour l'envoi.
         vector<TrajetReponse> reponse;
