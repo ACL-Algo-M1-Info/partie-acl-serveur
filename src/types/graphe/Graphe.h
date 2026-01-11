@@ -494,11 +494,12 @@ class Graphe
      */
     Graphe<S, T>* construireGrapheTournee(PElement<Sommet<T>>* tournee) const
     {
+        Graphe<S, T>* resultat = new Graphe<S, T>();
         if (tournee == nullptr)
         {
-            return nullptr;
+            return resultat;
         }
-        Graphe<S, T>* resultat = new Graphe<S, T>();
+
         map<int, Sommet<T>*> correspondance;
         map<int, Sommet<T>*> sommetsDuGrapheComplet;
         PElement<Sommet<T>>* itS = this->lSommets;
@@ -518,6 +519,10 @@ class Graphe
                 correspondance[sommetACPM->clef] = nouveau;
             }
             it = it->s;
+        }
+        if (PElement<Sommet<T>>::taille(resultat->lSommets )<= 1)
+        {
+            return resultat;
         }
 
         it = tournee;
