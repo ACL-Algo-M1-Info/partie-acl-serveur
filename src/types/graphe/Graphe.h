@@ -7,6 +7,7 @@
 #include <map>
 #include <set>
 #include <vector>
+
 #include "Arete.h"
 #include "PElement.h"
 #include "Sommet.h"
@@ -483,7 +484,7 @@ class Graphe
     }
 
     /************************************************************** UTILITAIRES POUR LE SERVEUR
-  ***************************************************************/
+     ***************************************************************/
 
     /**
      * HYPOTHESE : Est lancée sur un graphe complet pour retrouver toutes les arêtes de la tournée
@@ -493,6 +494,10 @@ class Graphe
      */
     Graphe<S, T>* construireGrapheTournee(PElement<Sommet<T>>* tournee) const
     {
+        if (tournee == nullptr)
+        {
+            return nullptr;
+        }
         Graphe<S, T>* resultat = new Graphe<S, T>();
         map<int, Sommet<T>*> correspondance;
         map<int, Sommet<T>*> sommetsDuGrapheComplet;
