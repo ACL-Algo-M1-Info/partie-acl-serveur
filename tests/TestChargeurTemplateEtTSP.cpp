@@ -51,8 +51,8 @@ int main()
         DistanceGeodesiqueCoordonnee distance_geodesique_coordonnee;
         Graphe<double, Coordonnee> *tournee = Utils::resoudreTSPComplet(graphe, distance_geodesique_coordonnee);
         // cout << *tournee << endl;
-        double total = tournee->sommePoids();
-        cout << "total = " << total << endl;
+        // double total = tournee->sommePoids();
+        // cout << "total = " << total << endl;
         afficheSucces("TEST CHARGEMENT DOSSIER JSON COORDONNEE et TSP");
     }
 }

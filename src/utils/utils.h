@@ -178,7 +178,7 @@ class Utils
      * @tparam FONCTEURDISTANCE
      * @param graphe
      * @param distance
-     * @return
+     * @return le trajet, sous forme de graphe, que l'heuristique a trouvé
      */
     template <class S, class T, class FONCTEURDISTANCE>
     static Graphe<S, T>* resoudreTSPComplet(Graphe<S, T>& graphe, const FONCTEURDISTANCE& distance)

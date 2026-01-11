@@ -41,20 +41,7 @@ class CritereSommetAvecPaire
     bool operator()(pair<Sommet<T>*, Sommet<T>*>* paire) const { return paire->first == ancienSommetCherche; }
 };
 
-/**
- * Foncteur pour calculer la distance euclidienne entre deux valeurs
- */
-class DistanceEuclidienne
-{
-public:
-    template <class T>
-    double operator()(const T& a, const T& b) const
-    {
-        double s = a - b;
-        double r = a - b;
-        return sqrt(s * s + r * r);
-    }
-};
+
 
 /**
  * Foncteur pour calculer la distance euclidienne entre deux coordonnées
@@ -90,7 +77,7 @@ class DistanceEuclidienneCoordonnee
 
 /**
  * Foncteur pour calculer la distance géodésique
- * Pourrait être paramétrée par un constructeur qui prendrait en argument le rayon de la sphére qu'il représente (donc pas seulement celui de la
+ * Est paramétrée par le rayon de la sphére qu'il représente (donc pas seulement celui de la
  * terre)
  */
 class DistanceGeodesiqueCoordonnee

@@ -42,7 +42,7 @@ int main()
         cout << "*********************************** TEST CHARGEMENT TEXTE COORDONNEE **************************************" << endl;
         ChargeurCoordonneeTexte chargeur_coordonnee_texte;
         Graphe<double, Coordonnee> graphe;
-        chargeur_coordonnee_texte.charger("../data/FichiersTexte/Meurthe-Et-Moselle.txt", graphe);
+        chargeur_coordonnee_texte.charger("../data/fichiersTexte/Meurthe-Et-Moselle.txt", graphe);
         // cout << "Le graphe charge = " << graphe << endl;
         assert(PElement<Sommet<Coordonnee>>::taille(graphe.lSommets) == 4);
         assert((PElement<Arete<double, Coordonnee>>::taille(graphe.lAretes)) == 0);
@@ -54,7 +54,7 @@ int main()
         cout << "*********************************** TEST CHARGEMENT TEXTE VECTEUR **************************************" << endl;
         ChargeurVecteurTexte chargeur_vecteur_texte;
         Graphe<double, Vecteur2D> graphe;
-        chargeur_vecteur_texte.charger("../data/FichiersTexte/Meurthe-Et-Moselle.txt", graphe);
+        chargeur_vecteur_texte.charger("../data/fichiersTexte/Meurthe-Et-Moselle.txt", graphe);
         // cout << "Le graphe charge = " << graphe << endl;
         assert(PElement<Sommet<Vecteur2D>>::taille(graphe.lSommets) == 4);
         assert((PElement<Arete<double, Vecteur2D>>::taille(graphe.lAretes)) == 0);
@@ -68,7 +68,8 @@ int main()
         ChargeurDossier<double, Coordonnee> chargeur_dossier(&chargeur_coordonnee_json);
         Graphe<double, Coordonnee> graphe;
         chargeur_dossier.charger("../data/13_fichiers_JSON", graphe);
-        cout << graphe << endl;
+        // cout << graphe << endl;
+        assert(PElement<Sommet<Coordonnee>>::tailleR(graphe.lSommets) == 245);
         afficheSucces("TEST CHARGEMENT DOSSIER JSON COORDONNEE");
     }
     return 0;

@@ -7,6 +7,7 @@
 #include <map>
 #include <set>
 #include <vector>
+
 #include "Arete.h"
 #include "PElement.h"
 #include "Sommet.h"
@@ -329,7 +330,7 @@ class Graphe
         }
         return nullptr;
     }
-    /************************************************************** UTILITAIRES ET MÉTHODE POUR L'HEURISTIQUE
+    /************************************************************** MÉTHODE POUR L'HEURISTIQUE
     ***************************************************************/
     /**
      * HYPOTHESE : Le graphe est supposé constitué uniquement d'une liste de sommets
@@ -482,6 +483,9 @@ class Graphe
         return tournee;
     }
 
+    /************************************************************** UTILITAIRES POUR LE SERVEUR
+     ***************************************************************/
+
     /**
      * HYPOTHESE : Est lancée sur un graphe complet pour retrouver toutes les arêtes de la tournée
      * (En particulier celle qui permet de fermer le cycle qu'on perd avec l'ACPM)
@@ -490,6 +494,10 @@ class Graphe
      */
     Graphe<S, T>* construireGrapheTournee(PElement<Sommet<T>>* tournee) const
     {
+        if (tournee == nullptr)
+        {
+            return nullptr;
+        }
         Graphe<S, T>* resultat = new Graphe<S, T>();
         map<int, Sommet<T>*> correspondance;
         map<int, Sommet<T>*> sommetsDuGrapheComplet;
