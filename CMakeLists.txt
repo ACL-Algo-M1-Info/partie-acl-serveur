@@ -106,3 +106,7 @@ target_link_libraries(testParseurJson PRIVATE CORE)
 # Test chargeur JSON générique
 add_executable(testChargeurGenerique ${TESTS}/TestChargeurGenerique.cpp)
 target_link_libraries(testChargeurGenerique PRIVATE CORE)
+
+
+add_executable(testGrapheVideTsp ${TESTS}/TestGrapheVideTsp.cpp)
+target_link_libraries(testGrapheVideTsp PRIVATE CORE)
