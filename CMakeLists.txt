@@ -39,7 +39,7 @@ target_include_directories(CORE PUBLIC ${SRC})
 
 ## Executable Exo 5
 add_executable(main ${SRC}/main.cpp)
-target_link_libraries(main PRIVATE ${EXT_LIB} CORE)
+target_link_libraries(main PRIVATE CORE ${EXT_LIB})
 
 ## Tests
 
