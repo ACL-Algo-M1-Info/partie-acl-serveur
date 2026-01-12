@@ -1,16 +1,36 @@
 ﻿//
-// Created by remik on 21/12/2025.
+// Created by remik on 02/01/2026.
 //
 
-// INCLUSIONS
-
+#include <winsock2.h> // Garder en 1er sinon conflit avec byte à cause d'unwrap std
 #include <iostream>
 
-using namespace std;
+#include "db/routes/routesDb.h"
+#include "db/villes/villesDb.h"
+#include "tcp/socketServeur/socketServeur.h"
+#include "types/chargeursGeneriques/ChargeurGeneriqueJson.h"
+
+using namespace serv;
 
 int main()
 {
-    cout << "Je suis une patate" << endl;
+    SetConsoleCP(CP_UTF8);
+    SetConsoleOutputCP(CP_UTF8);
+
+    // Chargement des singletons
+    RoutesDb* r = RoutesDb::getInstance();
+    VillesDb* v = VillesDb::getInstance();
+
+    r->recupererDonnees();
+    v->recupererDonnees();
+
+    string ip = "127.0.0.1";
+    short port = 9111;
+
+    SocketServeur *s = SocketServeur::getInstance();
+
+    s->ecouter(ip, port);
+    s->accepterRequetes();
 
     return 0;
 }
